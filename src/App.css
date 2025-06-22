@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
 }
 
 body {
@@ -11,30 +12,12 @@ body {
   background-color: #f0f2f5;
 }
 
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Глобальні стилі для кнопок */
-.MuiButton-root {
-  text-transform: none !important;
-  font-weight: 500 !important;
-}
-
-/* Стилі для посилань */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* Анімації для плавних переходів */
-* {
-  transition: all 0.3s ease;
-}
-
-/* Стилі для скроллбару */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
