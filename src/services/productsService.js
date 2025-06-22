@@ -57,7 +57,7 @@ export const getProductsByCategory = async (category) => {
   try {
     const q = query(
       collection(db, PRODUCTS_COLLECTION),
-      where("category", "==", category)
+      where("Категорія", "==", category)
     );
     const querySnapshot = await getDocs(q);
     const products = [];
@@ -119,7 +119,7 @@ export const getCategories = async () => {
   try {
     const products = await getAllProducts();
     const categories = [
-      ...new Set(products.map((product) => product.category)),
+      ...new Set(products.map((product) => product.Категорія)),
     ];
     return categories.filter(Boolean); // Видаляємо пусті значення
   } catch (error) {
@@ -136,9 +136,9 @@ export const searchProducts = async (searchTerm) => {
 
     return products.filter(
       (product) =>
-        product.name?.toLowerCase().includes(searchLower) ||
-        product.description?.toLowerCase().includes(searchLower) ||
-        product.category?.toLowerCase().includes(searchLower)
+        product.Назва?.toLowerCase().includes(searchLower) ||
+        product.Опис?.toLowerCase().includes(searchLower) ||
+        product.Категорія?.toLowerCase().includes(searchLower)
     );
   } catch (error) {
     console.error("Помилка пошуку товарів:", error);
