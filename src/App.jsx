@@ -17,6 +17,10 @@ function App() {
             display: "flex",
             flexDirection: "column",
             minHeight: "100vh",
+            maxWidth: "1280px",
+            margin: "0 auto",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            backgroundColor: "#fff",
           }}
         >
           <Header />
