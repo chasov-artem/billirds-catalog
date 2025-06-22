@@ -49,7 +49,7 @@ const ProductsTest = () => {
       ) : (
         <Grid container spacing={3}>
           {products.map((product) => (
-            <Grid xs={12} sm={6} md={4} key={product.id}>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.id}>
               <Card className={styles.productCard}>
                 {product.imageUrl && (
                   <CardMedia
