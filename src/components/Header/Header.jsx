@@ -9,7 +9,7 @@ const Header = () => {
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           <Link to="/" className={styles.logoLink}>
-            Більярдні Столи
+            Більярд Сервіс
           </Link>
         </Typography>
         <Box sx={{ display: "flex", gap: 2 }}>
