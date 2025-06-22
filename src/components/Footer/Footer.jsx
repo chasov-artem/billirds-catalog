@@ -8,7 +8,7 @@ const Footer = () => {
     <Box component="footer" className={styles.footer}>
       <Container maxWidth="lg">
         <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
+          <Grid xs={12} md={4}>
             <Typography variant="h6" gutterBottom>
               Більярдні Столи
             </Typography>
@@ -18,7 +18,7 @@ const Footer = () => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid xs={12} md={4}>
             <Typography variant="h6" gutterBottom>
               Контакти
             </Typography>
@@ -37,7 +37,7 @@ const Footer = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid xs={12} md={4}>
             <Typography variant="h6" gutterBottom>
               Соціальні мережі
             </Typography>
