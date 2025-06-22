@@ -1,0 +1,10 @@
+.catalogSection {
+  padding: 2rem 1rem;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
