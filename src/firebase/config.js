@@ -3,21 +3,20 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
-// Firebase конфігурація
-// Замініть на ваші реальні дані з Firebase Console
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "your-api-key",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "your-messaging-sender-id",
-  appId: "your-app-id",
+  apiKey: "AIzaSyDUuwSaYga67Tb3uofxYVtSPWrUR21dp5c",
+  authDomain: "billiard-catalog.firebaseapp.com",
+  projectId: "billiard-catalog",
+  storageBucket: "billiard-catalog.appspot.com",
+  messagingSenderId: "548960891243",
+  appId: "1:548960891243:web:7a5f54a0380f1b6a4a1c2e",
 };
 
-// Ініціалізація Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Експорт сервісів
+// Export services
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 export const auth = getAuth(app);
