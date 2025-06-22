@@ -24,7 +24,7 @@ const Home = () => {
       </Box>
 
       {/* Features Section */}
-      <Container maxWidth="md" sx={{ py: 8 }}>
+      <Container maxWidth="lg" sx={{ py: 8 }}>
         <Typography variant="h3" component="h2" align="center" gutterBottom>
           Чому Обирають Нас
         </Typography>
