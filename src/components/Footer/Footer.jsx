@@ -10,7 +10,7 @@ const Footer = () => {
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" gutterBottom>
-              Більярдні Столи
+              Більярд Сервіс
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Якісні більярдні столи для вашого дому та бізнесу. Професійне
