@@ -1,0 +1,26 @@
+.header {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logoLink {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.logoLink:hover {
+  color: #ffd700;
+}
+
+.header .MuiButton-root {
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.header .MuiButton-root:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}

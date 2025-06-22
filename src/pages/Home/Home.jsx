@@ -1,0 +1,157 @@
+import React from "react";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+} from "@mui/material";
+import { SportsEsports, LocalShipping, Support } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import styles from "./Home.module.css";
+
+const Home = () => {
+  return (
+    <Box className={styles.home}>
+      {/* Hero Section */}
+      <Box className={styles.heroSection}>
+        <Container maxWidth="lg">
+          <Box className={styles.heroContent}>
+            <Typography
+              variant="h2"
+              component="h1"
+              className={styles.heroTitle}
+            >
+              Професійні Більярдні Столи
+            </Typography>
+            <Typography variant="h5" className={styles.heroSubtitle}>
+              Якісне обладнання для вашого дому та бізнесу
+            </Typography>
+            <Box className={styles.heroButtons}>
+              <Button
+                variant="contained"
+                size="large"
+                component={Link}
+                to="/catalog"
+                className={`${styles.heroButton} ${styles.primary}`}
+              >
+                Переглянути Каталог
+              </Button>
+              <Button
+                variant="outlined"
+                size="large"
+                className={`${styles.heroButton} ${styles.secondary}`}
+                href="https://t.me/your-username"
+                target="_blank"
+              >
+                Зв'язатися з Нами
+              </Button>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+
+      {/* Features Section */}
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <Typography variant="h3" component="h2" align="center" gutterBottom>
+          Чому Обирають Нас
+        </Typography>
+        <Grid container spacing={4} sx={{ mt: 4 }}>
+          <Grid item xs={12} md={4}>
+            <Card className={styles.featureCard}>
+              <CardContent>
+                <SportsEsports className={styles.featureIcon} />
+                <Typography variant="h5" component="h3" gutterBottom>
+                  Якість
+                </Typography>
+                <Typography variant="body1">
+                  Тільки перевірені виробники з гарантією якості. Професійне
+                  обладнання для серйозної гри.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Card className={styles.featureCard}>
+              <CardContent>
+                <LocalShipping className={styles.featureIcon} />
+                <Typography variant="h5" component="h3" gutterBottom>
+                  Доставка
+                </Typography>
+                <Typography variant="body1">
+                  Швидка доставка по всій Україні. Збірка та налаштування на
+                  місці.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Card className={styles.featureCard}>
+              <CardContent>
+                <Support className={styles.featureIcon} />
+                <Typography variant="h5" component="h3" gutterBottom>
+                  Підтримка
+                </Typography>
+                <Typography variant="body1">
+                  Технічна підтримка та консультації. Запчастини та аксесуари
+                  завжди в наявності.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Container>
+
+      {/* CTA Section */}
+      <Box className={styles.ctaSection}>
+        <Container maxWidth="md">
+          <Typography variant="h4" component="h2" align="center" gutterBottom>
+            Готові Обрати Свій Стіл?
+          </Typography>
+          <Typography variant="h6" align="center" sx={{ mb: 4 }}>
+            Зв'яжіться з нами для консультації та замовлення
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              gap: 2,
+              flexWrap: "wrap",
+            }}
+          >
+            <Button
+              variant="contained"
+              size="large"
+              href="https://t.me/your-username"
+              target="_blank"
+            >
+              Telegram
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              href="https://wa.me/380XXXXXXXXX"
+              target="_blank"
+            >
+              WhatsApp
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              component={Link}
+              to="/catalog"
+            >
+              Каталог
+            </Button>
+          </Box>
+        </Container>
+      </Box>
+    </Box>
+  );
+};
+
+export default Home;
