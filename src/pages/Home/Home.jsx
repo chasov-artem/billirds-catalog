@@ -60,7 +60,7 @@ const Home = () => {
           Чому Обирають Нас
         </Typography>
         <Grid container spacing={4} sx={{ mt: 4 }}>
-          <Grid item xs={12} md={4}>
+          <Grid xs={12} md={4}>
             <Card className={styles.featureCard}>
               <CardContent>
                 <SportsEsports className={styles.featureIcon} />
@@ -75,7 +75,7 @@ const Home = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid xs={12} md={4}>
             <Card className={styles.featureCard}>
               <CardContent>
                 <LocalShipping className={styles.featureIcon} />
@@ -90,7 +90,7 @@ const Home = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid xs={12} md={4}>
             <Card className={styles.featureCard}>
               <CardContent>
                 <Support className={styles.featureIcon} />
