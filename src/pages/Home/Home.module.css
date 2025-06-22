@@ -3,7 +3,7 @@
 }
 
 .heroSection {
-  background: #1c253c url("/src/assets/hero-banner.jpg") no-repeat center center;
+  background: #062826 url("/src/assets/hero-banner.jpg") no-repeat center center;
   background-size: contain;
   color: white;
   min-height: 400px;
