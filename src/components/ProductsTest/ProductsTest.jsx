@@ -56,20 +56,20 @@ const ProductsTest = () => {
                     component="img"
                     height="200"
                     image={product.imageUrl}
-                    alt={product.name}
+                    alt={product.Назва}
                     className={styles.productImage}
                   />
                 )}
                 <CardContent>
                   <Typography variant="h6" component="h3" gutterBottom>
-                    {product.name}
+                    {product.Назва}
                   </Typography>
                   <Typography
                     variant="body2"
                     color="text.secondary"
                     gutterBottom
                   >
-                    Категорія: {product.category}
+                    Категорія: {product.Категорія}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -77,11 +77,11 @@ const ProductsTest = () => {
                     gutterBottom
                   >
                     Ціна:{" "}
-                    {product.price ? `${product.price} грн` : "Ціна не вказана"}
+                    {product.Ціна ? `${product.Ціна} грн` : "Ціна не вказана"}
                   </Typography>
-                  {product.description && (
+                  {product.Опис && (
                     <Typography variant="body2" color="text.secondary">
-                      {product.description}
+                      {product.Опис}
                     </Typography>
                   )}
                 </CardContent>

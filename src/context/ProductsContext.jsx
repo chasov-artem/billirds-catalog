@@ -53,7 +53,7 @@ export const ProductsProvider = ({ children }) => {
     if (!category || category === "all") {
       return products;
     }
-    return products.filter((product) => product.category === category);
+    return products.filter((product) => product.Категорія === category);
   };
 
   // Пошук товарів
@@ -64,9 +64,9 @@ export const ProductsProvider = ({ children }) => {
     const searchLower = searchTerm.toLowerCase();
     return products.filter(
       (product) =>
-        product.name?.toLowerCase().includes(searchLower) ||
-        product.description?.toLowerCase().includes(searchLower) ||
-        product.category?.toLowerCase().includes(searchLower)
+        product.Назва?.toLowerCase().includes(searchLower) ||
+        product.Опис?.toLowerCase().includes(searchLower) ||
+        product.Категорія?.toLowerCase().includes(searchLower)
     );
   };
 
