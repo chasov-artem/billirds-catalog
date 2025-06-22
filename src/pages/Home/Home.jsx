@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { SportsEsports, LocalShipping, Support } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import ProductsTest from "../../components/ProductsTest/ProductsTest";
 import styles from "./Home.module.css";
 
 const Home = () => {
@@ -105,6 +106,11 @@ const Home = () => {
           </Grid>
         </Grid>
       </Container>
+
+      {/* Firebase Test Section */}
+      <Box sx={{ bgcolor: "#f8f9fa", py: 4 }}>
+        <ProductsTest />
+      </Box>
 
       {/* CTA Section */}
       <Box className={styles.ctaSection}>

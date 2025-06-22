@@ -3,12 +3,13 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
-// Firebase конфігурація (потрібно буде замінити на реальні дані)
+// Firebase конфігурація
+// Замініть на ваші реальні дані з Firebase Console
 const firebaseConfig = {
   apiKey: "your-api-key",
-  authDomain: "your-auth-domain",
+  authDomain: "your-project-id.firebaseapp.com",
   projectId: "your-project-id",
-  storageBucket: "your-storage-bucket",
+  storageBucket: "your-project-id.appspot.com",
   messagingSenderId: "your-messaging-sender-id",
   appId: "your-app-id",
 };
