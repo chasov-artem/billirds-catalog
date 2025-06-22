@@ -19,43 +19,12 @@ const Home = () => {
       {/* Hero Section */}
       <Box className={styles.heroSection}>
         <Container maxWidth="lg">
-          <Box className={styles.heroContent}>
-            <Typography
-              variant="h2"
-              component="h1"
-              className={styles.heroTitle}
-            >
-              Професійні Більярдні Столи
-            </Typography>
-            <Typography variant="h5" className={styles.heroSubtitle}>
-              Якісне обладнання для вашого дому та бізнесу
-            </Typography>
-            <Box className={styles.heroButtons}>
-              <Button
-                variant="contained"
-                size="large"
-                component={Link}
-                to="/catalog"
-                className={`${styles.heroButton} ${styles.primary}`}
-              >
-                Переглянути Каталог
-              </Button>
-              <Button
-                variant="outlined"
-                size="large"
-                className={`${styles.heroButton} ${styles.secondary}`}
-                href="https://t.me/your-username"
-                target="_blank"
-              >
-                Зв'язатися з Нами
-              </Button>
-            </Box>
-          </Box>
+          <Box className={styles.heroContent}>{/* Content removed */}</Box>
         </Container>
       </Box>
 
       {/* Features Section */}
-      <Container maxWidth="lg" sx={{ py: 8 }}>
+      <Container maxWidth="md" sx={{ py: 8 }}>
         <Typography variant="h3" component="h2" align="center" gutterBottom>
           Чому Обирають Нас
         </Typography>
