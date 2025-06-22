@@ -4,6 +4,7 @@ import { Box, CssBaseline } from "@mui/material";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
+import CatalogPage from "./pages/Catalog/CatalogPage";
 import { ProductsProvider } from "./context/ProductsContext";
 import "./App.css";
 
@@ -27,10 +28,7 @@ function App() {
           <Box component="main" sx={{ flexGrow: 1 }}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route
-                path="/catalog"
-                element={<div>Каталог (буде додано)</div>}
-              />
+              <Route path="/catalog" element={<CatalogPage />} />
               <Route
                 path="/admin"
                 element={<div>Адмін панель (буде додано)</div>}

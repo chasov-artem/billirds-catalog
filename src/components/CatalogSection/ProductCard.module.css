@@ -1,0 +1,64 @@
+.productCard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+  box-shadow: none;
+}
+
+.productCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-color: transparent;
+}
+
+.productImage {
+  height: 220px;
+  object-fit: contain; /* Змінено на contain, щоб картинка влізала повністю */
+  background-color: #ffffff;
+  padding: 1rem;
+}
+
+.cardContent {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem !important;
+}
+
+.productName {
+  font-weight: 600 !important;
+  flex-grow: 1; /* Розтягує назву, щоб ціна була внизу */
+  min-height: 48px; /* Резервує місце для двох рядків назви */
+}
+
+.productCategory {
+  font-size: 0.8rem !important;
+  color: #6c757d !important;
+  margin-bottom: 1rem !important;
+}
+
+.priceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* Притискає цей блок донизу */
+}
+
+.productPrice {
+  font-weight: bold !important;
+  color: #1e3c72;
+}
+
+.cartButton {
+  background-color: #ffd700 !important;
+  color: #1e3c72 !important;
+  font-weight: bold !important;
+  box-shadow: none !important;
+}
+
+.cartButton:hover {
+  background-color: #ffed4e !important;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3) !important;
+}
