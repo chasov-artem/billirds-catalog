@@ -1,0 +1,139 @@
+.catalogPage {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  padding: 2rem 0;
+}
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.pageTitle {
+  color: #115e59 !important;
+  font-weight: 700 !important;
+  margin-bottom: 1rem !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pageSubtitle {
+  color: #64748b !important;
+  font-size: 1.1rem !important;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.filtersPanel {
+  background: white !important;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  margin-bottom: 2rem !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(17, 94, 89, 0.1) !important;
+}
+
+.searchField {
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.searchField .MuiOutlinedInput-root {
+  border-radius: 12px;
+}
+
+.searchField .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #115e59;
+}
+
+.searchField
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #115e59;
+}
+
+.searchIcon {
+  color: #64748b !important;
+}
+
+.filterIcon {
+  color: #64748b !important;
+}
+
+.stats {
+  text-align: center;
+  padding: 1rem;
+  background: #f1f5f9;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.activeFilters {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.filterChip {
+  margin: 0.25rem !important;
+  background: linear-gradient(135deg, #115e59 0%, #134e4a 100%) !important;
+  color: white !important;
+}
+
+.filterChip .MuiChip-deleteIcon {
+  color: white !important;
+}
+
+.catalogContent {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(17, 94, 89, 0.1);
+}
+
+.noResults {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(17, 94, 89, 0.1);
+}
+
+.noResults h6 {
+  color: #115e59 !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Адаптивність для мобільних пристроїв */
+@media (max-width: 768px) {
+  .catalogPage {
+    padding: 1rem 0;
+  }
+
+  .pageHeader {
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+  }
+
+  .pageTitle {
+    font-size: 2rem !important;
+  }
+
+  .filtersPanel {
+    padding: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .catalogContent {
+    padding: 1rem;
+  }
+
+  .noResults {
+    padding: 2rem 1rem;
+  }
+}

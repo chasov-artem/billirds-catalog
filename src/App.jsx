@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
 import CatalogPage from "./pages/Catalog/CatalogPage";
+import ProductPage from "./pages/Product/ProductPage";
 import { ProductsProvider } from "./context/ProductsContext";
 import "./App.css";
 
@@ -29,6 +30,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/catalog" element={<CatalogPage />} />
+              <Route path="/product/:productId" element={<ProductPage />} />
               <Route
                 path="/admin"
                 element={<div>Адмін панель (буде додано)</div>}
