@@ -11,10 +11,17 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useProducts } from "../../context/ProductsContext";
 import styles from "./CategorySidebar.module.css";
 
-const CategorySidebar = ({ onFilterChange, activeFilter }) => {
-  const { products } = useProducts();
+const CategorySidebar = ({
+  onFilterChange,
+  activeFilter,
+  products: externalProducts,
+}) => {
+  const { products: contextProducts } = useProducts();
   const [categories, setCategories] = useState({});
   const [open, setOpen] = useState({});
+
+  // Використовуємо зовнішні продукти, якщо вони передані, інакше з контексту
+  const products = externalProducts || contextProducts;
 
   useEffect(() => {
     const grouped = products.reduce((acc, product) => {

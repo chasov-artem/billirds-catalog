@@ -5,6 +5,8 @@
   transition: all 0.3s ease;
   border: 1px solid #e9ecef;
   box-shadow: none;
+  position: relative;
+  overflow: hidden;
 }
 
 .productCard:hover {
@@ -13,11 +15,51 @@
   border-color: transparent;
 }
 
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+}
+
 .productImage {
   height: 220px;
-  object-fit: contain; /* Змінено на contain, щоб картинка влізала повністю */
+  object-fit: contain;
   background-color: #ffffff;
   padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.productCard:hover .productImage {
+  transform: scale(1.05);
+}
+
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.productCard:hover .imageOverlay {
+  opacity: 1;
+}
+
+.viewButton {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #115e59 !important;
+  transition: all 0.3s ease !important;
+}
+
+.viewButton:hover {
+  background: white !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
 .cardContent {
@@ -29,8 +71,17 @@
 
 .productName {
   font-weight: 600 !important;
-  flex-grow: 1; /* Розтягує назву, щоб ціна була внизу */
-  min-height: 48px; /* Резервує місце для двох рядків назви */
+  flex-grow: 1;
+  min-height: 48px;
+  color: #115e59 !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease !important;
+  cursor: pointer;
+}
+
+.productName:hover {
+  color: #134e4a !important;
+  text-decoration: underline !important;
 }
 
 .productCategory {
@@ -43,7 +94,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto; /* Притискає цей блок донизу */
+  margin-top: auto;
 }
 
 .productPrice {
@@ -52,13 +103,15 @@
 }
 
 .cartButton {
-  background-color: #ffd700 !important;
-  color: #134e4a !important;
+  background: linear-gradient(135deg, #115e59 0%, #134e4a 100%) !important;
+  color: white !important;
   font-weight: bold !important;
   box-shadow: none !important;
+  transition: all 0.3s ease !important;
 }
 
 .cartButton:hover {
-  background-color: #ffed4e !important;
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3) !important;
+  background: linear-gradient(135deg, #134e4a 0%, #0f3d3a 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.3) !important;
 }

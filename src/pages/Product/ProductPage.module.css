@@ -1,0 +1,292 @@
+.productPage {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  padding: 2rem 0;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.errorContainer {
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.breadcrumbs {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.breadcrumbLink {
+  color: #115e59 !important;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.breadcrumbLink:hover {
+  color: #134e4a !important;
+  text-decoration: underline;
+}
+
+.imageSection {
+  background: white !important;
+  border-radius: 16px !important;
+  padding: 1rem !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(17, 94, 89, 0.1) !important;
+}
+
+.mainImage {
+  width: 100% !important;
+  height: 400px !important;
+  object-fit: cover !important;
+  border-radius: 12px !important;
+  margin-bottom: 1rem !important;
+}
+
+.thumbnailContainer {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.thumbnail {
+  width: 80px !important;
+  height: 80px !important;
+  cursor: pointer !important;
+  border: 2px solid transparent !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.thumbnail:hover {
+  border-color: #115e59 !important;
+  transform: scale(1.05) !important;
+}
+
+.selectedThumbnail {
+  border-color: #115e59 !important;
+  box-shadow: 0 2px 8px rgba(17, 94, 89, 0.3) !important;
+}
+
+.thumbnailImage {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 6px !important;
+}
+
+.infoSection {
+  background: white !important;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(17, 94, 89, 0.1) !important;
+  height: fit-content !important;
+}
+
+.productHeader {
+  margin-bottom: 1rem;
+}
+
+.categoryChip {
+  background: linear-gradient(135deg, #115e59 0%, #134e4a 100%) !important;
+  color: white !important;
+  margin-bottom: 1rem !important;
+}
+
+.productTitle {
+  color: #115e59 !important;
+  font-weight: 700 !important;
+  margin-bottom: 0.5rem !important;
+  line-height: 1.2 !important;
+}
+
+.priceSection {
+  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(17, 94, 89, 0.1);
+}
+
+.price {
+  color: #115e59 !important;
+  font-weight: 700 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.orderSection {
+  margin: 1rem 0;
+}
+
+.telegramButton {
+  background: linear-gradient(135deg, #0088cc 0%, #0077b3 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.telegramButton:hover {
+  background: linear-gradient(135deg, #0077b3 0%, #006699 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3) !important;
+}
+
+.whatsappButton {
+  background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.whatsappButton:hover {
+  background: linear-gradient(135deg, #20ba5a 0%, #1a9f4a 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3) !important;
+}
+
+.phoneButton {
+  border-color: #115e59 !important;
+  color: #115e59 !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.phoneButton:hover {
+  background: #115e59 !important;
+  color: white !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.3) !important;
+}
+
+.descriptionSection {
+  margin: 1rem 0;
+}
+
+.description {
+  line-height: 1.6 !important;
+  color: #374151 !important;
+}
+
+.specsSection {
+  margin: 1rem 0;
+}
+
+.specItem {
+  padding: 0.25rem 0 !important;
+}
+
+.checkIcon {
+  color: #10b981 !important;
+  font-size: 1.2rem !important;
+}
+
+.additionalInfo {
+  background: white !important;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(17, 94, 89, 0.1) !important;
+}
+
+.featuresSection {
+  margin-top: 2rem;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.featureIcon {
+  color: #10b981 !important;
+  font-size: 1.2rem !important;
+}
+
+.contactInfo {
+  background: white !important;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(17, 94, 89, 0.1) !important;
+  height: fit-content !important;
+}
+
+.contactIcon {
+  color: #115e59 !important;
+}
+
+.workingHours {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.backButtonContainer {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.backButton {
+  border-color: #115e59 !important;
+  color: #115e59 !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 2rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.backButton:hover {
+  background: #115e59 !important;
+  color: white !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.3) !important;
+}
+
+/* Адаптивність для мобільних пристроїв */
+@media (max-width: 768px) {
+  .productPage {
+    padding: 1rem 0;
+  }
+
+  .infoSection {
+    padding: 1.5rem !important;
+  }
+
+  .mainImage {
+    height: 300px !important;
+  }
+
+  .productTitle {
+    font-size: 1.75rem !important;
+  }
+
+  .price {
+    font-size: 2rem !important;
+  }
+
+  .additionalInfo,
+  .contactInfo {
+    padding: 1.5rem !important;
+  }
+
+  .thumbnail {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}

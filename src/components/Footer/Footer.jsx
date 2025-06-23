@@ -23,17 +23,24 @@ const Footer = () => {
               Контакти
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-              <Link href="tel:+380XXXXXXXXX" className={styles.contactLink}>
+              <Link href="tel:0664070941" className={styles.contactLink}>
                 <Phone sx={{ mr: 1 }} />
-                +380 XX XXX XX XX
+                066 407 09 41 (Viber/Telegram)
+              </Link>
+              <Link href="tel:0675417308" className={styles.contactLink}>
+                <Phone sx={{ mr: 1 }} />
+                067 541 73 08
               </Link>
               <Link
-                href="mailto:info@billiard-tables.com"
+                href="mailto:info@billiardservice.com"
                 className={styles.contactLink}
               >
                 <Email sx={{ mr: 1 }} />
-                info@billiard-tables.com
+                info@billiardservice.com
               </Link>
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                Дніпро, вул Антоновича 79
+              </Typography>
             </Box>
           </Grid>
 
