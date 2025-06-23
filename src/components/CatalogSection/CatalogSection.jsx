@@ -5,13 +5,16 @@ import CategorySidebar from "./CategorySidebar";
 import ProductGrid from "./ProductGrid";
 import styles from "./CatalogSection.module.css";
 
-const CatalogSection = () => {
-  const { products, loading, error } = useProducts();
+const CatalogSection = ({ products: externalProducts }) => {
+  const { products: contextProducts, loading, error } = useProducts();
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [activeFilter, setActiveFilter] = useState({
     type: "all",
     value: "Усі товари",
   });
+
+  // Використовуємо зовнішні продукти, якщо вони передані, інакше з контексту
+  const products = externalProducts || contextProducts;
 
   useEffect(() => {
     setFilteredProducts(products);
@@ -31,7 +34,7 @@ const CatalogSection = () => {
     }
   };
 
-  if (error) {
+  if (error && !externalProducts) {
     return (
       <Box sx={{ p: 4 }}>
         <Alert severity="error">
@@ -48,10 +51,11 @@ const CatalogSection = () => {
           <CategorySidebar
             onFilterChange={handleFilterChange}
             activeFilter={activeFilter}
+            products={products}
           />
         </Grid>
         <Grid size={{ xs: 12, md: 9 }}>
-          {loading ? (
+          {loading && !externalProducts ? (
             <Box className={styles.loader}>
               <CircularProgress />
             </Box>
