@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Дозволяємо читати всі документи
+    match /{document=**} {
+      allow read: if true;
+    }
+    
+    // Дозволяємо записувати в колекцію products
+    match /products/{productId} {
+      allow write: if true;
+    }
+  }
+} 

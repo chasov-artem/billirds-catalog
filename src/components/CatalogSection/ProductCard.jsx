@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import styles from "./ProductCard.module.css";
 
 const ProductCard = ({ product }) => {
-  const defaultImage = "/src/assets/default-product-image.png"; // Шлях до зображення-заглушки
+  const defaultImage = "/default-product-image.png"; // Шлях до зображення-заглушки
 
   const handleOrder = (e) => {
     e.preventDefault();
