@@ -8,7 +8,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDUuwSaYga67Tb3uofxYVtSPWrUR21dp5c",
   authDomain: "billiard-catalog.firebaseapp.com",
   projectId: "billiard-catalog",
-  storageBucket: "billiard-catalog.appspot.com",
+  storageBucket: "billiard-catalog.firebasestorage.app",
   messagingSenderId: "548960891243",
   appId: "1:548960891243:web:7a5f54a0380f1b6a4a1c2e",
 };

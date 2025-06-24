@@ -32,8 +32,10 @@ const ProductCard = ({ product }) => {
           alt={product.Назва || product.name}
           className={styles.productImage}
           onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = defaultImage;
+            if (!e.target.src.endsWith("default-product-image.png")) {
+              e.target.onerror = null;
+              e.target.src = defaultImage;
+            }
           }}
         />
         <Box className={styles.imageOverlay}>
