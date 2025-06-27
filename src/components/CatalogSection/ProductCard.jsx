@@ -14,6 +14,9 @@ import styles from "./ProductCard.module.css";
 
 const ProductCard = ({ product }) => {
   const defaultImage = "/default-product-image.png"; // Шлях до зображення-заглушки
+  const images = product.Фото || [];
+  const mainImage =
+    images[0] || product.imageUrl || product.зображення || defaultImage;
 
   const handleOrder = (e) => {
     e.preventDefault();
@@ -28,7 +31,7 @@ const ProductCard = ({ product }) => {
       <Box className={styles.imageContainer}>
         <CardMedia
           component="img"
-          image={product.imageUrl || product.зображення || defaultImage}
+          image={mainImage}
           alt={product.Назва || product.name}
           className={styles.productImage}
           onError={(e) => {
