@@ -21,6 +21,7 @@ import {
   CircularProgress,
   Skeleton,
   Fade,
+  Modal,
 } from "@mui/material";
 import {
   ArrowBack,
@@ -33,6 +34,9 @@ import {
   CheckCircle,
   Star,
   StarBorder,
+  ArrowBackIos,
+  ArrowForwardIos,
+  Close,
 } from "@mui/icons-material";
 import { useProducts } from "../../context/ProductsContext";
 import styles from "./ProductPage.module.css";
@@ -44,6 +48,8 @@ const ProductPage = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [productLoading, setProductLoading] = useState(true);
   const [productError, setProductError] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalIndex, setModalIndex] = useState(0);
 
   useEffect(() => {
     setProductLoading(true);
@@ -96,8 +102,17 @@ const ProductPage = () => {
 
   const formatPrice = (price) => {
     if (!price) return "За запитом";
-    return new Intl.NumberFormat("uk-UA").format(price);
+    return `${new Intl.NumberFormat("uk-UA").format(price)} грн`;
   };
+
+  const openModal = (index) => {
+    setModalIndex(index);
+    setModalOpen(true);
+  };
+  const closeModal = () => setModalOpen(false);
+  const prevImage = () =>
+    setModalIndex((modalIndex - 1 + images.length) % images.length);
+  const nextImage = () => setModalIndex((modalIndex + 1) % images.length);
 
   // Лоадер під час завантаження продуктів
   if (loading) {
@@ -312,6 +327,13 @@ const ProductPage = () => {
   }
 
   // Основний контент товару
+  const images = product.Фото || [];
+  const mainImage =
+    images[selectedImage] ||
+    product.imageUrl ||
+    product.зображення ||
+    "https://via.placeholder.com/1200x600?text=Немає+зображення";
+
   return (
     <Fade in={true} timeout={800}>
       <div className={styles.productPage}>
@@ -333,39 +355,58 @@ const ProductPage = () => {
           <Paper className={styles.imageSection} elevation={2} sx={{ mb: 4 }}>
             <CardMedia
               component="img"
-              image={
-                product.imageUrl ||
-                product.зображення ||
-                "https://via.placeholder.com/1200x600?text=Немає+зображення"
-              }
+              image={mainImage}
               alt={product.Назва || product.name}
               className={styles.mainImage}
+              onClick={() => openModal(selectedImage)}
+              style={{ cursor: images.length > 0 ? "pointer" : "default" }}
             />
-            {/* Додаткові зображення (якщо є) */}
-            {product.additionalImages &&
-              product.additionalImages.length > 0 && (
-                <Box className={styles.thumbnailContainer}>
-                  {product.additionalImages.map((img, index) => (
-                    <Card
-                      key={index}
-                      className={`${styles.thumbnail} ${
-                        selectedImage === index ? styles.selectedThumbnail : ""
+            {images.length > 1 && (
+              <Box className={styles.thumbnailContainer}>
+                {images.map((img, index) => (
+                  <Card
+                    key={index}
+                    className={`${styles.thumbnail} ${
+                      selectedImage === index ? styles.selectedThumbnail : ""
+                    }`}
+                    onClick={() => setSelectedImage(index)}
+                  >
+                    <CardMedia
+                      component="img"
+                      image={img}
+                      alt={`${product.Назва || product.name} - зображення ${
+                        index + 1
                       }`}
-                      onClick={() => setSelectedImage(index)}
-                    >
-                      <CardMedia
-                        component="img"
-                        image={img}
-                        alt={`${product.Назва || product.name} - зображення ${
-                          index + 1
-                        }`}
-                        className={styles.thumbnailImage}
-                      />
-                    </Card>
-                  ))}
-                </Box>
-              )}
+                      className={styles.thumbnailImage}
+                    />
+                  </Card>
+                ))}
+              </Box>
+            )}
           </Paper>
+
+          {/* Модалка для фото */}
+          <Modal open={modalOpen} onClose={closeModal}>
+            <Box className={styles.modalBox}>
+              <IconButton className={styles.modalClose} onClick={closeModal}>
+                <Close />
+              </IconButton>
+              <IconButton className={styles.modalArrowLeft} onClick={prevImage}>
+                <ArrowBackIos />
+              </IconButton>
+              <img
+                src={images[modalIndex]}
+                alt={`Фото ${modalIndex + 1}`}
+                className={styles.modalImage}
+              />
+              <IconButton
+                className={styles.modalArrowRight}
+                onClick={nextImage}
+              >
+                <ArrowForwardIos />
+              </IconButton>
+            </Box>
+          </Modal>
 
           <Grid container spacing={4}>
             {/* Ліва колонка: Опис */}
