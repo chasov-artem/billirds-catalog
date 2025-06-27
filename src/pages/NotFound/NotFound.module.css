@@ -1,0 +1,189 @@
+.notFoundPage {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.errorIcon {
+  margin-bottom: 2rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.errorCode {
+  font-size: 8rem !important;
+  font-weight: 900 !important;
+  color: #115e59 !important;
+  margin-bottom: 1rem !important;
+  text-shadow: 2px 2px 4px rgba(17, 94, 89, 0.2);
+  line-height: 1 !important;
+}
+
+.errorTitle {
+  color: #134e4a !important;
+  font-weight: 700 !important;
+  margin-bottom: 1.5rem !important;
+  font-size: 2.5rem !important;
+}
+
+.errorMessage {
+  color: #6b7280 !important;
+  font-size: 1.2rem !important;
+  line-height: 1.6 !important;
+  margin-bottom: 3rem !important;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.navigationButtons {
+  margin-bottom: 3rem;
+}
+
+.homeButton {
+  background: linear-gradient(135deg, #115e59 0%, #134e4a 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  height: 56px !important;
+}
+
+.homeButton:hover {
+  background: linear-gradient(135deg, #134e4a 0%, #0f3d3a 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.3) !important;
+}
+
+.catalogButton {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  height: 56px !important;
+}
+
+.catalogButton:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+.backButton {
+  border-color: #115e59 !important;
+  color: #115e59 !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  height: 56px !important;
+}
+
+.backButton:hover {
+  background: #115e59 !important;
+  color: white !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.3) !important;
+}
+
+.infoCard {
+  background: white !important;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(17, 94, 89, 0.1) !important;
+  margin-bottom: 2rem !important;
+  text-align: left !important;
+}
+
+.infoCard h6 {
+  color: #115e59 !important;
+  font-weight: 700 !important;
+  margin-bottom: 1rem !important;
+}
+
+.suggestions {
+  color: #6b7280 !important;
+}
+
+.suggestions div {
+  margin-bottom: 0.5rem !important;
+  line-height: 1.5 !important;
+}
+
+.contactInfo {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(17, 94, 89, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(17, 94, 89, 0.1);
+}
+
+.contactInfo p {
+  margin-bottom: 0.5rem !important;
+}
+
+/* Адаптивність для мобільних пристроїв */
+@media (max-width: 768px) {
+  .errorCode {
+    font-size: 6rem !important;
+  }
+
+  .errorTitle {
+    font-size: 2rem !important;
+  }
+
+  .errorMessage {
+    font-size: 1rem !important;
+  }
+
+  .content {
+    padding: 0 1rem;
+  }
+
+  .infoCard {
+    padding: 1.5rem !important;
+  }
+
+  .navigationButtons {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .errorCode {
+    font-size: 4rem !important;
+  }
+
+  .errorTitle {
+    font-size: 1.5rem !important;
+  }
+
+  .errorMessage {
+    font-size: 0.9rem !important;
+  }
+
+  .homeButton,
+  .catalogButton,
+  .backButton {
+    height: 48px !important;
+    font-size: 0.9rem !important;
+  }
+}
