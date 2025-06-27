@@ -5,7 +5,7 @@
 
 .heroSection {
   background-image: url("/src/assets/hero-banner.jpg"),
-    linear-gradient(135deg, #115e59 0%, #134e4a 100%);
+    linear-gradient(135deg, #115e59 0%, #115e59 100%);
   background-size: contain, cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -145,5 +145,122 @@
   .heroButtons {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+.servicesSection {
+  margin: 3rem 0 2rem 0;
+}
+
+.servicesSection .MuiGrid-container {
+  flex-direction: row !important;
+}
+
+.serviceCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);
+  transition: box-shadow 0.2s, transform 0.2s;
+  min-height: 320px;
+}
+.serviceCard:hover {
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.18);
+  transform: translateY(-4px) scale(1.03);
+}
+
+.serviceIcon {
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.serviceTitle {
+  font-weight: 700 !important;
+  color: #115e59 !important;
+  margin-bottom: 0.7rem !important;
+  text-align: center;
+  text-decoration: none !important;
+}
+
+.serviceTitle:hover,
+.serviceTitle:focus,
+.serviceTitle:active {
+  text-decoration: none !important;
+}
+
+.serviceDescription {
+  color: #374151 !important;
+  text-align: center;
+  font-size: 1.05rem !important;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .servicesSection .MuiGrid-container {
+    flex-direction: column !important;
+  }
+  .serviceCard {
+    min-height: 260px;
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .servicesSection {
+    margin: 2rem 0 1rem 0;
+  }
+  .serviceCard {
+    min-height: 200px;
+    padding: 1rem 0.5rem;
+  }
+  .serviceTitle {
+    font-size: 1.1rem !important;
+  }
+  .serviceDescription {
+    font-size: 0.95rem !important;
+  }
+}
+
+.servicesRow::-webkit-scrollbar {
+  height: 8px;
+  background: transparent;
+}
+.servicesRow::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+.servicesRow::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.servicesRow {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 2rem;
+  overflow-x: auto;
+  justify-content: center;
+  align-items: stretch;
+  padding-bottom: 0.5rem;
+}
+
+.serviceGridItem {
+  min-width: 320px;
+  flex: 1 1 320px;
+  display: flex;
+}
+
+@media (max-width: 900px) {
+  .servicesRow {
+    flex-direction: column !important;
+    gap: 1.5rem;
+    overflow-x: visible;
+  }
+  .serviceGridItem {
+    min-width: 0;
+    flex: 1 1 100%;
   }
 }
