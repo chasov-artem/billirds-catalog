@@ -11,6 +11,9 @@ import {
   Grid,
   Paper,
   Chip,
+  Skeleton,
+  Fade,
+  CircularProgress,
 } from "@mui/material";
 import { Search, FilterList, Sort } from "@mui/icons-material";
 import CatalogSection from "../../components/CatalogSection/CatalogSection";
@@ -18,7 +21,7 @@ import { useProducts } from "../../context/ProductsContext";
 import styles from "./CatalogPage.module.css";
 
 const CatalogPage = () => {
-  const { products } = useProducts();
+  const { products, loading } = useProducts();
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("name");
   const [priceRange, setPriceRange] = useState("all");
@@ -63,130 +66,216 @@ const CatalogPage = () => {
       }
     });
 
-  return (
-    <div className={styles.catalogPage}>
-      <Container maxWidth="xl">
-        {/* Заголовок сторінки */}
-        <Box className={styles.pageHeader}>
-          <Typography variant="h3" component="h1" className={styles.pageTitle}>
-            Каталог більярдних столів
-          </Typography>
-          <Typography variant="body1" className={styles.pageSubtitle}>
-            Знайдіть ідеальний стіл для вашого більярдного клубу або дому
-          </Typography>
-        </Box>
-
-        {/* Панель фільтрів та пошуку */}
-        <Paper className={styles.filtersPanel} elevation={2}>
-          <Grid container spacing={3} alignItems="center">
-            {/* Пошук */}
-            <Grid size={{ xs: 12, md: 4 }}>
-              <TextField
-                fullWidth
-                placeholder="Пошук столів..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                InputProps={{
-                  startAdornment: <Search className={styles.searchIcon} />,
-                }}
-                className={styles.searchField}
-              />
-            </Grid>
-
-            {/* Сортування */}
-            <Grid size={{ xs: 12, md: 3 }}>
-              <FormControl fullWidth>
-                <InputLabel>Сортування</InputLabel>
-                <Select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  startAdornment={<Sort className={styles.filterIcon} />}
-                >
-                  <MenuItem value="name">За назвою</MenuItem>
-                  <MenuItem value="price-low">Ціна: від дешевих</MenuItem>
-                  <MenuItem value="price-high">Ціна: від дорогих</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-
-            {/* Фільтр за ціною */}
-            <Grid size={{ xs: 12, md: 3 }}>
-              <FormControl fullWidth>
-                <InputLabel>Ціновий діапазон</InputLabel>
-                <Select
-                  value={priceRange}
-                  onChange={(e) => setPriceRange(e.target.value)}
-                  startAdornment={<FilterList className={styles.filterIcon} />}
-                >
-                  <MenuItem value="all">Всі ціни</MenuItem>
-                  <MenuItem value="low">До 5,000 грн</MenuItem>
-                  <MenuItem value="medium">5,000 - 15,000 грн</MenuItem>
-                  <MenuItem value="high">Понад 15,000 грн</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-
-            {/* Статистика */}
-            <Grid size={{ xs: 12, md: 2 }}>
-              <Box className={styles.stats}>
-                <Typography variant="body2" color="textSecondary">
-                  Знайдено: {filteredProducts.length}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  Всього: {products.length}
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Paper>
-
-        {/* Активні фільтри */}
-        {(searchTerm || priceRange !== "all") && (
-          <Box className={styles.activeFilters}>
-            <Typography variant="body2" component="span">
-              Активні фільтри:{" "}
-            </Typography>
-            {searchTerm && (
-              <Chip
-                label={`Пошук: "${searchTerm}"`}
-                onDelete={() => setSearchTerm("")}
-                className={styles.filterChip}
-              />
-            )}
-            {priceRange !== "all" && (
-              <Chip
-                label={`Ціна: ${
-                  priceRange === "low"
-                    ? "До 5,000 грн"
-                    : priceRange === "medium"
-                    ? "5,000 - 15,000 грн"
-                    : "Понад 15,000 грн"
-                }`}
-                onDelete={() => setPriceRange("all")}
-                className={styles.filterChip}
-              />
-            )}
+  // Лоадер під час завантаження
+  if (loading) {
+    return (
+      <div className={styles.catalogPage}>
+        <Container maxWidth="xl">
+          {/* Заголовок сторінки - скелетон */}
+          <Box className={styles.pageHeader}>
+            <Skeleton variant="text" width="60%" height={48} sx={{ mb: 1 }} />
+            <Skeleton variant="text" width="40%" height={24} />
           </Box>
-        )}
 
-        {/* Каталог */}
-        <Box className={styles.catalogContent}>
-          <CatalogSection products={filteredProducts} />
-        </Box>
-
-        {/* Повідомлення, якщо нічого не знайдено */}
-        {filteredProducts.length === 0 && (
-          <Paper className={styles.noResults} elevation={1}>
-            <Typography variant="h6" align="center">
-              На жаль, за вашими критеріями нічого не знайдено
-            </Typography>
-            <Typography variant="body2" align="center" color="textSecondary">
-              Спробуйте змінити параметри пошуку або фільтри
-            </Typography>
+          {/* Панель фільтрів - скелетон */}
+          <Paper className={styles.filtersPanel} elevation={2}>
+            <Grid container spacing={3} alignItems="center">
+              <Grid size={{ xs: 12, md: 4 }}>
+                <Skeleton
+                  variant="rectangular"
+                  height={56}
+                  sx={{ borderRadius: 1 }}
+                />
+              </Grid>
+              <Grid size={{ xs: 12, md: 3 }}>
+                <Skeleton
+                  variant="rectangular"
+                  height={56}
+                  sx={{ borderRadius: 1 }}
+                />
+              </Grid>
+              <Grid size={{ xs: 12, md: 3 }}>
+                <Skeleton
+                  variant="rectangular"
+                  height={56}
+                  sx={{ borderRadius: 1 }}
+                />
+              </Grid>
+              <Grid size={{ xs: 12, md: 2 }}>
+                <Box sx={{ textAlign: "center" }}>
+                  <Skeleton variant="text" width="80%" height={20} />
+                  <Skeleton variant="text" width="60%" height={20} />
+                </Box>
+              </Grid>
+            </Grid>
           </Paper>
-        )}
-      </Container>
-    </div>
+
+          {/* Каталог - скелетон */}
+          <Box className={styles.catalogContent}>
+            <Grid container spacing={3}>
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                <Grid key={i} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                  <Paper elevation={2} sx={{ p: 2, borderRadius: 2 }}>
+                    <Skeleton
+                      variant="rectangular"
+                      height={200}
+                      sx={{ borderRadius: 1, mb: 2 }}
+                    />
+                    <Skeleton
+                      variant="text"
+                      width="80%"
+                      height={24}
+                      sx={{ mb: 1 }}
+                    />
+                    <Skeleton
+                      variant="text"
+                      width="60%"
+                      height={20}
+                      sx={{ mb: 1 }}
+                    />
+                    <Skeleton variant="text" width="40%" height={32} />
+                  </Paper>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Container>
+      </div>
+    );
+  }
+
+  return (
+    <Fade in={true} timeout={600}>
+      <div className={styles.catalogPage}>
+        <Container maxWidth="xl">
+          {/* Заголовок сторінки */}
+          <Box className={styles.pageHeader}>
+            <Typography
+              variant="h3"
+              component="h1"
+              className={styles.pageTitle}
+            >
+              Каталог більярдних столів
+            </Typography>
+            <Typography variant="body1" className={styles.pageSubtitle}>
+              Знайдіть ідеальний стіл для вашого більярдного клубу або дому
+            </Typography>
+          </Box>
+
+          {/* Панель фільтрів та пошуку */}
+          <Paper className={styles.filtersPanel} elevation={2}>
+            <Grid container spacing={3} alignItems="center">
+              {/* Пошук */}
+              <Grid size={{ xs: 12, md: 4 }}>
+                <TextField
+                  fullWidth
+                  placeholder="Пошук столів..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  InputProps={{
+                    startAdornment: <Search className={styles.searchIcon} />,
+                  }}
+                  className={styles.searchField}
+                />
+              </Grid>
+
+              {/* Сортування */}
+              <Grid size={{ xs: 12, md: 3 }}>
+                <FormControl fullWidth>
+                  <InputLabel>Сортування</InputLabel>
+                  <Select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    startAdornment={<Sort className={styles.filterIcon} />}
+                  >
+                    <MenuItem value="name">За назвою</MenuItem>
+                    <MenuItem value="price-low">Ціна: від дешевих</MenuItem>
+                    <MenuItem value="price-high">Ціна: від дорогих</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              {/* Фільтр за ціною */}
+              <Grid size={{ xs: 12, md: 3 }}>
+                <FormControl fullWidth>
+                  <InputLabel>Ціновий діапазон</InputLabel>
+                  <Select
+                    value={priceRange}
+                    onChange={(e) => setPriceRange(e.target.value)}
+                    startAdornment={
+                      <FilterList className={styles.filterIcon} />
+                    }
+                  >
+                    <MenuItem value="all">Всі ціни</MenuItem>
+                    <MenuItem value="low">До 5,000 грн</MenuItem>
+                    <MenuItem value="medium">5,000 - 15,000 грн</MenuItem>
+                    <MenuItem value="high">Понад 15,000 грн</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              {/* Статистика */}
+              <Grid size={{ xs: 12, md: 2 }}>
+                <Box className={styles.stats}>
+                  <Typography variant="body2" color="textSecondary">
+                    Знайдено: {filteredProducts.length}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Всього: {products.length}
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Paper>
+
+          {/* Активні фільтри */}
+          {(searchTerm || priceRange !== "all") && (
+            <Box className={styles.activeFilters}>
+              <Typography variant="body2" component="span">
+                Активні фільтри:{" "}
+              </Typography>
+              {searchTerm && (
+                <Chip
+                  label={`Пошук: "${searchTerm}"`}
+                  onDelete={() => setSearchTerm("")}
+                  className={styles.filterChip}
+                />
+              )}
+              {priceRange !== "all" && (
+                <Chip
+                  label={`Ціна: ${
+                    priceRange === "low"
+                      ? "До 5,000 грн"
+                      : priceRange === "medium"
+                      ? "5,000 - 15,000 грн"
+                      : "Понад 15,000 грн"
+                  }`}
+                  onDelete={() => setPriceRange("all")}
+                  className={styles.filterChip}
+                />
+              )}
+            </Box>
+          )}
+
+          {/* Каталог */}
+          <Box className={styles.catalogContent}>
+            <CatalogSection products={filteredProducts} />
+          </Box>
+
+          {/* Повідомлення, якщо нічого не знайдено */}
+          {filteredProducts.length === 0 && (
+            <Paper className={styles.noResults} elevation={1}>
+              <Typography variant="h6" align="center">
+                На жаль, за вашими критеріями нічого не знайдено
+              </Typography>
+              <Typography variant="body2" align="center" color="textSecondary">
+                Спробуйте змінити параметри пошуку або фільтри
+              </Typography>
+            </Paper>
+          )}
+        </Container>
+      </div>
+    </Fade>
   );
 };
 

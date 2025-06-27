@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
 import CatalogPage from "./pages/Catalog/CatalogPage";
 import ProductPage from "./pages/Product/ProductPage";
+import NotFound from "./pages/NotFound/NotFound";
 import { ProductsProvider } from "./context/ProductsContext";
 import "./App.css";
 
@@ -35,6 +36,7 @@ function App() {
                 path="/admin"
                 element={<div>Адмін панель (буде додано)</div>}
               />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Box>
           <Footer />

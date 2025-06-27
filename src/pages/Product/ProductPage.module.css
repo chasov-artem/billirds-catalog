@@ -10,11 +10,29 @@
   align-items: center;
   justify-content: center;
   min-height: 60vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  padding: 2rem;
+}
+
+.loadingContainer h6 {
+  color: #115e59 !important;
+  font-weight: 600 !important;
+  margin-top: 1rem !important;
+}
+
+.loadingContainer p {
+  color: #6b7280 !important;
+  margin-top: 0.5rem !important;
 }
 
 .errorContainer {
   padding: 4rem 0;
   text-align: center;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .breadcrumbs {
