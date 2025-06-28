@@ -8,6 +8,7 @@ import CatalogPage from "./pages/Catalog/CatalogPage";
 import ProductPage from "./pages/Product/ProductPage";
 import NotFound from "./pages/NotFound/NotFound";
 import { ProductsProvider } from "./context/ProductsContext";
+import AdminPage from "./pages/Admin/AdminPage";
 import "./App.css";
 
 function App() {
@@ -32,10 +33,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/catalog" element={<CatalogPage />} />
               <Route path="/product/:productId" element={<ProductPage />} />
-              <Route
-                path="/admin"
-                element={<div>Адмін панель (буде додано)</div>}
-              />
+              <Route path="/admin" element={<AdminPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Box>
