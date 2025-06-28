@@ -169,7 +169,7 @@ const CatalogPage = () => {
               <Grid size={{ xs: 12, md: 4 }}>
                 <TextField
                   fullWidth
-                  placeholder="Пошук столів..."
+                  placeholder="Пошук товарів..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   InputProps={{
@@ -182,8 +182,10 @@ const CatalogPage = () => {
               {/* Сортування */}
               <Grid size={{ xs: 12, md: 3 }}>
                 <FormControl fullWidth>
-                  <InputLabel>Сортування</InputLabel>
+                  <InputLabel id="sort-label">Сортування</InputLabel>
                   <Select
+                    labelId="sort-label"
+                    label="Сортування"
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
                     startAdornment={<Sort className={styles.filterIcon} />}
@@ -198,8 +200,10 @@ const CatalogPage = () => {
               {/* Фільтр за ціною */}
               <Grid size={{ xs: 12, md: 3 }}>
                 <FormControl fullWidth>
-                  <InputLabel>Ціновий діапазон</InputLabel>
+                  <InputLabel id="price-label">Ціновий діапазон</InputLabel>
                   <Select
+                    labelId="price-label"
+                    label="Ціновий діапазон"
                     value={priceRange}
                     onChange={(e) => setPriceRange(e.target.value)}
                     startAdornment={

@@ -369,7 +369,8 @@ const ProductPage = () => {
                     className={`${styles.thumbnail} ${
                       selectedImage === index ? styles.selectedThumbnail : ""
                     }`}
-                    onClick={() => setSelectedImage(index)}
+                    onClick={() => openModal(index)}
+                    onMouseEnter={() => setSelectedImage(index)}
                   >
                     <CardMedia
                       component="img"
