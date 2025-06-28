@@ -77,11 +77,16 @@
   text-decoration: none !important;
   transition: color 0.3s ease !important;
   cursor: pointer;
+  font-size: 1.3em !important;
+  text-decoration-thickness: 0 !important;
+  text-underline-offset: 0 !important;
 }
 
 .productName:hover {
   color: #134e4a !important;
   text-decoration: underline !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 2px !important;
 }
 
 .productCategory {
