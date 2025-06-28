@@ -64,8 +64,8 @@ const ProductCard = ({ product }) => {
         </Typography>
         <Typography
           variant="body2"
-          color="text.secondary"
           className={styles.productCategory}
+          style={{ color: "#fff" }}
         >
           {product.Підкатегорія
             ? `${product.Категорія} / ${product.Підкатегорія}`
