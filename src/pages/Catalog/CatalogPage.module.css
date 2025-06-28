@@ -13,24 +13,33 @@
 .pageTitle {
   color: #115e59 !important;
   font-weight: 700 !important;
-  margin-bottom: 1rem !important;
+  margin-bottom: 1.5rem !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .pageSubtitle {
   color: #64748b !important;
   font-size: 1.1rem !important;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0 auto 2.5rem auto;
+  text-align: center;
 }
 
 .filtersPanel {
   background: white !important;
   border-radius: 16px !important;
-  padding: 2rem !important;
-  margin-bottom: 2rem !important;
+  padding: 2.5rem 2rem 2rem 2rem !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 2.5rem !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
   border: 1px solid rgba(17, 94, 89, 0.1) !important;
+}
+
+.filtersPanel label,
+.filtersPanel .MuiInputLabel-root {
+  font-size: 1.18rem !important;
+  font-weight: 600 !important;
 }
 
 .searchField {
@@ -136,4 +145,15 @@
   .noResults {
     padding: 2rem 1rem;
   }
+}
+
+.filtersPanel .MuiInputLabel-outlined {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  top: -0.7em;
+  left: 1.2rem;
+  right: 1.2rem;
+  background: white;
+  padding: 0 0.7em;
+  z-index: 1;
 }

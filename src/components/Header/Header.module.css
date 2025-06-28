@@ -32,3 +32,63 @@
 .header .MuiTypography-root {
   color: white !important;
 }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.logoBox {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+}
+
+.contactsBox {
+  flex: 2 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contactsText {
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: center;
+}
+.contactLink {
+  color: #ffd700 !important;
+  text-decoration: none;
+  margin: 0 0.25rem;
+}
+.contactLink:hover {
+  text-decoration: underline;
+}
+
+.navBox {
+  display: flex;
+  align-items: center;
+}
+.desktopNav {
+  display: flex;
+  gap: 1rem;
+}
+.burgerButton {
+  display: none !important;
+}
+@media (max-width: 900px) {
+  .contactsBox {
+    display: none;
+  }
+  .desktopNav {
+    display: none;
+  }
+  .burgerButton {
+    display: flex !important;
+  }
+}
+.mobileDrawer {
+  z-index: 1301;
+}

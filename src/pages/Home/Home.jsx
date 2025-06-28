@@ -1,9 +1,20 @@
-import React from "react";
-import { Box, Container, Fade, Typography, Grid, Paper } from "@mui/material";
-import { GiReceiveMoney, Gi3dHammer } from "react-icons/gi";
+import React, { useState } from "react";
+import {
+  Box,
+  Container,
+  Fade,
+  Typography,
+  Grid,
+  Paper,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
+import { GiReceiveMoney, Gi3dHammer, GiTable } from "react-icons/gi";
 import { BsWrenchAdjustable } from "react-icons/bs";
+import { Search } from "@mui/icons-material";
 import CatalogSection from "../../components/CatalogSection/CatalogSection";
 import styles from "./Home.module.css";
+import { useProducts } from "../../context/ProductsContext";
 
 const services = [
   {
@@ -20,13 +31,23 @@ const services = [
   },
   {
     title: "Перетяжка більярдних столів",
-    icon: <BsWrenchAdjustable size={48} color="#10b981" />,
+    icon: <GiTable size={48} color="#10b981" />,
     description:
       "Якісна заміна сукна та ремонт ігрової поверхні. Оновимо ваш стіл до ідеального стану!",
   },
 ];
 
 const Home = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const { products } = useProducts();
+  const filteredProducts = products.filter((product) => {
+    const name = product.Назва || product.name || "";
+    const description = product.Опис || product.description || "";
+    return (
+      name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
   return (
     <Fade in={true} timeout={800}>
       <Box className={styles.home}>
@@ -58,12 +79,10 @@ const Home = () => {
           >
             {services.map((service, idx) => (
               <Grid
-                item
-                xs={12}
-                sm={6}
-                md={4}
+                size={{ xs: 12, sm: 6, md: 4 }}
                 key={idx}
                 className={styles.serviceGridItem}
+                style={{ display: "flex", height: "100%" }}
               >
                 <Paper elevation={3} className={styles.serviceCard}>
                   <Box className={styles.serviceIcon}>{service.icon}</Box>
@@ -82,8 +101,27 @@ const Home = () => {
           </Grid>
         </Container>
 
+        {/* Search Section */}
+        <Container maxWidth="lg" sx={{ mb: 4 }}>
+          <TextField
+            fullWidth
+            placeholder="Пошук товарів..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search />
+                </InputAdornment>
+              ),
+            }}
+            className={styles.searchField}
+            sx={{ my: 4 }}
+          />
+        </Container>
+
         {/* Catalog Section */}
-        <CatalogSection />
+        <CatalogSection products={searchTerm ? filteredProducts : undefined} />
       </Box>
     </Fade>
   );
