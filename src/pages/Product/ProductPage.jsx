@@ -540,6 +540,7 @@ const ProductPage = () => {
                       product.Категорія || product.category || "Більярдні столи"
                     }
                     className={styles.categoryChip}
+                    sx={{ color: "#fff" }}
                   />
                   <Typography
                     variant="h4"

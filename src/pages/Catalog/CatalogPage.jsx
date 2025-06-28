@@ -14,17 +14,27 @@ import {
   Skeleton,
   Fade,
   CircularProgress,
+  Slider,
 } from "@mui/material";
 import { Search, FilterList, Sort } from "@mui/icons-material";
 import CatalogSection from "../../components/CatalogSection/CatalogSection";
 import { useProducts } from "../../context/ProductsContext";
 import styles from "./CatalogPage.module.css";
 
+// Додаю функцію для форматування ціни у форматі 10к
+function formatK(value) {
+  if (value >= 10000) {
+    if (value === 50000) return "50к+";
+    return value / 1000 + "к";
+  }
+  return value;
+}
+
 const CatalogPage = () => {
   const { products, loading } = useProducts();
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("name");
-  const [priceRange, setPriceRange] = useState("all");
+  const [priceRange, setPriceRange] = useState([0, 50000]);
 
   // Фільтруємо та сортуємо продукти
   const filteredProducts = products
@@ -38,12 +48,11 @@ const CatalogPage = () => {
 
       const productPrice = product.Ціна || product.price || 0;
       let matchesPrice = true;
-      if (priceRange === "low") {
-        matchesPrice = productPrice <= 5000;
-      } else if (priceRange === "medium") {
-        matchesPrice = productPrice > 5000 && productPrice <= 15000;
-      } else if (priceRange === "high") {
-        matchesPrice = productPrice > 15000;
+      if (priceRange[0] > 0) {
+        matchesPrice = matchesPrice && productPrice >= priceRange[0];
+      }
+      if (priceRange[1] < 50000) {
+        matchesPrice = matchesPrice && productPrice <= priceRange[1];
       }
 
       return matchesSearch && matchesPrice;
@@ -157,9 +166,6 @@ const CatalogPage = () => {
             >
               Каталог більярдних столів
             </Typography>
-            <Typography variant="body1" className={styles.pageSubtitle}>
-              Знайдіть ідеальний стіл для вашого більярдного клубу або дому
-            </Typography>
           </Box>
 
           {/* Панель фільтрів та пошуку */}
@@ -199,23 +205,36 @@ const CatalogPage = () => {
 
               {/* Фільтр за ціною */}
               <Grid size={{ xs: 12, md: 3 }}>
-                <FormControl fullWidth>
-                  <InputLabel id="price-label">Ціновий діапазон</InputLabel>
-                  <Select
-                    labelId="price-label"
-                    label="Ціновий діапазон"
+                <Box sx={{ px: 2 }}>
+                  <Typography id="price-range-slider-label" gutterBottom>
+                    Ціновий діапазон (грн)
+                  </Typography>
+                  <Slider
                     value={priceRange}
-                    onChange={(e) => setPriceRange(e.target.value)}
-                    startAdornment={
-                      <FilterList className={styles.filterIcon} />
-                    }
-                  >
-                    <MenuItem value="all">Всі ціни</MenuItem>
-                    <MenuItem value="low">До 5,000 грн</MenuItem>
-                    <MenuItem value="medium">5,000 - 15,000 грн</MenuItem>
-                    <MenuItem value="high">Понад 15,000 грн</MenuItem>
-                  </Select>
-                </FormControl>
+                    min={0}
+                    max={50000}
+                    step={1000}
+                    onChange={(_, val) => setPriceRange(val)}
+                    valueLabelDisplay="auto"
+                    getAriaLabel={() => "Price range"}
+                    getAriaValueText={(v) => `${formatK(v)} грн`}
+                    marks={[
+                      { value: 0, label: "0" },
+                      { value: 10000, label: "10к" },
+                      { value: 20000, label: "20к" },
+                      { value: 30000, label: "30к" },
+                      { value: 40000, label: "40к" },
+                      { value: 50000, label: "50к+" },
+                    ]}
+                    sx={{ mt: 3 }}
+                    aria-labelledby="price-range-slider-label"
+                  />
+                  <Typography variant="body2" sx={{ mt: 1, color: "#115e59" }}>
+                    {formatK(priceRange[0])} —{" "}
+                    {priceRange[1] === 50000 ? "50к+" : formatK(priceRange[1])}{" "}
+                    грн
+                  </Typography>
+                </Box>
               </Grid>
 
               {/* Статистика */}
@@ -233,7 +252,7 @@ const CatalogPage = () => {
           </Paper>
 
           {/* Активні фільтри */}
-          {(searchTerm || priceRange !== "all") && (
+          {(searchTerm || priceRange[0] > 0 || priceRange[1] < 50000) && (
             <Box className={styles.activeFilters}>
               <Typography variant="body2" component="span">
                 Активні фільтри:{" "}
@@ -243,19 +262,19 @@ const CatalogPage = () => {
                   label={`Пошук: "${searchTerm}"`}
                   onDelete={() => setSearchTerm("")}
                   className={styles.filterChip}
+                  sx={{ color: "#fff" }}
                 />
               )}
-              {priceRange !== "all" && (
+              {(priceRange[0] > 0 || priceRange[1] < 50000) && (
                 <Chip
-                  label={`Ціна: ${
-                    priceRange === "low"
-                      ? "До 5,000 грн"
-                      : priceRange === "medium"
-                      ? "5,000 - 15,000 грн"
-                      : "Понад 15,000 грн"
-                  }`}
-                  onDelete={() => setPriceRange("all")}
+                  label={`Ціна: від ${formatK(priceRange[0])}${
+                    priceRange[1] < 50000
+                      ? ` до ${formatK(priceRange[1])}`
+                      : "+"
+                  } грн`}
+                  onDelete={() => setPriceRange([0, 50000])}
                   className={styles.filterChip}
+                  sx={{ color: "#fff" }}
                 />
               )}
             </Box>

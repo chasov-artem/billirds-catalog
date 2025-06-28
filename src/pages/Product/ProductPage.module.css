@@ -15,14 +15,14 @@
 }
 
 .loadingContainer h6 {
-  color: #115e59 !important;
-  font-weight: 600 !important;
-  margin-top: 1rem !important;
+  color: #115e59;
+  font-weight: 600;
+  margin-top: 1rem;
 }
 
 .loadingContainer p {
-  color: #6b7280 !important;
-  margin-top: 0.5rem !important;
+  color: #6b7280;
+  margin-top: 0.5rem;
 }
 
 .errorContainer {
@@ -44,31 +44,31 @@
 }
 
 .breadcrumbLink {
-  color: #115e59 !important;
+  color: #115e59;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .breadcrumbLink:hover {
-  color: #134e4a !important;
+  color: #134e4a;
   text-decoration: underline;
 }
 
 .imageSection {
-  background: white !important;
-  border-radius: 16px !important;
-  padding: 1rem !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-  border: 1px solid rgba(17, 94, 89, 0.1) !important;
+  background: white;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(17, 94, 89, 0.1);
 }
 
 .mainImage {
-  width: 100% !important;
-  height: 400px !important;
-  object-fit: contain !important;
-  background: #fff !important;
-  border-radius: 12px !important;
-  margin-bottom: 1rem !important;
+  width: 100%;
+  height: 400px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 12px;
+  margin-bottom: 1rem;
   cursor: pointer;
 }
 
@@ -79,38 +79,38 @@
 }
 
 .thumbnail {
-  width: 80px !important;
-  height: 80px !important;
-  cursor: pointer !important;
-  border: 2px solid transparent !important;
-  border-radius: 8px !important;
-  transition: all 0.3s ease !important;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
 .thumbnail:hover {
-  border-color: #115e59 !important;
-  transform: scale(1.05) !important;
+  border-color: #115e59;
+  transform: scale(1.05);
 }
 
 .selectedThumbnail {
-  border-color: #115e59 !important;
-  box-shadow: 0 2px 8px rgba(17, 94, 89, 0.3) !important;
+  border-color: #115e59;
+  box-shadow: 0 2px 8px rgba(17, 94, 89, 0.3);
 }
 
 .thumbnailImage {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  border-radius: 6px !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
 .infoSection {
-  background: white !important;
-  border-radius: 16px !important;
-  padding: 2rem !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-  border: 1px solid rgba(17, 94, 89, 0.1) !important;
-  height: fit-content !important;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(17, 94, 89, 0.1);
+  height: fit-content;
 }
 
 .productHeader {
@@ -118,16 +118,16 @@
 }
 
 .categoryChip {
-  background: linear-gradient(135deg, #115e59 0%, #134e4a 100%) !important;
-  color: white !important;
-  margin-bottom: 1rem !important;
+  background: linear-gradient(135deg, #115e59 0%, #134e4a 100%);
+  color: #fff;
+  margin-bottom: 1rem;
 }
 
 .productTitle {
-  color: #115e59 !important;
-  font-weight: 700 !important;
-  margin-bottom: 0.5rem !important;
-  line-height: 1.2 !important;
+  color: #115e59;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
 
 .priceSection {
@@ -139,9 +139,9 @@
 }
 
 .price {
-  color: #115e59 !important;
-  font-weight: 700 !important;
-  margin-bottom: 0.5rem !important;
+  color: #115e59;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
 .orderSection {
@@ -149,43 +149,43 @@
 }
 
 .telegramButton {
-  background: linear-gradient(135deg, #0088cc 0%, #0077b3 100%) !important;
-  color: white !important;
-  font-weight: 600 !important;
-  transition: all 0.3s ease !important;
+  background: linear-gradient(135deg, #0088cc 0%, #0077b3 100%);
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .telegramButton:hover {
-  background: linear-gradient(135deg, #0077b3 0%, #006699 100%) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3) !important;
+  background: linear-gradient(135deg, #0077b3 0%, #006699 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
 }
 
 .whatsappButton {
-  background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%) !important;
-  color: white !important;
-  font-weight: 600 !important;
-  transition: all 0.3s ease !important;
+  background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%);
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .whatsappButton:hover {
-  background: linear-gradient(135deg, #20ba5a 0%, #1a9f4a 100%) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3) !important;
+  background: linear-gradient(135deg, #20ba5a 0%, #1a9f4a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
 }
 
 .phoneButton {
-  border-color: #115e59 !important;
-  color: #115e59 !important;
-  font-weight: 600 !important;
-  transition: all 0.3s ease !important;
+  border-color: #115e59;
+  color: #115e59;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .phoneButton:hover {
-  background: #115e59 !important;
-  color: white !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.3) !important;
+  background: #115e59;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.3);
 }
 
 .descriptionSection {
@@ -193,8 +193,8 @@
 }
 
 .description {
-  line-height: 1.6 !important;
-  color: #374151 !important;
+  line-height: 1.6;
+  color: #374151;
 }
 
 .specsSection {
@@ -202,20 +202,20 @@
 }
 
 .specItem {
-  padding: 0.25rem 0 !important;
+  padding: 0.25rem 0;
 }
 
 .checkIcon {
-  color: #10b981 !important;
-  font-size: 1.2rem !important;
+  color: #10b981;
+  font-size: 1.2rem;
 }
 
 .additionalInfo {
-  background: white !important;
-  border-radius: 16px !important;
-  padding: 2rem !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-  border: 1px solid rgba(17, 94, 89, 0.1) !important;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(17, 94, 89, 0.1);
 }
 
 .featuresSection {
@@ -233,21 +233,21 @@
 }
 
 .featureIcon {
-  color: #10b981 !important;
-  font-size: 1.2rem !important;
+  color: #10b981;
+  font-size: 1.2rem;
 }
 
 .contactInfo {
-  background: white !important;
-  border-radius: 16px !important;
-  padding: 2rem !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-  border: 1px solid rgba(17, 94, 89, 0.1) !important;
-  height: fit-content !important;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(17, 94, 89, 0.1);
+  height: fit-content;
 }
 
 .contactIcon {
-  color: #115e59 !important;
+  color: #115e59;
 }
 
 .workingHours {
@@ -264,18 +264,18 @@
 }
 
 .backButton {
-  border-color: #115e59 !important;
-  color: #115e59 !important;
-  font-weight: 600 !important;
-  padding: 0.75rem 2rem !important;
-  transition: all 0.3s ease !important;
+  border-color: #115e59;
+  color: #115e59;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  transition: all 0.3s ease;
 }
 
 .backButton:hover {
-  background: #115e59 !important;
-  color: white !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.3) !important;
+  background: #115e59;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.3);
 }
 
 /* Адаптивність для мобільних пристроїв */
@@ -285,29 +285,29 @@
   }
 
   .infoSection {
-    padding: 1.5rem !important;
+    padding: 1.5rem;
   }
 
   .mainImage {
-    height: 300px !important;
+    height: 300px;
   }
 
   .productTitle {
-    font-size: 1.75rem !important;
+    font-size: 1.75rem;
   }
 
   .price {
-    font-size: 2rem !important;
+    font-size: 2rem;
   }
 
   .additionalInfo,
   .contactInfo {
-    padding: 1.5rem !important;
+    padding: 1.5rem;
   }
 
   .thumbnail {
-    width: 60px !important;
-    height: 60px !important;
+    width: 60px;
+    height: 60px;
   }
 }
 

@@ -11,35 +11,35 @@
 }
 
 .pageTitle {
-  color: #115e59 !important;
-  font-weight: 700 !important;
-  margin-bottom: 1.5rem !important;
+  color: #115e59;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 .pageSubtitle {
-  color: #64748b !important;
-  font-size: 1.1rem !important;
+  color: #64748b;
+  font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto 2.5rem auto;
   text-align: center;
 }
 
 .filtersPanel {
-  background: white !important;
-  border-radius: 16px !important;
-  padding: 2.5rem 2rem 2rem 2rem !important;
-  margin-top: 1.5rem !important;
-  margin-bottom: 2.5rem !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-  border: 1px solid rgba(17, 94, 89, 0.1) !important;
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(17, 94, 89, 0.1);
 }
 
 .filtersPanel label,
 .filtersPanel .MuiInputLabel-root {
-  font-size: 1.18rem !important;
-  font-weight: 600 !important;
+  font-size: 1.18rem;
+  font-weight: 600;
 }
 
 .searchField {
@@ -62,11 +62,11 @@
 }
 
 .searchIcon {
-  color: #64748b !important;
+  color: #64748b;
 }
 
 .filterIcon {
-  color: #64748b !important;
+  color: #64748b;
 }
 
 .stats {
@@ -87,13 +87,13 @@
 }
 
 .filterChip {
-  margin: 0.25rem !important;
-  background: linear-gradient(135deg, #115e59 0%, #134e4a 100%) !important;
-  color: white !important;
+  margin: 0.25rem;
+  background: linear-gradient(135deg, #115e59 0%, #134e4a 100%);
+  color: #fff;
 }
 
 .filterChip .MuiChip-deleteIcon {
-  color: white !important;
+  color: white;
 }
 
 .catalogContent {
@@ -114,8 +114,8 @@
 }
 
 .noResults h6 {
-  color: #115e59 !important;
-  margin-bottom: 1rem !important;
+  color: #115e59;
+  margin-bottom: 1rem;
 }
 
 /* Адаптивність для мобільних пристроїв */
@@ -130,12 +130,12 @@
   }
 
   .pageTitle {
-    font-size: 2rem !important;
+    font-size: 2rem;
   }
 
   .filtersPanel {
-    padding: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .catalogContent {
@@ -148,12 +148,12 @@
 }
 
 .filtersPanel .MuiInputLabel-outlined {
-  font-size: 1rem !important;
-  font-weight: 600 !important;
+  font-size: 1rem;
+  font-weight: 600;
   top: -0.7em;
   left: 1.2rem;
   right: 1.2rem;
   background: white;
-  padding: 0 0.7em;
+  padding: 0 0.75em;
   z-index: 1;
 }
