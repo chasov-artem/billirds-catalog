@@ -6,9 +6,14 @@ service cloud.firestore {
       allow read: if true;
     }
     
-    // Дозволяємо записувати в колекцію products
+    // Дозволяємо записувати в колекцію products тільки аутентифікованим адміністраторам
     match /products/{productId} {
-      allow write: if true;
+      allow write: if request.auth != null && request.auth.token.email == "chasov90@gmail.com";
+    }
+    
+    // Дозволяємо записувати в колекцію categories тільки аутентифікованим адміністраторам
+    match /categories/{categoryId} {
+      allow write: if request.auth != null && request.auth.token.email == "chasov90@gmail.com";
     }
   }
 } 
