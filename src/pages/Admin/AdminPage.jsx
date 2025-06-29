@@ -16,6 +16,8 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import app from "../../firebase/config";
+import AdminProductsTable from "./AdminProductsTable";
+import AdminCategories from "./AdminCategories";
 
 const ADMIN_EMAIL = "chasov90@gmail.com";
 
@@ -120,7 +122,7 @@ export default function AdminPage() {
       alignItems="center"
       justifyContent="center"
     >
-      <Paper sx={{ p: 4, textAlign: "center", maxWidth: 600, width: "100%" }}>
+      <Paper sx={{ p: 4, textAlign: "center", maxWidth: 900, width: "100%" }}>
         <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
           <Avatar
             src={user.photoURL}
@@ -134,12 +136,16 @@ export default function AdminPage() {
             </Typography>
           </Box>
         </Box>
-        <Typography variant="h5" mb={2} color="primary">
-          Адмін-панель (далі буде CRUD)
-        </Typography>
-        <Button variant="outlined" onClick={handleSignOut}>
+        <Button variant="outlined" onClick={handleSignOut} sx={{ mb: 3 }}>
           Вийти
         </Button>
+        <AdminProductsTable />
+        <Box mt={5}>
+          <Typography variant="h6" mb={2}>
+            Керування категоріями
+          </Typography>
+          <AdminCategories />
+        </Box>
       </Paper>
     </Box>
   );
