@@ -32,6 +32,7 @@ export default function ProductFormDialog({
     Характеристики: "",
     Фото: [],
     Додатково: {},
+    Модель: "",
   });
   const [images, setImages] = useState([]);
   const fileInputRef = useRef();
@@ -49,6 +50,7 @@ export default function ProductFormDialog({
         Характеристики: initialData.Характеристики || "",
         Фото: initialData.Фото || [],
         Додатково: initialData.Додатково || {},
+        Модель: initialData.Модель || "",
       });
       setExistingImages(initialData.Фото || []);
       setImages([]);
@@ -62,6 +64,7 @@ export default function ProductFormDialog({
         Характеристики: "",
         Фото: [],
         Додатково: {},
+        Модель: "",
       });
       setExistingImages([]);
       setImages([]);
@@ -160,6 +163,14 @@ export default function ProductFormDialog({
                 label="Підкатегорія"
                 name="Підкатегорія"
                 value={form.Підкатегорія}
+                onChange={handleChange}
+                fullWidth
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                label="Модель"
+                name="Модель"
+                value={form.Модель}
                 onChange={handleChange}
                 fullWidth
                 sx={{ mb: 2 }}
