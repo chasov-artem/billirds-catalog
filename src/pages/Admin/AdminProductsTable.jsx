@@ -33,10 +33,13 @@ import {
   doc,
   addDoc,
   updateDoc,
+  writeBatch,
 } from "firebase/firestore";
 import { db, storage } from "../../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import ProductFormDialog from "./ProductFormDialog";
+import ProductImportDialog from "./ProductImportDialog";
+import Checkbox from "@mui/material/Checkbox";
 
 export default function AdminProductsTable() {
   const [products, setProducts] = useState([]);
@@ -52,6 +55,8 @@ export default function AdminProductsTable() {
   const [formOpen, setFormOpen] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
+  const [importOpen, setImportOpen] = useState(false);
+  const [selected, setSelected] = useState([]);
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -151,6 +156,48 @@ export default function AdminProductsTable() {
     }
   };
 
+  const isSelected = (id) => selected.includes(id);
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelected(filtered.map((p) => p.id));
+    } else {
+      setSelected([]);
+    }
+  };
+  const handleSelect = (id) => {
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
+  const handleDeleteSelected = async () => {
+    if (!selected.length) return;
+    if (!window.confirm(`Видалити ${selected.length} товар(ів)?`)) return;
+    setDeleting(true);
+    try {
+      const batch = writeBatch(db);
+      selected.forEach((id) => {
+        batch.delete(doc(db, "products", id));
+      });
+      await batch.commit();
+      setSnackbar({
+        open: true,
+        message: `Видалено ${selected.length} товар(ів)`,
+        severity: "success",
+      });
+      setSelected([]);
+      fetchProducts();
+    } catch (e) {
+      setSnackbar({
+        open: true,
+        message: "Помилка видалення: " + e.message,
+        severity: "error",
+      });
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   return (
     <Box>
       <Box
@@ -162,15 +209,36 @@ export default function AdminProductsTable() {
         <Typography variant="h5" color="primary">
           Товари
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<Add />}
-          sx={{ bgcolor: "#115e59", ":hover": { bgcolor: "#134e4a" } }}
-          onClick={() => setFormOpen(true)}
-        >
-          Додати товар
-        </Button>
+        <Box display="flex" gap={2}>
+          <Button
+            variant="contained"
+            startIcon={<Add />}
+            sx={{ bgcolor: "#115e59", ":hover": { bgcolor: "#134e4a" } }}
+            onClick={() => setFormOpen(true)}
+          >
+            Додати товар
+          </Button>
+          <Button variant="outlined" onClick={() => setImportOpen(true)}>
+            Імпорт товарів
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            disabled={!selected.length || deleting}
+            onClick={handleDeleteSelected}
+          >
+            Видалити вибрані
+          </Button>
+        </Box>
       </Box>
+      <ProductImportDialog
+        open={importOpen}
+        onClose={() => setImportOpen(false)}
+        onImport={() => {
+          setImportOpen(false);
+          fetchProducts();
+        }}
+      />
       <TextField
         label="Пошук по назві або категорії"
         value={search}
@@ -182,6 +250,18 @@ export default function AdminProductsTable() {
         <Table>
           <TableHead>
             <TableRow sx={{ bgcolor: "#f0f9ff" }}>
+              <TableCell padding="checkbox">
+                <Checkbox
+                  indeterminate={
+                    selected.length > 0 && selected.length < filtered.length
+                  }
+                  checked={
+                    filtered.length > 0 && selected.length === filtered.length
+                  }
+                  onChange={handleSelectAll}
+                  inputProps={{ "aria-label": "select all products" }}
+                />
+              </TableCell>
               <TableCell>Фото</TableCell>
               <TableCell>Назва</TableCell>
               <TableCell>Категорія</TableCell>
@@ -192,41 +272,55 @@ export default function AdminProductsTable() {
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={5} align="center">
+                <TableCell colSpan={6} align="center">
                   <CircularProgress size={32} />
                 </TableCell>
               </TableRow>
             ) : filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} align="center">
+                <TableCell colSpan={6} align="center">
                   <Typography color="text.secondary">Немає товарів</Typography>
                 </TableCell>
               </TableRow>
             ) : (
-              filtered.map((p) => (
-                <TableRow key={p.id} hover>
+              filtered.map((row) => (
+                <TableRow key={row.id} selected={isSelected(row.id)}>
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      checked={isSelected(row.id)}
+                      onChange={() => handleSelect(row.id)}
+                      inputProps={{ "aria-label": `select product ${row.id}` }}
+                    />
+                  </TableCell>
                   <TableCell>
                     <Avatar
                       src={
-                        Array.isArray(p.Фото)
-                          ? p.Фото[0]
-                          : p.Фото || p.imageUrl || "/default-product-image.png"
+                        Array.isArray(row.Фото)
+                          ? row.Фото[0]
+                          : row.Фото ||
+                            row.imageUrl ||
+                            "/default-product-image.png"
                       }
-                      alt={p.Назва || p.name}
+                      alt={row.Назва || row.name}
                       variant="rounded"
                       sx={{ width: 56, height: 40, bgcolor: "#e0f2fe" }}
                     />
                   </TableCell>
-                  <TableCell>{p.Назва || p.name}</TableCell>
-                  <TableCell>{p.Категорія || p.category}</TableCell>
+                  <TableCell>{row.Назва || row.name}</TableCell>
+                  <TableCell>{row.Категорія || row.category}</TableCell>
                   <TableCell>
-                    {p.Ціна || p.price ? `${p.Ціна || p.price} грн` : "-"}
+                    {row.Ціна || row.price
+                      ? `${row.Ціна || row.price} грн`
+                      : "-"}
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Редагувати">
                       <IconButton
                         color="primary"
-                        onClick={() => setEditProduct(p)}
+                        onClick={() => {
+                          setEditProduct(row);
+                          setFormOpen(true);
+                        }}
                       >
                         <Edit />
                       </IconButton>
@@ -234,7 +328,7 @@ export default function AdminProductsTable() {
                     <Tooltip title="Видалити">
                       <IconButton
                         color="error"
-                        onClick={() => setDeleteId(p.id)}
+                        onClick={() => setDeleteId(row.id)}
                       >
                         <Delete />
                       </IconButton>
