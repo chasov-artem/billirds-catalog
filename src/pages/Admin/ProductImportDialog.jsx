@@ -68,6 +68,8 @@ export default function ProductImportDialog({ open, onClose, onImport }) {
         await addDoc(collection(db, "products"), {
           Назва: row["Назва"] || row["name"] || "",
           Категорія: row["Категорія"] || row["category"] || "",
+          Підкатегорія: row["Підкатегорія"] || row["subcategory"] || "",
+          Модель: row["Модель"] || row["model"] || "",
           Ціна: Number(row["Ціна"] || row["price"] || 0),
           Опис: row["Опис"] || row["description"] || "",
           Фото: row["Фото"] ? [row["Фото"]] : [],
