@@ -11,7 +11,6 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ["react", "react-dom"],
-          firebase: ["firebase"],
           mui: ["@mui/material", "@mui/icons-material"],
         },
       },
@@ -20,5 +19,13 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true,
+  },
+  optimizeDeps: {
+    include: [
+      "firebase/app",
+      "firebase/auth",
+      "firebase/firestore",
+      "firebase/storage",
+    ],
   },
 });
