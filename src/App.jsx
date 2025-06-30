@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// Альтернатива якщо BrowserRouter не працює на Vercel:
+// import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { Box, CssBaseline } from "@mui/material";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
