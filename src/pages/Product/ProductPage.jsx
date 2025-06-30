@@ -36,7 +36,6 @@ import {
   StarBorder,
   ArrowBackIos,
   ArrowForwardIos,
-  Close,
 } from "@mui/icons-material";
 import { useProducts } from "../../context/ProductsContext";
 import styles from "./ProductPage.module.css";
@@ -389,9 +388,6 @@ const ProductPage = () => {
           {/* Модалка для фото */}
           <Modal open={modalOpen} onClose={closeModal}>
             <Box className={styles.modalBox}>
-              <IconButton className={styles.modalClose} onClick={closeModal}>
-                <Close />
-              </IconButton>
               <IconButton className={styles.modalArrowLeft} onClick={prevImage}>
                 <ArrowBackIos />
               </IconButton>
