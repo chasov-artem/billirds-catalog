@@ -354,13 +354,6 @@
 .modalArrowRight {
   right: 16px;
 }
-.modalClose {
-  position: absolute;
-  top: -370px;
-  right: -1350px;
-  background: rgba(255, 255, 255, 0.7);
-  z-index: 10001;
-}
 
 .modalContent {
   position: relative;
@@ -372,8 +365,5 @@
 }
 
 @media (max-width: 600px) {
-  .modalClose {
-    top: 8px;
-    right: 8px;
-  }
+  /* Медіа-запити для мобільних пристроїв можна додати тут */
 }
