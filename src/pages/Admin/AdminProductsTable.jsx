@@ -361,21 +361,10 @@ export default function AdminProductsTable() {
   const isAll10Selected = paginatedProducts
     .slice(0, 10)
     .every((p) => selected.includes(p.id));
-  const isAllPageSelected = paginatedProducts.every((p) =>
-    selected.includes(p.id)
-  );
 
   const handleToggle10 = () => {
     const ids = paginatedProducts.slice(0, 10).map((p) => p.id);
     if (isAll10Selected) {
-      setSelected(selected.filter((id) => !ids.includes(id)));
-    } else {
-      setSelected([...new Set([...selected, ...ids])]);
-    }
-  };
-  const handleToggleAllPage = () => {
-    const ids = paginatedProducts.map((p) => p.id);
-    if (isAllPageSelected) {
       setSelected(selected.filter((id) => !ids.includes(id)));
     } else {
       setSelected([...new Set([...selected, ...ids])]);
@@ -426,15 +415,6 @@ export default function AdminProductsTable() {
               <Checkbox checked={isAll10Selected} onChange={handleToggle10} />
             }
             label="Виділити 10"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isAllPageSelected}
-                onChange={handleToggleAllPage}
-              />
-            }
-            label="Виділити всі на сторінці"
           />
         </Box>
       </Box>

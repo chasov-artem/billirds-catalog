@@ -430,6 +430,74 @@ const ProductPage = () => {
                   </Typography>
                 )}
 
+                {/* Додаткові поля - тільки ті, що додані вручну в адмінці */}
+                {(() => {
+                  const additionalFields = Object.entries(product).filter(
+                    ([key, value]) => {
+                      // Виключаємо всі стандартні поля
+                      const excludedFields = [
+                        "id",
+                        "Назва",
+                        "name",
+                        "Ціна",
+                        "price",
+                        "Опис",
+                        "description",
+                        "детальнийОпис",
+                        "Характеристики",
+                        "characteristics",
+                        "характеристики",
+                        "фото",
+                        "photo",
+                        "photos",
+                        "Категорія",
+                        "category",
+                        "Підкатегорія",
+                        "subcategory",
+                        "Модель",
+                        "model",
+                        "Розмір",
+                        "size",
+                        "createdAt",
+                        "updatedAt",
+                      ];
+                      // Додаємо перевірку на простий тип
+                      const isSimple =
+                        typeof value === "string" || typeof value === "number";
+                      return (
+                        !excludedFields.includes(key) &&
+                        isSimple &&
+                        value &&
+                        value.toString().trim() !== ""
+                      );
+                    }
+                  );
+
+                  if (additionalFields.length > 0) {
+                    return (
+                      <Box sx={{ mb: 2 }}>
+                        <Typography variant="h6" gutterBottom>
+                          Додаткова інформація:
+                        </Typography>
+                        <List dense>
+                          {additionalFields.map(([key, value]) => (
+                            <ListItem key={key} className={styles.specItem}>
+                              <ListItemIcon>
+                                <CheckCircle className={styles.checkIcon} />
+                              </ListItemIcon>
+                              <ListItemText
+                                primary={`${key}: ${value}`}
+                                primaryTypographyProps={{ variant: "body2" }}
+                              />
+                            </ListItem>
+                          ))}
+                        </List>
+                      </Box>
+                    );
+                  }
+                  return null;
+                })()}
+
                 {/* Переваги */}
                 <Box className={styles.featuresSection}>
                   <Typography variant="h6" gutterBottom>
@@ -616,18 +684,6 @@ const ProductPage = () => {
                 </Box>
 
                 <Divider sx={{ my: 2 }} />
-
-                {/* Розмір */}
-                {(product.Розмір || product.size) && (
-                  <Box className={styles.descriptionSection}>
-                    <Typography variant="h6" gutterBottom>
-                      Розмір:
-                    </Typography>
-                    <Typography variant="body1" className={styles.description}>
-                      {product.Розмір || product.size}
-                    </Typography>
-                  </Box>
-                )}
 
                 {/* Характеристики */}
                 {(product.Характеристики ||
