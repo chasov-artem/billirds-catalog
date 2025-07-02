@@ -41,7 +41,32 @@ const CategorySidebar = ({
       }
       return acc;
     }, {});
-    setCategories(grouped);
+
+    // Визначаємо порядок категорій
+    const categoryOrder = [
+      "Більярдні столи",
+      "Тенісні столи",
+      "Більярдні киї",
+      "Більярдні кулі",
+      "Сукно",
+    ];
+
+    // Сортуємо категорії за заданим порядком
+    const sortedCategories = {};
+    categoryOrder.forEach((category) => {
+      if (grouped[category]) {
+        sortedCategories[category] = grouped[category];
+      }
+    });
+
+    // Додаємо інші категорії, які не в списку
+    Object.keys(grouped).forEach((category) => {
+      if (!categoryOrder.includes(category)) {
+        sortedCategories[category] = grouped[category];
+      }
+    });
+
+    setCategories(sortedCategories);
   }, [products]);
 
   const handleToggle = (category) => {
