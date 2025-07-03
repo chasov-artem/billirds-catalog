@@ -14,10 +14,12 @@ import styles from "./AdminPage.module.css";
 import { Google } from "@mui/icons-material";
 import {
   getAuth,
+  signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
+  getRedirectResult,
 } from "firebase/auth";
 import app from "../../firebase/config";
 import AdminProductsTable from "./AdminProductsTable";
@@ -40,15 +42,40 @@ export default function AdminPage() {
       setUser(u);
       setLoading(false);
     });
+
+    // Перевіряємо результат redirect авторизації
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result) {
+          // Успішна авторизація
+          setUser(result.user);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Помилка redirect авторизації:", error);
+        setError("Помилка авторизації: " + error.message);
+        setLoading(false);
+      });
+
     return () => unsubscribe();
   }, []);
 
   const handleSignIn = async () => {
     setError("");
+    setLoading(true);
     try {
-      await signInWithPopup(auth, provider);
+      // Спочатку пробуємо redirect (краще для мобільних)
+      await signInWithRedirect(auth, provider);
     } catch (e) {
-      setError("Помилка входу: " + e.message);
+      console.log("Redirect не працює, пробуємо popup:", e.message);
+      try {
+        // Якщо redirect не працює, пробуємо popup
+        await signInWithPopup(auth, provider);
+      } catch (popupError) {
+        setError("Помилка авторизації: " + popupError.message);
+        setLoading(false);
+      }
     }
   };
 
@@ -103,10 +130,27 @@ export default function AdminPage() {
           >
             Вхід для адміністратора
           </Typography>
+          {isMobile && (
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              mb={2}
+              sx={{ fontSize: "0.9rem" }}
+            >
+              На мобільних пристроях авторизація може зайняти кілька секунд
+            </Typography>
+          )}
           <Button
             variant="contained"
-            startIcon={<Google />}
+            startIcon={
+              loading ? (
+                <CircularProgress size={20} color="inherit" />
+              ) : (
+                <Google />
+              )
+            }
             onClick={handleSignIn}
+            disabled={loading}
             sx={{
               bgcolor: "#115e59",
               ":hover": { bgcolor: "#134e4a" },
@@ -117,7 +161,7 @@ export default function AdminPage() {
             }}
             fullWidth={isMobile}
           >
-            Увійти через Google
+            {loading ? "Завантаження..." : "Увійти через Google"}
           </Button>
           {error && (
             <Typography
