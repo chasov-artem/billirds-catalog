@@ -32,11 +32,11 @@ const Footer = () => {
                 067 541 73 08
               </Link>
               <Link
-                href="mailto:info@billiardservice.com"
+                href="mailto:biillija777@gmail.com"
                 className={styles.contactLink}
               >
                 <Email sx={{ mr: 1 }} />
-                info@billiardservice.com
+                biillija777@gmail.com
               </Link>
               <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
                 Дніпро, вул Антоновича 79

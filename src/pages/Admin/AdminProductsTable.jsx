@@ -27,8 +27,16 @@ import {
   FormControl,
   InputLabel,
   FormControlLabel,
+  Card,
+  CardContent,
+  CardActions,
+  Grid,
+  Chip,
+  useTheme,
+  useMediaQuery,
+  Divider,
 } from "@mui/material";
-import { Edit, Delete, Add } from "@mui/icons-material";
+import { Edit, Delete, Add, Visibility } from "@mui/icons-material";
 import {
   collection,
   getDocs,
@@ -80,6 +88,9 @@ export default function AdminProductsTable() {
   const [newDescription, setNewDescription] = useState("");
   const [existingPhotos, setExistingPhotos] = useState([]);
   const [initialPhotos, setInitialPhotos] = useState([]);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -199,15 +210,15 @@ export default function AdminProductsTable() {
       );
     }
   };
+
   const handleSelect = (id) => {
     setSelected((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     );
   };
 
   const handleDeleteSelected = async () => {
     if (!selected.length) return;
-    if (!window.confirm(`Видалити ${selected.length} товар(ів)?`)) return;
     setDeleting(true);
     try {
       const batch = writeBatch(db);
@@ -217,7 +228,7 @@ export default function AdminProductsTable() {
       await batch.commit();
       setSnackbar({
         open: true,
-        message: `Видалено ${selected.length} товар(ів)`,
+        message: `Видалено ${selected.length} товарів`,
         severity: "success",
       });
       setSelected([]);
@@ -225,7 +236,7 @@ export default function AdminProductsTable() {
     } catch (e) {
       setSnackbar({
         open: true,
-        message: "Помилка видалення: " + e.message,
+        message: "Помилка: " + e.message,
         severity: "error",
       });
     } finally {
@@ -234,20 +245,14 @@ export default function AdminProductsTable() {
   };
 
   const handleOpenEditCategory = async () => {
-    if (selected.length > 0) {
-      const selectedProducts = products.filter((p) => selected.includes(p.id));
-      const allPhotos = selectedProducts.map((p) => p.Фото || []);
-      const first = JSON.stringify(allPhotos[0] || []);
-      const same = allPhotos.every(
-        (arr) => JSON.stringify(arr || []) === first
-      );
-      const photos = same ? allPhotos[0] : [];
-      setExistingPhotos(photos);
-      setInitialPhotos(photos);
-    } else {
-      setExistingPhotos([]);
-      setInitialPhotos([]);
-    }
+    if (!selected.length) return;
+    const firstProduct = products.find((p) => p.id === selected[0]);
+    setNewCategory(firstProduct?.Категорія || "");
+    setNewSubcategory(firstProduct?.Підкатегорія || "");
+    setNewModel(firstProduct?.Модель || "");
+    setNewDescription(firstProduct?.Опис || "");
+    setExistingPhotos(firstProduct?.Фото || []);
+    setInitialPhotos(firstProduct?.Фото || []);
     setEditCategoryOpen(true);
   };
 
@@ -260,101 +265,64 @@ export default function AdminProductsTable() {
   };
 
   const handleBulkCategoryUpdate = async () => {
-    const hasChanges =
-      newCategory ||
-      newPhotos.length > 0 ||
-      newSubcategory ||
-      newModel ||
-      newDescription ||
-      JSON.stringify(existingPhotos) !== JSON.stringify(initialPhotos);
-    if (!selected.length || !hasChanges) return;
+    if (!selected.length) return;
     setDeleting(true);
-    let photoUrls = [];
     try {
-      if (newPhotos.length > 0) {
-        setUploadingPhoto(true);
-
-        // Створюємо Map для унікальних файлів (хеш файлу -> URL)
-        const uniqueFiles = new Map();
-
-        // Функція для створення хешу файлу
-        const createFileHash = async (file) => {
-          const buffer = await file.arrayBuffer();
-          const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
-          const hashArray = Array.from(new Uint8Array(hashBuffer));
-          return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-        };
-
-        // Обробляємо кожен файл
-        for (const file of Array.from(newPhotos)) {
-          const fileHash = await createFileHash(file);
-
-          // Якщо файл з таким хешем вже оброблений, використовуємо існуючий URL
-          if (uniqueFiles.has(fileHash)) {
-            photoUrls.push(uniqueFiles.get(fileHash));
-          } else {
-            // Завантажуємо новий файл
-            const fileRef = storageRef(
-              storage,
-              `products/bulk_${fileHash}_${file.name}`
-            );
-            await uploadBytes(fileRef, file);
-            const url = await getDownloadURL(fileRef);
-            uniqueFiles.set(fileHash, url);
-            photoUrls.push(url);
-          }
-        }
-
-        setUploadingPhoto(false);
-      }
       const batch = writeBatch(db);
+      let photoUrls = existingPhotos;
+      if (newPhotos && newPhotos.length > 0) {
+        const newUrls = await Promise.all(
+          Array.from(newPhotos).map(async (file) => {
+            const storageRef = storageRef(
+              storage,
+              `products/${Date.now()}_${file.name}`
+            );
+            await uploadBytes(storageRef, file);
+            return await getDownloadURL(storageRef);
+          })
+        );
+        photoUrls = [...existingPhotos, ...newUrls];
+      }
       selected.forEach((id) => {
         const updateData = {};
-        if (newCategory) updateData["Категорія"] = newCategory;
-        if (newSubcategory) updateData["Підкатегорія"] = newSubcategory;
-        if (newModel) updateData["Модель"] = newModel;
-        if (newDescription) updateData["Опис"] = newDescription;
-
-        if (photoUrls.length > 0 && existingPhotos.length > 0) {
-          updateData["Фото"] = [...existingPhotos, ...photoUrls];
-        } else if (photoUrls.length > 0) {
-          updateData["Фото"] = photoUrls;
-        } else if (
-          JSON.stringify(existingPhotos) !== JSON.stringify(initialPhotos)
-        ) {
-          updateData["Фото"] = existingPhotos;
-        }
-
+        if (newCategory) updateData.Категорія = newCategory;
+        if (newSubcategory) updateData.Підкатегорія = newSubcategory;
+        if (newModel) updateData.Модель = newModel;
+        if (newDescription) updateData.Опис = newDescription;
+        if (photoUrls.length > 0) updateData.Фото = photoUrls;
         if (Object.keys(updateData).length > 0) {
           batch.update(doc(db, "products", id), updateData);
         }
       });
       await batch.commit();
-
       setSnackbar({
         open: true,
-        message: `Оновлено ${selected.length} товар(ів)`,
+        message: `Оновлено ${selected.length} товарів`,
         severity: "success",
       });
       setSelected([]);
-      fetchProducts();
       setEditCategoryOpen(false);
-      setNewCategory("");
-      setNewSubcategory("");
-      setNewModel("");
-      setNewPhotos([]);
-      setNewDescription("");
-      setExistingPhotos([]);
-      setInitialPhotos([]);
+      fetchProducts();
     } catch (e) {
       setSnackbar({
         open: true,
-        message: "Помилка оновлення: " + e.message,
+        message: "Помилка: " + e.message,
         severity: "error",
       });
     } finally {
       setDeleting(false);
-      setUploadingPhoto(false);
+    }
+  };
+
+  const handleToggle10 = () => {
+    const first10 = paginatedProducts.slice(0, 10).map((p) => p.id);
+    if (
+      selected.length === first10.length &&
+      first10.every((id) => selected.includes(id))
+    ) {
+      setSelected(selected.filter((id) => !first10.includes(id)));
+    } else {
+      setSelected([...new Set([...selected, ...first10])]);
     }
   };
 
@@ -362,41 +330,290 @@ export default function AdminProductsTable() {
     .slice(0, 10)
     .every((p) => selected.includes(p.id));
 
-  const handleToggle10 = () => {
-    const ids = paginatedProducts.slice(0, 10).map((p) => p.id);
-    if (isAll10Selected) {
-      setSelected(selected.filter((id) => !ids.includes(id)));
-    } else {
-      setSelected([...new Set([...selected, ...ids])]);
-    }
-  };
+  // Мобільна версія - картки замість таблиці
+  const renderMobileCards = () => (
+    <Grid container spacing={2}>
+      {loading ? (
+        <Grid item xs={12} display="flex" justifyContent="center" py={4}>
+          <CircularProgress size={40} />
+        </Grid>
+      ) : paginatedProducts.length === 0 ? (
+        <Grid item xs={12} textAlign="center" py={4}>
+          <Typography color="text.secondary">Немає товарів</Typography>
+        </Grid>
+      ) : (
+        paginatedProducts.map((product) => (
+          <Grid item xs={12} key={product.id}>
+            <Card
+              sx={{
+                position: "relative",
+                border: isSelected(product.id)
+                  ? "2px solid #115e59"
+                  : "1px solid #e0e0e0",
+                borderRadius: 2,
+              }}
+            >
+              <CardContent sx={{ pb: 1 }}>
+                <Box display="flex" alignItems="flex-start" gap={2}>
+                  <Checkbox
+                    checked={isSelected(product.id)}
+                    onChange={() => handleSelect(product.id)}
+                    sx={{ mt: -1 }}
+                  />
+                  <Avatar
+                    src={
+                      Array.isArray(product.Фото)
+                        ? product.Фото[0]
+                        : product.Фото ||
+                          product.imageUrl ||
+                          "/default-product-image.png"
+                    }
+                    alt={product.Назва || product.name}
+                    variant="rounded"
+                    sx={{ width: 60, height: 60, bgcolor: "#e0f2fe" }}
+                  />
+                  <Box flex={1} minWidth={0}>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: "1rem",
+                        mb: 0.5,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {product.Назва || product.name}
+                    </Typography>
+                    <Box display="flex" flexWrap="wrap" gap={0.5} mb={1}>
+                      {product.Категорія && (
+                        <Chip
+                          label={product.Категорія}
+                          size="small"
+                          color="primary"
+                          variant="outlined"
+                        />
+                      )}
+                      {product.Підкатегорія && (
+                        <Chip
+                          label={product.Підкатегорія}
+                          size="small"
+                          color="secondary"
+                          variant="outlined"
+                        />
+                      )}
+                    </Box>
+                    <Typography variant="body2" color="text.secondary" mb={1}>
+                      Модель: {product.Модель || product.model || "-"}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      color="primary"
+                      sx={{ fontWeight: 700 }}
+                    >
+                      {product.Ціна || product.price
+                        ? `${product.Ціна || product.price} грн`
+                        : "-"}
+                    </Typography>
+                  </Box>
+                </Box>
+              </CardContent>
+              <Divider />
+              <CardActions
+                sx={{ justifyContent: "space-between", px: 2, py: 1 }}
+              >
+                <Box display="flex" gap={1}>
+                  <Tooltip title="Редагувати">
+                    <IconButton
+                      color="primary"
+                      size="small"
+                      onClick={() => {
+                        setEditProduct(product);
+                        setFormOpen(true);
+                      }}
+                    >
+                      <Edit fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Видалити">
+                    <IconButton
+                      color="error"
+                      size="small"
+                      onClick={() => setDeleteId(product.id)}
+                    >
+                      <Delete fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))
+      )}
+    </Grid>
+  );
+
+  // Десктопна версія - таблиця
+  const renderDesktopTable = () => (
+    <Paper sx={{ width: "100%", overflow: "auto" }}>
+      <Table>
+        <TableHead>
+          <TableRow sx={{ bgcolor: "#f0f9ff" }}>
+            <TableCell padding="checkbox">
+              <Checkbox
+                indeterminate={
+                  selected.length > 0 &&
+                  selected.length < paginatedProducts.length
+                }
+                checked={
+                  paginatedProducts.length > 0 &&
+                  paginatedProducts.every((p) => selected.includes(p.id))
+                }
+                onChange={handleSelectAll}
+                inputProps={{ "aria-label": "select all products" }}
+              />
+            </TableCell>
+            <TableCell>Фото</TableCell>
+            <TableCell>Назва</TableCell>
+            <TableCell>Категорія</TableCell>
+            <TableCell>Підкатегорія</TableCell>
+            <TableCell>Модель</TableCell>
+            <TableCell>Ціна</TableCell>
+            <TableCell align="right">Дії</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {loading ? (
+            <TableRow>
+              <TableCell colSpan={8} align="center">
+                <CircularProgress size={32} />
+              </TableCell>
+            </TableRow>
+          ) : paginatedProducts.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={8} align="center">
+                <Typography color="text.secondary">Немає товарів</Typography>
+              </TableCell>
+            </TableRow>
+          ) : (
+            paginatedProducts.map((row) => (
+              <TableRow key={row.id} selected={isSelected(row.id)}>
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    checked={isSelected(row.id)}
+                    onChange={() => handleSelect(row.id)}
+                    inputProps={{ "aria-label": `select product ${row.id}` }}
+                  />
+                </TableCell>
+                <TableCell>
+                  <Avatar
+                    src={
+                      Array.isArray(row.Фото)
+                        ? row.Фото[0]
+                        : row.Фото ||
+                          row.imageUrl ||
+                          "/default-product-image.png"
+                    }
+                    alt={row.Назва || row.name}
+                    variant="rounded"
+                    sx={{ width: 56, height: 40, bgcolor: "#e0f2fe" }}
+                  />
+                </TableCell>
+                <TableCell>{row.Назва || row.name}</TableCell>
+                <TableCell>{row.Категорія || row.category}</TableCell>
+                <TableCell>{row.Підкатегорія || row.subcategory}</TableCell>
+                <TableCell>{row.Модель || row.model}</TableCell>
+                <TableCell>
+                  {row.Ціна || row.price ? `${row.Ціна || row.price} грн` : "-"}
+                </TableCell>
+                <TableCell align="right">
+                  <Tooltip title="Редагувати">
+                    <IconButton
+                      color="primary"
+                      onClick={() => {
+                        setEditProduct(row);
+                        setFormOpen(true);
+                      }}
+                    >
+                      <Edit />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Видалити">
+                    <IconButton
+                      color="error"
+                      onClick={() => setDeleteId(row.id)}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </Tooltip>
+                </TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </Table>
+    </Paper>
+  );
 
   return (
     <Box>
       <Box
         display="flex"
-        alignItems="center"
         justifyContent="space-between"
-        mb={2}
+        alignItems="center"
+        mb={3}
+        flexWrap="wrap"
+        gap={2}
       >
-        <Typography variant="h5" color="primary">
-          Товари
+        <Typography variant="h5" sx={{ fontWeight: 600, color: "#115e59" }}>
+          Керування товарами
         </Typography>
-        <Box display="flex" gap={2}>
+        <Box display="flex" gap={1} flexWrap="wrap">
           <Button
             variant="contained"
             startIcon={<Add />}
-            sx={{ bgcolor: "#115e59", ":hover": { bgcolor: "#134e4a" } }}
             onClick={() => setFormOpen(true)}
+            sx={{
+              bgcolor: "#115e59",
+              ":hover": { bgcolor: "#134e4a" },
+              py: isMobile ? 1 : 1.5,
+              px: isMobile ? 2 : 3,
+            }}
           >
             Додати товар
           </Button>
-          <Button variant="outlined" onClick={() => setImportOpen(true)}>
-            Імпорт товарів
-          </Button>
           <Button
-            variant="contained"
+            variant="outlined"
+            onClick={() => setImportOpen(true)}
+            sx={{
+              py: isMobile ? 1 : 1.5,
+              px: isMobile ? 2 : 3,
+            }}
+          >
+            Імпорт
+          </Button>
+        </Box>
+      </Box>
+
+      {selected.length > 0 && (
+        <Box
+          display="flex"
+          gap={2}
+          mb={3}
+          p={2}
+          bgcolor="#f0f9ff"
+          borderRadius={2}
+          border="1px solid #e0f2fe"
+          flexWrap="wrap"
+        >
+          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+            Вибрано: {selected.length}
+          </Typography>
+          <Button
+            variant="outlined"
             color="error"
+            size="small"
             disabled={!selected.length || deleting}
             onClick={handleDeleteSelected}
           >
@@ -405,6 +622,7 @@ export default function AdminProductsTable() {
           <Button
             variant="contained"
             color="primary"
+            size="small"
             disabled={!selected.length || deleting}
             onClick={handleOpenEditCategory}
           >
@@ -417,7 +635,8 @@ export default function AdminProductsTable() {
             label="Виділити 10"
           />
         </Box>
-      </Box>
+      )}
+
       <ProductImportDialog
         open={importOpen}
         onClose={() => setImportOpen(false)}
@@ -426,123 +645,34 @@ export default function AdminProductsTable() {
           fetchProducts();
         }}
       />
+
       <TextField
         label="Пошук по назві або категорії"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         size="small"
-        sx={{ mb: 2, width: 320 }}
+        sx={{
+          mb: 3,
+          width: isMobile ? "100%" : 320,
+          "& .MuiOutlinedInput-root": {
+            borderRadius: 2,
+          },
+        }}
       />
-      <Paper sx={{ width: "100%", overflow: "auto" }}>
-        <Table>
-          <TableHead>
-            <TableRow sx={{ bgcolor: "#f0f9ff" }}>
-              <TableCell padding="checkbox">
-                <Checkbox
-                  indeterminate={
-                    selected.length > 0 &&
-                    selected.length < paginatedProducts.length
-                  }
-                  checked={
-                    paginatedProducts.length > 0 &&
-                    paginatedProducts.every((p) => selected.includes(p.id))
-                  }
-                  onChange={handleSelectAll}
-                  inputProps={{ "aria-label": "select all products" }}
-                />
-              </TableCell>
-              <TableCell>Фото</TableCell>
-              <TableCell>Назва</TableCell>
-              <TableCell>Категорія</TableCell>
-              <TableCell>Підкатегорія</TableCell>
-              <TableCell>Модель</TableCell>
-              <TableCell>Ціна</TableCell>
-              <TableCell align="right">Дії</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {loading ? (
-              <TableRow>
-                <TableCell colSpan={8} align="center">
-                  <CircularProgress size={32} />
-                </TableCell>
-              </TableRow>
-            ) : paginatedProducts.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={8} align="center">
-                  <Typography color="text.secondary">Немає товарів</Typography>
-                </TableCell>
-              </TableRow>
-            ) : (
-              paginatedProducts.map((row) => (
-                <TableRow key={row.id} selected={isSelected(row.id)}>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected(row.id)}
-                      onChange={() => handleSelect(row.id)}
-                      inputProps={{ "aria-label": `select product ${row.id}` }}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Avatar
-                      src={
-                        Array.isArray(row.Фото)
-                          ? row.Фото[0]
-                          : row.Фото ||
-                            row.imageUrl ||
-                            "/default-product-image.png"
-                      }
-                      alt={row.Назва || row.name}
-                      variant="rounded"
-                      sx={{ width: 56, height: 40, bgcolor: "#e0f2fe" }}
-                    />
-                  </TableCell>
-                  <TableCell>{row.Назва || row.name}</TableCell>
-                  <TableCell>{row.Категорія || row.category}</TableCell>
-                  <TableCell>{row.Підкатегорія || row.subcategory}</TableCell>
-                  <TableCell>{row.Модель || row.model}</TableCell>
-                  <TableCell>
-                    {row.Ціна || row.price
-                      ? `${row.Ціна || row.price} грн`
-                      : "-"}
-                  </TableCell>
-                  <TableCell align="right">
-                    <Tooltip title="Редагувати">
-                      <IconButton
-                        color="primary"
-                        onClick={() => {
-                          setEditProduct(row);
-                          setFormOpen(true);
-                        }}
-                      >
-                        <Edit />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Видалити">
-                      <IconButton
-                        color="error"
-                        onClick={() => setDeleteId(row.id)}
-                      >
-                        <Delete />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-        <Box display="flex" justifyContent="center" my={2}>
-          <Pagination
-            count={pageCount}
-            page={page}
-            onChange={(_, value) => setPage(value)}
-            color="primary"
-            shape="rounded"
-            size="large"
-          />
-        </Box>
-      </Paper>
+
+      {isMobile ? renderMobileCards() : renderDesktopTable()}
+
+      <Box display="flex" justifyContent="center" my={3}>
+        <Pagination
+          count={pageCount}
+          page={page}
+          onChange={(_, value) => setPage(value)}
+          color="primary"
+          shape="rounded"
+          size={isMobile ? "medium" : "large"}
+        />
+      </Box>
+
       <ProductFormDialog
         open={formOpen || !!editProduct}
         onClose={() => {
@@ -555,6 +685,7 @@ export default function AdminProductsTable() {
         initialData={editProduct}
         loading={formLoading}
       />
+
       <Dialog open={!!deleteId} onClose={() => setDeleteId(null)}>
         <DialogTitle>Видалити товар?</DialogTitle>
         <DialogContent>
@@ -572,9 +703,12 @@ export default function AdminProductsTable() {
           </Button>
         </DialogActions>
       </Dialog>
+
       <Dialog
         open={editCategoryOpen}
         onClose={() => setEditCategoryOpen(false)}
+        maxWidth="sm"
+        fullWidth
       >
         <DialogTitle>
           Змінити категорію для {selected.length} товар(ів)
@@ -708,6 +842,7 @@ export default function AdminProductsTable() {
           </Button>
         </DialogActions>
       </Dialog>
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={4000}

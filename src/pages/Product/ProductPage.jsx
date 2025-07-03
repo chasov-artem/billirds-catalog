@@ -565,7 +565,7 @@ const ProductPage = () => {
                       <Email className={styles.contactIcon} />
                     </ListItemIcon>
                     <ListItemText
-                      primary="info@billiardservice.com"
+                      primary="biillija777@gmail.com"
                       secondary="Email"
                     />
                   </ListItem>
