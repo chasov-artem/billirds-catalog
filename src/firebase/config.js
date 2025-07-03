@@ -9,15 +9,8 @@ const getAuthDomain = () => {
     return import.meta.env.VITE_FIREBASE_AUTH_DOMAIN;
   }
 
-  // Якщо ми на Vercel, використовуємо поточний домен
-  if (
-    typeof window !== "undefined" &&
-    window.location.hostname.includes("vercel.app")
-  ) {
-    return window.location.hostname;
-  }
-
-  // Дефолтне значення для локальної розробки
+  // Завжди використовуємо дефолтний домен Firebase
+  // Домен Vercel потрібно додати в Firebase Authorized domains
   return "billiard-catalog.firebaseapp.com";
 };
 
