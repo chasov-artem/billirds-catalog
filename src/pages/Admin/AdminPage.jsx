@@ -278,58 +278,6 @@ export default function AdminPage() {
       </Box>
     );
 
-  if (user.email !== ADMIN_EMAIL)
-    return (
-      <Box
-        minHeight="100vh"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        sx={{
-          background: "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
-          padding: isMobile ? 2 : 4,
-        }}
-      >
-        <Paper
-          sx={{
-            p: isMobile ? 3 : 4,
-            textAlign: "center",
-            maxWidth: isMobile ? "100%" : 400,
-            width: "100%",
-            borderRadius: 3,
-            boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          }}
-        >
-          <Typography
-            variant={isMobile ? "h6" : "h6"}
-            color="error"
-            sx={{ fontWeight: 600, mb: 2 }}
-          >
-            Доступ заборонено
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            mb={3}
-            sx={{ fontSize: isMobile ? "0.9rem" : "1rem" }}
-          >
-            Ви не є адміністратором цього сайту
-          </Typography>
-          <Button
-            variant="outlined"
-            onClick={handleSignOut}
-            fullWidth={isMobile}
-            sx={{
-              py: isMobile ? 1.5 : 2,
-              borderRadius: 2,
-            }}
-          >
-            Вийти
-          </Button>
-        </Paper>
-      </Box>
-    );
-
   // Основний інтерфейс адмінки
   return (
     <Box className={styles.adminPage}>
