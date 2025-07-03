@@ -24,56 +24,105 @@ import {
 import app from "../../firebase/config";
 import AdminProductsTable from "./AdminProductsTable";
 import AdminCategories from "./AdminCategories";
+import { debugFirebase } from "../../firebase/debug";
 
 const ADMIN_EMAIL = "chasov90@gmail.com";
 
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+provider.setCustomParameters({
+  prompt: "select_account",
+});
 
 export default function AdminPage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [usePopup, setUsePopup] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
-      setUser(u);
-      setLoading(false);
-    });
+    let unsubscribe;
 
-    // Перевіряємо результат redirect авторизації
-    getRedirectResult(auth)
-      .then((result) => {
+    const initializeAuth = async () => {
+      console.log("Ініціалізація авторизації...");
+      console.log("Поточний домен:", window.location.hostname);
+      console.log("Auth domain:", auth.config.authDomain);
+
+      try {
+        // Спочатку перевіряємо результат redirect авторизації
+        const result = await getRedirectResult(auth);
         if (result) {
-          // Успішна авторизація
+          console.log("Redirect авторизація успішна:", result.user.email);
           setUser(result.user);
           setLoading(false);
+          return;
+        } else {
+          console.log("Немає результату redirect авторизації");
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Помилка redirect авторизації:", error);
         setError("Помилка авторизації: " + error.message);
+      }
+
+      // Потім підписуємось на зміни стану авторизації
+      unsubscribe = onAuthStateChanged(auth, (u) => {
+        console.log("Auth state changed:", u?.email);
+        setUser(u);
         setLoading(false);
       });
+    };
 
-    return () => unsubscribe();
+    initializeAuth();
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, []);
 
   const handleSignIn = async () => {
     setError("");
     setLoading(true);
+    console.log("Початок авторизації...");
+
     try {
-      // Спочатку пробуємо redirect (краще для мобільних)
-      await signInWithRedirect(auth, provider);
+      if (usePopup || isMobile) {
+        // Використовуємо popup якщо вибрано або на мобільних
+        console.log("Спроба popup авторизації...");
+        const result = await signInWithPopup(auth, provider);
+        console.log("Popup авторизація успішна:", result.user.email);
+        setUser(result.user);
+        setLoading(false);
+      } else {
+        // На десктопі спочатку пробуємо redirect
+        console.log("Спроба redirect авторизації...");
+        await signInWithRedirect(auth, provider);
+        console.log("Redirect авторизація ініційована");
+      }
     } catch (e) {
-      console.log("Redirect не працює, пробуємо popup:", e.message);
+      console.log(
+        "Перший спосіб не працює, пробуємо альтернативний:",
+        e.message
+      );
       try {
-        // Якщо redirect не працює, пробуємо popup
-        await signInWithPopup(auth, provider);
-      } catch (popupError) {
-        setError("Помилка авторизації: " + popupError.message);
+        if (usePopup || isMobile) {
+          // Якщо popup не працює, пробуємо redirect
+          console.log("Спроба redirect авторизації...");
+          await signInWithRedirect(auth, provider);
+        } else {
+          // Якщо redirect не працює, пробуємо popup
+          console.log("Спроба popup авторизації...");
+          const result = await signInWithPopup(auth, provider);
+          console.log("Popup авторизація успішна:", result.user.email);
+          setUser(result.user);
+          setLoading(false);
+        }
+      } catch (fallbackError) {
+        console.error("Помилка fallback авторизації:", fallbackError);
+        setError("Помилка авторизації: " + fallbackError.message);
         setLoading(false);
       }
     }
@@ -140,6 +189,37 @@ export default function AdminPage() {
               На мобільних пристроях авторизація може зайняти кілька секунд
             </Typography>
           )}
+
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            mb={2}
+            sx={{ fontSize: "0.8rem", fontFamily: "monospace" }}
+          >
+            Домен: {window.location.hostname}
+          </Typography>
+
+          <Box sx={{ mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
+            <Typography variant="body2" color="text.secondary">
+              Режим:
+            </Typography>
+            <Button
+              size="small"
+              variant={usePopup ? "outlined" : "contained"}
+              onClick={() => setUsePopup(false)}
+              sx={{ minWidth: "auto", px: 1 }}
+            >
+              Redirect
+            </Button>
+            <Button
+              size="small"
+              variant={usePopup ? "contained" : "outlined"}
+              onClick={() => setUsePopup(true)}
+              sx={{ minWidth: "auto", px: 1 }}
+            >
+              Popup
+            </Button>
+          </Box>
           <Button
             variant="contained"
             startIcon={
@@ -158,11 +238,33 @@ export default function AdminPage() {
               px: isMobile ? 3 : 4,
               fontSize: isMobile ? "1rem" : "1.1rem",
               borderRadius: 2,
+              mb: 2,
             }}
             fullWidth={isMobile}
           >
             {loading ? "Завантаження..." : "Увійти через Google"}
           </Button>
+
+          <Button
+            variant="outlined"
+            onClick={async () => {
+              await debugFirebase();
+            }}
+            sx={{
+              borderColor: "#115e59",
+              color: "#115e59",
+              ":hover": { borderColor: "#134e4a", color: "#134e4a" },
+              py: isMobile ? 1 : 1.5,
+              px: isMobile ? 2 : 3,
+              fontSize: isMobile ? "0.9rem" : "1rem",
+              borderRadius: 2,
+              mb: 2,
+            }}
+            fullWidth={isMobile}
+          >
+            Debug Firebase
+          </Button>
+
           {error && (
             <Typography
               color="error"

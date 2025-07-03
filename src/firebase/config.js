@@ -3,14 +3,30 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
+// Автоматично визначаємо authDomain на основі поточного домену
+const getAuthDomain = () => {
+  if (import.meta.env.VITE_FIREBASE_AUTH_DOMAIN) {
+    return import.meta.env.VITE_FIREBASE_AUTH_DOMAIN;
+  }
+
+  // Якщо ми на Vercel, використовуємо поточний домен
+  if (
+    typeof window !== "undefined" &&
+    window.location.hostname.includes("vercel.app")
+  ) {
+    return window.location.hostname;
+  }
+
+  // Дефолтне значення для локальної розробки
+  return "billiard-catalog.firebaseapp.com";
+};
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey:
     import.meta.env.VITE_FIREBASE_API_KEY ||
     "AIzaSyDUuwSaYga67Tb3uofxYVtSPWrUR21dp5c",
-  authDomain:
-    import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ||
-    "billiard-catalog.firebaseapp.com",
+  authDomain: getAuthDomain(),
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "billiard-catalog",
   storageBucket:
     import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ||
