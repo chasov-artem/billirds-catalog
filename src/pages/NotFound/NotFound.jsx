@@ -109,7 +109,7 @@ const NotFound = () => {
                 Потрібна допомога? Зв'яжіться з нами:
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                📞 066 407 09 41 | 📧 info@billiardservice.com
+                📞 066 407 09 41 | 📧 biillija777@gmail.com
               </Typography>
             </Box>
           </Box>

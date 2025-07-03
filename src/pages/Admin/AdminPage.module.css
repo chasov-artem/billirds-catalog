@@ -1,0 +1,253 @@
+.adminPage {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.adminContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.adminPaper {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.userAvatar {
+  width: 80px !important;
+  height: 80px !important;
+}
+
+.userDetails {
+  text-align: center;
+}
+
+.userName {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.userEmail {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.logoutButton {
+  width: 100%;
+  padding: 1rem !important;
+  border-radius: 12px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 2rem !important;
+}
+
+.sectionTitle {
+  color: #115e59;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Мобільні стилі */
+@media (max-width: 768px) {
+  .adminPage {
+    padding: 0.5rem;
+  }
+
+  .adminPaper {
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .userInfo {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .userAvatar {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .userName {
+    font-size: 1.1rem;
+  }
+
+  .userEmail {
+    font-size: 0.8rem;
+  }
+
+  .logoutButton {
+    padding: 0.75rem !important;
+    font-size: 1rem !important;
+  }
+
+  .sectionTitle {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Стилі для Samsung S25 Ultra та інших великих екранів */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .adminPaper {
+    padding: 1.5rem;
+  }
+
+  .userAvatar {
+    width: 70px !important;
+    height: 70px !important;
+  }
+}
+
+/* Анімації */
+.adminPaper {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Покращені стилі для кнопок */
+.actionButton {
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+.actionButton:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Стилі для карток товарів на мобільних */
+.productCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.productCard:hover {
+  border-color: #115e59;
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.1);
+}
+
+.productCard.selected {
+  border: 2px solid #115e59;
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.2);
+}
+
+/* Стилі для пошуку */
+.searchField {
+  border-radius: 12px !important;
+  margin-bottom: 1.5rem;
+}
+
+.searchField .MuiOutlinedInput-root {
+  border-radius: 12px !important;
+}
+
+.searchField .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #115e59 !important;
+}
+
+.searchField
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #115e59 !important;
+}
+
+/* Стилі для пагінації */
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+/* Стилі для повідомлень */
+.snackbar {
+  border-radius: 8px;
+}
+
+/* Стилі для діалогів */
+.dialog {
+  border-radius: 16px;
+}
+
+.dialogTitle {
+  font-weight: 600;
+  color: #115e59;
+}
+
+/* Стилі для чекбоксів */
+.checkbox {
+  color: #115e59 !important;
+}
+
+.checkbox.Mui-checked {
+  color: #115e59 !important;
+}
+
+/* Стилі для іконок */
+.iconButton {
+  transition: all 0.2s ease;
+}
+
+.iconButton:hover {
+  transform: scale(1.1);
+}
+
+/* Стилі для чипів категорій */
+.categoryChip {
+  margin: 0.25rem;
+  border-radius: 8px;
+}
+
+/* Стилі для аватара товару */
+.productAvatar {
+  border-radius: 8px !important;
+  background-color: #f0f9ff !important;
+}
+
+/* Стилі для ціни */
+.priceText {
+  font-weight: 700;
+  color: #115e59;
+}
+
+/* Стилі для назви товару */
+.productName {
+  font-weight: 600;
+  color: #115e59;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Стилі для категорії товару */
+.productCategory {
+  color: #666;
+  font-size: 0.9rem;
+}
