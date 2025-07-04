@@ -596,46 +596,49 @@ export default function AdminProductsTable() {
         </Box>
       </Box>
 
-      {selected.length > 0 && (
-        <Box
-          display="flex"
-          gap={2}
-          mb={3}
-          p={2}
-          bgcolor="#f0f9ff"
-          borderRadius={2}
-          border="1px solid #e0f2fe"
-          flexWrap="wrap"
-        >
-          <Typography variant="body2" sx={{ fontWeight: 600 }}>
-            Вибрано: {selected.length}
-          </Typography>
-          <Button
-            variant="outlined"
-            color="error"
-            size="small"
-            disabled={!selected.length || deleting}
-            onClick={handleDeleteSelected}
-          >
-            Видалити вибрані
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            disabled={!selected.length || deleting}
-            onClick={handleOpenEditCategory}
-          >
-            Масове редагування
-          </Button>
-          <FormControlLabel
-            control={
-              <Checkbox checked={isAll10Selected} onChange={handleToggle10} />
-            }
-            label="Виділити 10"
-          />
-        </Box>
-      )}
+      {/* Масові дії: 'Видалити вибрані', 'Масове редагування' — тільки якщо є вибрані. 'Виділити 10' — завжди. */}
+      <Box
+        display="flex"
+        gap={2}
+        mb={3}
+        p={2}
+        bgcolor="#f0f9ff"
+        borderRadius={2}
+        border="1px solid #e0f2fe"
+        flexWrap="wrap"
+      >
+        {selected.length > 0 && (
+          <>
+            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+              Вибрано: {selected.length}
+            </Typography>
+            <Button
+              variant="outlined"
+              color="error"
+              size="small"
+              disabled={!selected.length || deleting}
+              onClick={handleDeleteSelected}
+            >
+              Видалити вибрані
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              disabled={!selected.length || deleting}
+              onClick={handleOpenEditCategory}
+            >
+              Масове редагування
+            </Button>
+          </>
+        )}
+        <FormControlLabel
+          control={
+            <Checkbox checked={isAll10Selected} onChange={handleToggle10} />
+          }
+          label="Виділити 10"
+        />
+      </Box>
 
       <ProductImportDialog
         open={importOpen}
