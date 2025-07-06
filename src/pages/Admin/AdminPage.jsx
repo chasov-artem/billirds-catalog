@@ -23,7 +23,11 @@ import app from "../../firebase/config";
 import AdminProductsTable from "./AdminProductsTable";
 import AdminCategories from "./AdminCategories";
 
-const ADMIN_EMAIL = "chasov90@gmail.com";
+// Масив дозволених email'ів адміністраторів
+const ADMIN_EMAILS = [
+  "chasov90@gmail.com",
+  "biillija777@gmail.com", // Email нового власника
+];
 
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
@@ -64,6 +68,15 @@ export default function AdminPage() {
     setLoading(true);
     try {
       const result = await signInWithPopup(auth, provider);
+
+      // Перевіряємо чи email користувача в списку дозволених
+      if (!ADMIN_EMAILS.includes(result.user.email)) {
+        await signOut(auth);
+        setError("Доступ заборонено. Ваш email не в списку адміністраторів.");
+        setLoading(false);
+        return;
+      }
+
       setUser(result.user);
       localStorage.setItem("adminUser", JSON.stringify(result.user));
       setLoading(false);
