@@ -25,9 +25,7 @@ const firebaseConfig = {
     "AIzaSyDUuwSaYga67Tb3uofxYVtSPWrUR21dp5c",
   authDomain: getAuthDomain(),
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "billiard-catalog",
-  storageBucket:
-    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ||
-    "billiard-catalog.firebasestorage.app",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "billiard-catalog.firebasestorage.app",
   messagingSenderId:
     import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "548960891243",
   appId:
