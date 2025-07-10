@@ -130,12 +130,12 @@ export default function AdminProductsTable() {
       if (images && images.length > 0) {
         const newUrls = await Promise.all(
           images.map(async (img) => {
-            const storageRef = storageRef(
+            const fileRef = storageRef(
               storage,
               `products/${Date.now()}_${img.file.name}`
             );
-            await uploadBytes(storageRef, img.file);
-            return await getDownloadURL(storageRef);
+            await uploadBytes(fileRef, img.file);
+            return await getDownloadURL(fileRef);
           })
         );
         photoUrls = [...photoUrls, ...newUrls];
@@ -273,12 +273,12 @@ export default function AdminProductsTable() {
       if (newPhotos && newPhotos.length > 0) {
         const newUrls = await Promise.all(
           Array.from(newPhotos).map(async (file) => {
-            const storageRef = storageRef(
+            const fileRef = storageRef(
               storage,
               `products/${Date.now()}_${file.name}`
             );
-            await uploadBytes(storageRef, file);
-            return await getDownloadURL(storageRef);
+            await uploadBytes(fileRef, file);
+            return await getDownloadURL(fileRef);
           })
         );
         photoUrls = [...existingPhotos, ...newUrls];
