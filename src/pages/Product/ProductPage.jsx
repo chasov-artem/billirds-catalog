@@ -113,6 +113,18 @@ const ProductPage = () => {
     setModalIndex((modalIndex - 1 + images.length) % images.length);
   const nextImage = () => setModalIndex((modalIndex + 1) % images.length);
 
+  // Визначаємо статус
+  const status = product?.Статус || "Під замовлення";
+  let statusClass = styles.preorderStatus;
+  let statusText = "Під замовлення";
+  if (status === "В наявності") {
+    statusClass = styles.availableStatus;
+    statusText = "В наявності";
+  } else if (status === "Немає в наявності") {
+    statusClass = styles.unavailableStatus;
+    statusText = "Немає в наявності";
+  }
+
   // Лоадер під час завантаження продуктів
   if (loading) {
     return (
@@ -599,13 +611,29 @@ const ProductPage = () => {
               <Paper className={styles.infoSection} elevation={2}>
                 {/* Заголовок та категорія */}
                 <Box className={styles.productHeader}>
-                  <Chip
-                    label={
-                      product.Категорія || product.category || "Більярдні столи"
-                    }
-                    className={styles.categoryChip}
-                    sx={{ color: "#fff" }}
-                  />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      justifyContent: "space-between",
+                      mb: 2,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                      <Chip
+                        label={
+                          product.Категорія ||
+                          product.category ||
+                          "Більярдні столи"
+                        }
+                        className={styles.categoryChip}
+                        sx={{ color: "#fff" }}
+                      />
+                    </Box>
+                    {/* Плашка статусу */}
+                    <span className={statusClass}>{statusText}</span>
+                  </Box>
                   <Typography
                     variant="h4"
                     component="h1"

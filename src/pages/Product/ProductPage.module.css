@@ -367,3 +367,42 @@
 @media (max-width: 600px) {
   /* Медіа-запити для мобільних пристроїв можна додати тут */
 }
+
+.availableStatus {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9em;
+  border-radius: 16px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px;
+  margin-right: 10px;
+}
+
+.preorderStatus {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e42 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9em;
+  border-radius: 16px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px;
+  margin-right: 10px;
+}
+
+.unavailableStatus {
+  background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9em;
+  border-radius: 16px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px;
+  margin-right: 10px;
+}
