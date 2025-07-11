@@ -33,6 +33,7 @@ export default function ProductFormDialog({
     Фото: [],
     Додатково: {},
     Модель: "",
+    Статус: "Під замовлення",
   });
   const [images, setImages] = useState([]);
   const fileInputRef = useRef();
@@ -51,6 +52,7 @@ export default function ProductFormDialog({
         Фото: initialData.Фото || [],
         Додатково: initialData.Додатково || {},
         Модель: initialData.Модель || "",
+        Статус: initialData.Статус || "Під замовлення",
       });
       setExistingImages(initialData.Фото || []);
       setImages([]);
@@ -65,6 +67,7 @@ export default function ProductFormDialog({
         Фото: [],
         Додатково: {},
         Модель: "",
+        Статус: "Під замовлення",
       });
       setExistingImages([]);
       setImages([]);
@@ -185,6 +188,23 @@ export default function ProductFormDialog({
                 required
                 sx={{ mb: 2 }}
               />
+              <TextField
+                label="Статус"
+                name="Статус"
+                value={form.Статус}
+                onChange={handleChange}
+                select
+                fullWidth
+                required
+                sx={{ mb: 2 }}
+                SelectProps={{
+                  native: true,
+                }}
+              >
+                <option value="В наявності">В наявності</option>
+                <option value="Під замовлення">Під замовлення</option>
+                <option value="Немає в наявності">Немає в наявності</option>
+              </TextField>
               <TextField
                 label="Опис"
                 name="Опис"

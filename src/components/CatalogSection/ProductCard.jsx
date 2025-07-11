@@ -18,6 +18,18 @@ const ProductCard = ({ product }) => {
   const mainImage =
     images[0] || product.imageUrl || product.зображення || defaultImage;
 
+  // Визначаємо статус
+  const status = product.Статус || "Під замовлення";
+  let badgeClass = styles.preorderBadge;
+  let badgeText = "Під замовлення";
+  if (status === "В наявності") {
+    badgeClass = styles.availableBadge;
+    badgeText = "В наявності";
+  } else if (status === "Немає в наявності") {
+    badgeClass = styles.unavailableBadge;
+    badgeText = "Немає в наявності";
+  }
+
   const handleOrder = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -41,6 +53,10 @@ const ProductCard = ({ product }) => {
             }
           }}
         />
+        {/* Плашка статусу */}
+        <div className={`${styles.statusBadgeAbsolute} ${badgeClass}`}>
+          {badgeText}
+        </div>
         <Box className={styles.imageOverlay}>
           <IconButton
             component={Link}
