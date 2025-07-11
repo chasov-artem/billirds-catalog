@@ -22,5 +22,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Firebase service account keys
 serviceAccountKey.json
 serviceAccountKey-billiards-3564f.json
+
+# Temporary files and mirrors
+*.jar
+*-mirror/
+*-mirror.*/
+export.cjs
+import.cjs
+products.json
+bfg-*.jar
