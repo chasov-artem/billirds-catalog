@@ -22,3 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+serviceAccountKey.json
+serviceAccountKey-billiards-3564f.json
