@@ -203,11 +203,9 @@ export default function AdminPage() {
       <Container maxWidth="xl" className={styles.adminContainer}>
         <Paper className={styles.adminPaper}>
           <Box className={styles.userInfo}>
-            <Avatar
-              src={user.photoURL}
-              alt={user.displayName}
-              className={styles.userAvatar}
-            />
+            <Avatar className={styles.userAvatar}>
+              {user.displayName?.charAt(0) || user.email?.charAt(0) || "A"}
+            </Avatar>
             <Box className={styles.userDetails}>
               <Typography className={styles.userName}>
                 {user.displayName}
