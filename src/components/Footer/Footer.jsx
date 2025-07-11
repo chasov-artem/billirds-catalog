@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Container, Grid, Link } from "@mui/material";
 import { Phone, Email, Telegram, WhatsApp } from "@mui/icons-material";
+import LogoCustom from "../Logo/LogoCustom";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
@@ -9,9 +10,9 @@ const Footer = () => {
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 4 }}>
-            <Typography variant="h6" gutterBottom>
-              Більярд Сервіс
-            </Typography>
+            <Box sx={{ mb: 2 }}>
+              <LogoCustom width={140} height={60} />
+            </Box>
             <Typography variant="body2" color="text.secondary">
               Якісні більярдні столи для вашого дому та бізнесу. Професійне
               обладнання від перевірених виробників.

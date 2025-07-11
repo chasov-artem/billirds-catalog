@@ -13,6 +13,8 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import LogoCustom from "../Logo/LogoCustom";
 import styles from "./Header.module.css";
 
 const Header = () => {
@@ -23,11 +25,11 @@ const Header = () => {
     <AppBar position="static" className={styles.header}>
       <Toolbar className={styles.toolbar}>
         {/* Лого */}
-        <Typography variant="h6" component="div" className={styles.logoBox}>
+        <Box className={styles.logoBox}>
           <Link to="/" className={styles.logoLink}>
-            Більярд Сервіс
+            <LogoCustom width={220} height={90} />
           </Link>
-        </Typography>
+        </Box>
 
         {/* Адреса та контакти (тільки desktop) */}
         <Box className={styles.contactsBox}>
@@ -52,6 +54,15 @@ const Header = () => {
             </Button>
             <Button color="inherit" component={Link} to="/catalog">
               Каталог
+            </Button>
+            <Button
+              color="inherit"
+              component={Link}
+              to="/admin"
+              startIcon={<AdminPanelSettingsIcon />}
+              className={styles.adminButton}
+            >
+              Адмін
             </Button>
           </Box>
           <IconButton
@@ -84,6 +95,18 @@ const Header = () => {
               </ListItem>
               <ListItem component={Link} to="/catalog">
                 <ListItemText primary="Каталог" />
+              </ListItem>
+              <ListItem component={Link} to="/admin">
+                <ListItemText
+                  primary="Адмін"
+                  primaryTypographyProps={{
+                    sx: {
+                      display: "flex",
+                      alignItems: "center",
+                      fontWeight: "bold",
+                    },
+                  }}
+                />
               </ListItem>
               <ListItem>
                 <ListItemText
