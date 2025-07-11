@@ -120,4 +120,36 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(17, 94, 89, 0.3);
 }
- 
+
+.statusBadgeAbsolute {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+}
+
+.availableBadge,
+.preorderBadge,
+.unavailableBadge {
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 0.85em;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  color: #fff;
+}
+
+.availableBadge {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+}
+
+.preorderBadge {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e42 100%);
+}
+
+.unavailableBadge {
+  background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
+}
