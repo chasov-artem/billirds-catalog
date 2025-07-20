@@ -7,8 +7,28 @@ const PAGE_SIZE = 20;
 
 const ProductGrid = ({ products, filterName }) => {
   const [page, setPage] = useState(1);
-  const pageCount = Math.ceil(products.length / PAGE_SIZE);
-  const paginatedProducts = products.slice(
+
+  // Сортуємо товари: більярдні столи першими, потім інші категорії
+  const sortedProducts = [...products].sort((a, b) => {
+    const categoryA = a.Категорія || "";
+    const categoryB = b.Категорія || "";
+
+    // Більярдні столи завжди першими
+    if (categoryA === "Більярдні столи" && categoryB !== "Більярдні столи") {
+      return -1;
+    }
+    if (categoryA !== "Більярдні столи" && categoryB === "Більярдні столи") {
+      return 1;
+    }
+
+    // Якщо обидва більярдні столи або обидва не більярдні столи, сортуємо за назвою
+    const nameA = (a.Назва || a.name || "").toLowerCase();
+    const nameB = (b.Назва || b.name || "").toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
+
+  const pageCount = Math.ceil(sortedProducts.length / PAGE_SIZE);
+  const paginatedProducts = sortedProducts.slice(
     (page - 1) * PAGE_SIZE,
     page * PAGE_SIZE
   );
@@ -19,7 +39,7 @@ const ProductGrid = ({ products, filterName }) => {
         {filterName}
       </Typography>
 
-      {products.length === 0 ? (
+      {sortedProducts.length === 0 ? (
         <Alert severity="info" className={styles.alert}>
           За цим запитом товари не знайдено.
         </Alert>

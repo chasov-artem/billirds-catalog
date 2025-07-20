@@ -314,22 +314,6 @@ export default function AdminProductsTable() {
     }
   };
 
-  const handleToggle10 = () => {
-    const first10 = paginatedProducts.slice(0, 10).map((p) => p.id);
-    if (
-      selected.length === first10.length &&
-      first10.every((id) => selected.includes(id))
-    ) {
-      setSelected(selected.filter((id) => !first10.includes(id)));
-    } else {
-      setSelected([...new Set([...selected, ...first10])]);
-    }
-  };
-
-  const isAll10Selected = paginatedProducts
-    .slice(0, 10)
-    .every((p) => selected.includes(p.id));
-
   // Мобільна версія - картки замість таблиці
   const renderMobileCards = () => (
     <Grid container spacing={2}>
@@ -596,7 +580,7 @@ export default function AdminProductsTable() {
         </Box>
       </Box>
 
-      {/* Масові дії: 'Видалити вибрані', 'Масове редагування' — тільки якщо є вибрані. 'Виділити 10' — завжди. */}
+      {/* Масові дії: 'Видалити вибрані', 'Масове редагування' — тільки якщо є вибрані. */}
       <Box
         display="flex"
         gap={2}
@@ -632,12 +616,6 @@ export default function AdminProductsTable() {
             </Button>
           </>
         )}
-        <FormControlLabel
-          control={
-            <Checkbox checked={isAll10Selected} onChange={handleToggle10} />
-          }
-          label="Виділити 10"
-        />
       </Box>
 
       <ProductImportDialog
