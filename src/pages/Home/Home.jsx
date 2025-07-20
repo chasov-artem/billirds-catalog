@@ -88,21 +88,27 @@ const Home = () => {
           >
             Наші послуги
           </Typography>
-          <Grid
-            container
-            spacing={4}
-            justifyContent="center"
-            wrap="nowrap"
-            className={styles.servicesRow}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              gap: { xs: 1, sm: 1, md: 2 },
+            }}
           >
             {services.map((service, idx) => (
-              <Grid
-                size={{ xs: 12, sm: 6, md: 4 }}
+              <Box
                 key={idx}
-                className={styles.serviceGridItem}
-                style={{ display: "flex", height: "100%" }}
+                sx={{
+                  flex: { xs: "1 1 100%", md: "1 1 33.333%" },
+                  display: "flex",
+                  height: "100%",
+                }}
               >
-                <Paper elevation={3} className={styles.serviceCard}>
+                <Paper
+                  elevation={3}
+                  className={styles.serviceCard}
+                  sx={{ width: "100%" }}
+                >
                   <Box className={styles.serviceIcon}>{service.icon}</Box>
                   <Typography variant="h6" className={styles.serviceTitle}>
                     {service.title}
@@ -114,9 +120,9 @@ const Home = () => {
                     {service.description}
                   </Typography>
                 </Paper>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Container>
 
         {/* Search Section */}

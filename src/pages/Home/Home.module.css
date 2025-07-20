@@ -224,8 +224,16 @@
     flex-direction: column;
   }
   .serviceCard {
-    min-height: 260px;
-    padding: 1.5rem 1rem;
+    min-height: 280px;
+    padding: 2rem 1.5rem;
+  }
+  .serviceTitle {
+    font-size: 1.25rem;
+    margin-bottom: 0.8rem;
+  }
+  .serviceDescription {
+    font-size: 1.05rem;
+    line-height: 1.6;
   }
 }
 
@@ -234,14 +242,39 @@
     margin: 2rem 0 1rem 0;
   }
   .serviceCard {
-    min-height: 200px;
-    padding: 1rem 0.5rem;
+    min-height: 240px;
+    padding: 1.2rem 0.8rem;
+    margin: 0 0.5rem;
   }
   .serviceTitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
   }
   .serviceDescription {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .serviceIcon {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceCard {
+    min-height: 220px;
+    padding: 1rem 0.8rem;
+    margin: 0 0.3rem;
+  }
+  .serviceTitle {
     font-size: 0.95rem;
+    margin-bottom: 0.7rem;
+  }
+  .serviceDescription {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+  .serviceIcon {
+    margin-bottom: 0.8rem;
   }
 }
 
@@ -282,5 +315,12 @@
   .serviceGridItem {
     min-width: 0;
     flex: 1 1 100%;
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .serviceGridItem {
+    margin-bottom: 8px !important;
   }
 }

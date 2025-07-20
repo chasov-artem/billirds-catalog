@@ -27,7 +27,7 @@ const Header = () => {
         {/* Лого */}
         <Box className={styles.logoBox}>
           <Link to="/" className={styles.logoLink}>
-            <LogoCustom width={220} height={90} />
+            <LogoCustom width={180} height={70} />
           </Link>
         </Box>
 
