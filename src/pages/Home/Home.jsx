@@ -40,14 +40,32 @@ const services = [
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { products } = useProducts();
-  const filteredProducts = products.filter((product) => {
-    const name = product.Назва || product.name || "";
-    const description = product.Опис || product.description || "";
-    return (
-      name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  });
+  const filteredProducts = products
+    .filter((product) => {
+      const name = product.Назва || product.name || "";
+      const description = product.Опис || product.description || "";
+      return (
+        name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    })
+    .sort((a, b) => {
+      const categoryA = a.Категорія || "";
+      const categoryB = b.Категорія || "";
+      const nameA = a.Назва || a.name || "";
+      const nameB = b.Назва || b.name || "";
+
+      // Більярдні столи першими
+      if (categoryA === "Більярдні столи" && categoryB !== "Більярдні столи") {
+        return -1;
+      }
+      if (categoryA !== "Більярдні столи" && categoryB === "Більярдні столи") {
+        return 1;
+      }
+
+      // Якщо категорії однакові, сортуємо за назвою
+      return nameA.localeCompare(nameB);
+    });
   return (
     <Fade in={true} timeout={800}>
       <Box className={styles.home}>

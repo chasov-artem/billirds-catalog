@@ -58,11 +58,22 @@ const CatalogPage = () => {
       return matchesSearch && matchesPrice;
     })
     .sort((a, b) => {
+      const categoryA = a.Категорія || "";
+      const categoryB = b.Категорія || "";
       const nameA = a.Назва || a.name || "";
       const nameB = b.Назва || b.name || "";
       const priceA = a.Ціна || a.price || 0;
       const priceB = b.Ціна || b.price || 0;
 
+      // Спочатку сортуємо за категорією: більярдні столи першими
+      if (categoryA === "Більярдні столи" && categoryB !== "Більярдні столи") {
+        return -1;
+      }
+      if (categoryA !== "Більярдні столи" && categoryB === "Більярдні столи") {
+        return 1;
+      }
+
+      // Якщо категорії однакові або обидва не більярдні столи, сортуємо за вибраним критерієм
       switch (sortBy) {
         case "name":
           return nameA.localeCompare(nameB);
@@ -71,7 +82,7 @@ const CatalogPage = () => {
         case "price-high":
           return priceB - priceA;
         default:
-          return 0;
+          return nameA.localeCompare(nameB);
       }
     });
 
