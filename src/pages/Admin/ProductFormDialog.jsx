@@ -90,12 +90,12 @@ export default function ProductFormDialog({
       try {
         let processedFile = file;
 
-        // Перевіряємо розмір файлу (0.5MB = 0.5 * 1024 * 1024 bytes)
-        if (file.size > 0.5 * 1024 * 1024) {
-          // Опції стиснення для файлів більше 0.5MB
+        // Перевіряємо розмір файлу (0.2MB = 0.2 * 1024 * 1024 bytes)
+        if (file.size > 0.2 * 1024 * 1024) {
+          // Опції стиснення для файлів більше 0.2MB
           const options = {
-            maxSizeMB: 0.5, // максимальний розмір файлу (МБ)
-            maxWidthOrHeight: 1200, // максимальна ширина/висота (px)
+            maxSizeMB: 0.2, // максимальний розмір файлу (МБ)
+            maxWidthOrHeight: 1920, // максимальна ширина/висота (px)
             useWebWorker: true,
             fileType: "image/jpeg", // конвертуємо в JPEG для кращого стиснення
           };
@@ -108,7 +108,7 @@ export default function ProductFormDialog({
           url: URL.createObjectURL(processedFile),
           originalSize: file.size,
           optimizedSize: processedFile.size,
-          wasOptimized: file.size > 0.5 * 1024 * 1024,
+          wasOptimized: file.size > 0.2 * 1024 * 1024,
         });
       } catch (error) {
         console.error("Помилка оптимізації зображення:", error);
