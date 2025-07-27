@@ -15,6 +15,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Close, AddPhotoAlternate, Delete } from "@mui/icons-material";
+import imageCompression from "browser-image-compression";
 
 export default function ProductFormDialog({
   open,
@@ -39,6 +40,7 @@ export default function ProductFormDialog({
   const fileInputRef = useRef();
   const [newExtraKey, setNewExtraKey] = useState("");
   const [existingImages, setExistingImages] = useState([]);
+  const [optimizingImages, setOptimizingImages] = useState(false);
 
   useEffect(() => {
     if (initialData) {
@@ -80,12 +82,49 @@ export default function ProductFormDialog({
     const files = Array.from(e.dataTransfer.files);
     handleFiles(files);
   };
-  const handleFiles = (files) => {
-    const newImages = files.map((file) => ({
-      file,
-      url: URL.createObjectURL(file),
-    }));
+  const handleFiles = async (files) => {
+    setOptimizingImages(true);
+    const newImages = [];
+
+    for (const file of files) {
+      try {
+        let processedFile = file;
+
+        // Перевіряємо розмір файлу (0.5MB = 0.5 * 1024 * 1024 bytes)
+        if (file.size > 0.5 * 1024 * 1024) {
+          // Опції стиснення для файлів більше 0.5MB
+          const options = {
+            maxSizeMB: 0.5, // максимальний розмір файлу (МБ)
+            maxWidthOrHeight: 1200, // максимальна ширина/висота (px)
+            useWebWorker: true,
+            fileType: "image/jpeg", // конвертуємо в JPEG для кращого стиснення
+          };
+
+          processedFile = await imageCompression(file, options);
+        }
+
+        newImages.push({
+          file: processedFile,
+          url: URL.createObjectURL(processedFile),
+          originalSize: file.size,
+          optimizedSize: processedFile.size,
+          wasOptimized: file.size > 0.5 * 1024 * 1024,
+        });
+      } catch (error) {
+        console.error("Помилка оптимізації зображення:", error);
+        // Якщо оптимізація не вдалася, використовуємо оригінальний файл
+        newImages.push({
+          file: file,
+          url: URL.createObjectURL(file),
+          originalSize: file.size,
+          optimizedSize: file.size,
+          wasOptimized: false,
+        });
+      }
+    }
+
     setImages((prev) => [...prev, ...newImages]);
+    setOptimizingImages(false);
   };
   const handleRemoveImage = (idx) => {
     setImages((prev) => prev.filter((_, i) => i !== idx));
@@ -292,6 +331,20 @@ export default function ProductFormDialog({
                 <Typography variant="body2" color="text.secondary">
                   Перетягніть фото або натисніть для вибору
                 </Typography>
+                {optimizingImages && (
+                  <Box
+                    mt={1}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    gap={1}
+                  >
+                    <CircularProgress size={16} />
+                    <Typography variant="caption" color="text.secondary">
+                      Оптимізація зображень...
+                    </Typography>
+                  </Box>
+                )}
                 <input
                   type="file"
                   multiple
@@ -353,6 +406,24 @@ export default function ProductFormDialog({
                       >
                         <Delete fontSize="small" />
                       </IconButton>
+                      {img.wasOptimized && (
+                        <Chip
+                          label={`${Math.round(
+                            ((img.originalSize - img.optimizedSize) /
+                              img.originalSize) *
+                              100
+                          )}% менше`}
+                          size="small"
+                          color="success"
+                          sx={{
+                            position: "absolute",
+                            bottom: 0,
+                            left: 0,
+                            fontSize: "0.6rem",
+                            height: "16px",
+                          }}
+                        />
+                      )}
                     </Box>
                   ))}
                 </Box>
