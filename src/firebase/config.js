@@ -13,6 +13,12 @@ const getAuthDomain = () => {
     return import.meta.env.VITE_FIREBASE_AUTH_DOMAIN;
   }
 
+  // Перевіряємо поточний домен
+  const currentDomain = window.location.hostname;
+  if (currentDomain === "billiard-servis.com") {
+    return "billiard-servis.com";
+  }
+
   // Завжди використовуємо дефолтний домен Firebase
   // Домен Vercel потрібно додати в Firebase Authorized domains
   return "billiard-catalog.firebaseapp.com";
@@ -25,7 +31,9 @@ const firebaseConfig = {
     "AIzaSyDUuwSaYga67Tb3uofxYVtSPWrUR21dp5c",
   authDomain: getAuthDomain(),
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "billiard-catalog",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "billiard-catalog.firebasestorage.app",
+  storageBucket:
+    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ||
+    "billiard-catalog.firebasestorage.app",
   messagingSenderId:
     import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "548960891243",
   appId:
