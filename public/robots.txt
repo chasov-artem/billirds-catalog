@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://your-project.vercel.app/sitemap.xml 
+# Блокируємо адмінку від індексації
+Disallow: /admin
+
+# Дозволяємо всі інші сторінки
+Allow: /
+
+# Sitemap
+Sitemap: https://billiard-servis.com/sitemap.xml 
