@@ -235,18 +235,7 @@
   }
 }
 
-/* Мобільні стилі */
-@media (max-width: 768px) {
-  .medium {
-    width: 160px;
-    height: 42px;
-  }
-
-  .large {
-    width: 240px;
-    height: 64px;
-  }
-}
+/* Мобільні стилі - видалено для однакового розміру */
 
 /* Темна тема (якщо потрібно) */
 @media (prefers-color-scheme: dark) {
