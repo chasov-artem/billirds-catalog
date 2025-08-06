@@ -8,24 +8,8 @@ const PAGE_SIZE = 20;
 const ProductGrid = ({ products, filterName }) => {
   const [page, setPage] = useState(1);
 
-  // Сортуємо товари: більярдні столи першими, потім інші категорії
-  const sortedProducts = [...products].sort((a, b) => {
-    const categoryA = a.Категорія || "";
-    const categoryB = b.Категорія || "";
-
-    // Більярдні столи завжди першими
-    if (categoryA === "Більярдні столи" && categoryB !== "Більярдні столи") {
-      return -1;
-    }
-    if (categoryA !== "Більярдні столи" && categoryB === "Більярдні столи") {
-      return 1;
-    }
-
-    // Якщо обидва більярдні столи або обидва не більярдні столи, сортуємо за назвою
-    const nameA = (a.Назва || a.name || "").toLowerCase();
-    const nameB = (b.Назва || b.name || "").toLowerCase();
-    return nameA.localeCompare(nameB);
-  });
+  // Використовуємо продукти як є, сортування відбувається в CatalogPage
+  const sortedProducts = products;
 
   const pageCount = Math.ceil(sortedProducts.length / PAGE_SIZE);
   const paginatedProducts = sortedProducts.slice(

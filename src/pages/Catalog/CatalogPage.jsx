@@ -46,7 +46,8 @@ const CatalogPage = () => {
         productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         productDescription.toLowerCase().includes(searchTerm.toLowerCase());
 
-      const productPrice = product.Ціна || product.price || 0;
+      const productPrice =
+        parseFloat(product.Ціна) || parseFloat(product.price) || 0;
       let matchesPrice = true;
       if (priceRange[0] > 0) {
         matchesPrice = matchesPrice && productPrice >= priceRange[0];
@@ -62,8 +63,8 @@ const CatalogPage = () => {
       const categoryB = b.Категорія || "";
       const nameA = a.Назва || a.name || "";
       const nameB = b.Назва || b.name || "";
-      const priceA = a.Ціна || a.price || 0;
-      const priceB = b.Ціна || b.price || 0;
+      const priceA = parseFloat(a.Ціна) || parseFloat(a.price) || 0;
+      const priceB = parseFloat(b.Ціна) || parseFloat(b.price) || 0;
 
       // Спочатку сортуємо за категорією: більярдні столи першими
       if (categoryA === "Більярдні столи" && categoryB !== "Більярдні столи") {
