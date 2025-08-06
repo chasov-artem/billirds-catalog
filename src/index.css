@@ -11,3 +11,12 @@ body {
   min-height: 100vh;
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
 }
+
+/* Глобальні стилі для лейбла сортування */
+.MuiInputLabel-outlined {
+  font-size: 0.95rem !important;
+}
+
+.MuiInputLabel-outlined.MuiInputLabel-shrink {
+  font-size: 0.95rem !important;
+}
