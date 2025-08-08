@@ -8,11 +8,18 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
-import { ShoppingCart, Visibility } from "@mui/icons-material";
+import {
+  ShoppingCart,
+  Visibility,
+  Favorite,
+  FavoriteBorder,
+} from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { useFavorites } from "../../context/FavoritesContext";
 import styles from "./ProductCard.module.css";
 
 const ProductCard = ({ product }) => {
+  const { toggleFavorite, isInFavorites } = useFavorites();
   const defaultImage = "/default-product-image.png"; // Шлях до зображення-заглушки
   const images = product.Фото || [];
   const mainImage =
@@ -65,6 +72,23 @@ const ProductCard = ({ product }) => {
             size="large"
           >
             <Visibility />
+          </IconButton>
+          <IconButton
+            className={styles.favoriteButton}
+            size="large"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleFavorite(product.id);
+            }}
+            sx={{
+              color: isInFavorites(product.id) ? "#ff4081" : "white",
+              "&:hover": {
+                color: isInFavorites(product.id) ? "#f50057" : "#ff4081",
+              },
+            }}
+          >
+            {isInFavorites(product.id) ? <Favorite /> : <FavoriteBorder />}
           </IconButton>
         </Box>
       </Box>

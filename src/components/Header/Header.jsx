@@ -10,15 +10,19 @@ import {
   List,
   ListItem,
   ListItemText,
+  Badge,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import LogoCustom from "../Logo/LogoCustom";
+import { useFavorites } from "../../context/FavoritesContext";
 import styles from "./Header.module.css";
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { favoritesCount } = useFavorites();
   const handleDrawerToggle = () => setDrawerOpen((prev) => !prev);
 
   return (
@@ -54,6 +58,18 @@ const Header = () => {
             </Button>
             <Button color="inherit" component={Link} to="/catalog">
               Каталог
+            </Button>
+            <Button
+              color="inherit"
+              component={Link}
+              to="/favorites"
+              startIcon={
+                <Badge badgeContent={favoritesCount} color="error">
+                  <FavoriteIcon />
+                </Badge>
+              }
+            >
+              Обране
             </Button>
             <Button
               color="inherit"
@@ -95,6 +111,22 @@ const Header = () => {
               </ListItem>
               <ListItem component={Link} to="/catalog">
                 <ListItemText primary="Каталог" />
+              </ListItem>
+              <ListItem component={Link} to="/favorites">
+                <ListItemText
+                  primary={
+                    <span>
+                      Обране
+                      <Badge
+                        badgeContent={favoritesCount}
+                        color="error"
+                        sx={{ ml: 1 }}
+                      >
+                        <FavoriteIcon fontSize="small" />
+                      </Badge>
+                    </span>
+                  }
+                />
               </ListItem>
               <ListItem component={Link} to="/admin">
                 <ListItemText

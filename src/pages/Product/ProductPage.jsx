@@ -36,13 +36,17 @@ import {
   StarBorder,
   ArrowBackIos,
   ArrowForwardIos,
+  Favorite,
+  FavoriteBorder,
 } from "@mui/icons-material";
 import { useProducts } from "../../context/ProductsContext";
+import { useFavorites } from "../../context/FavoritesContext";
 import styles from "./ProductPage.module.css";
 
 const ProductPage = () => {
   const { productId } = useParams();
   const { products, loading } = useProducts();
+  const { toggleFavorite, isInFavorites } = useFavorites();
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [productLoading, setProductLoading] = useState(true);
@@ -634,18 +638,47 @@ const ProductPage = () => {
                     {/* Плашка статусу */}
                     <span className={statusClass}>{statusText}</span>
                   </Box>
-                  <Typography
-                    variant="h4"
-                    component="h1"
-                    className={styles.productTitle}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: 2,
+                    }}
                   >
-                    {product.Назва || product.name}
-                  </Typography>
-                  {product.Підкатегорія && (
-                    <Typography variant="body2" color="text.secondary">
-                      {product.Підкатегорія}
-                    </Typography>
-                  )}
+                    <Box sx={{ flex: 1 }}>
+                      <Typography
+                        variant="h4"
+                        component="h1"
+                        className={styles.productTitle}
+                      >
+                        {product.Назва || product.name}
+                      </Typography>
+                      {product.Підкатегорія && (
+                        <Typography variant="body2" color="text.secondary">
+                          {product.Підкатегорія}
+                        </Typography>
+                      )}
+                    </Box>
+                    <IconButton
+                      onClick={() => toggleFavorite(product.id)}
+                      sx={{
+                        color: isInFavorites(product.id) ? "#ff4081" : "#666",
+                        "&:hover": {
+                          color: isInFavorites(product.id)
+                            ? "#f50057"
+                            : "#ff4081",
+                        },
+                      }}
+                      size="large"
+                    >
+                      {isInFavorites(product.id) ? (
+                        <Favorite />
+                      ) : (
+                        <FavoriteBorder />
+                      )}
+                    </IconButton>
+                  </Box>
                 </Box>
 
                 <Divider sx={{ my: 2 }} />

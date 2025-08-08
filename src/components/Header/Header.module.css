@@ -105,8 +105,8 @@
 .burgerButton {
   display: none !important;
 }
-/* Бургер-меню для екранів до 1050px */
-@media (max-width: 1050px) {
+/* Бургер-меню для екранів до 1150px */
+@media (max-width: 1150px) {
   .contactsBox {
     display: none;
   }
