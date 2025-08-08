@@ -1,0 +1,159 @@
+.mapsContainer {
+  padding: 24px;
+  margin: 20px 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.locationIcon {
+  color: #115e59;
+  font-size: 28px;
+  margin-right: 12px;
+}
+
+.title {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.mapContainer {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.addressTitle,
+.contactTitle,
+.hoursTitle {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.address {
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.contactInfo,
+.workingHours {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.phone {
+  color: #374151;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hours {
+  color: #374151;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timeIcon {
+  color: #115e59;
+  font-size: 16px;
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.directionsButton {
+  height: 48px;
+  font-weight: 600;
+  text-transform: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.2);
+}
+
+.callButton,
+.mapButton {
+  height: 40px;
+  font-weight: 500;
+  text-transform: none;
+  border-radius: 8px;
+  border-width: 2px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .mapsContainer {
+    padding: 16px;
+    margin: 16px 0;
+  }
+
+  .header {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .locationIcon {
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+
+  .infoContainer {
+    margin-top: 16px;
+  }
+
+  .contactInfo,
+  .workingHours {
+    padding: 12px;
+  }
+}
+
+/* Hover effects */
+.mapsContainer:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.directionsButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(17, 94, 89, 0.3);
+}
+
+.callButton:hover,
+.mapButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.15);
+}
+
+/* Map iframe styling */
+.mapContainer iframe {
+  transition: all 0.3s ease;
+}
+
+.mapContainer iframe:hover {
+  transform: scale(1.02);
+}

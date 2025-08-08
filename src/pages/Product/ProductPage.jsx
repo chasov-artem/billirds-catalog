@@ -41,6 +41,8 @@ import {
 } from "@mui/icons-material";
 import { useProducts } from "../../context/ProductsContext";
 import { useFavorites } from "../../context/FavoritesContext";
+import SEOHead from "../../components/SEO/SEOHead";
+import { generateImageAlt } from "../../utils/seoHelpers";
 import styles from "./ProductPage.module.css";
 
 const ProductPage = () => {
@@ -351,6 +353,12 @@ const ProductPage = () => {
 
   return (
     <Fade in={true} timeout={800}>
+      <SEOHead
+        product={product}
+        url={`https://billiard-servis.com/product/${productId}`}
+        image={mainImage}
+        type="product"
+      />
       <div className={styles.productPage}>
         <Container maxWidth="lg">
           {/* Хлібні крихти */}
@@ -371,7 +379,7 @@ const ProductPage = () => {
             <CardMedia
               component="img"
               image={mainImage}
-              alt={product.Назва || product.name}
+              alt={generateImageAlt(product, selectedImage)}
               className={styles.mainImage}
               onClick={() => openModal(selectedImage)}
               style={{ cursor: images.length > 0 ? "pointer" : "default" }}
@@ -390,9 +398,7 @@ const ProductPage = () => {
                     <CardMedia
                       component="img"
                       image={img}
-                      alt={`${product.Назва || product.name} - зображення ${
-                        index + 1
-                      }`}
+                      alt={generateImageAlt(product, index)}
                       className={styles.thumbnailImage}
                     />
                   </Card>
@@ -602,9 +608,7 @@ const ProductPage = () => {
                     <br />
                     Пн-Пт: 9:00 - 18:00
                     <br />
-                    Сб: 10:00 - 16:00
-                    <br />
-                    Нд: Вихідний
+                    Сб-Нд: 9:00 - 15:00
                   </Typography>
                 </Box>
               </Paper>

@@ -13,6 +13,7 @@ import { GiReceiveMoney, Gi3dHammer, GiTable } from "react-icons/gi";
 import { BsWrenchAdjustable } from "react-icons/bs";
 import { Search } from "@mui/icons-material";
 import CatalogSection from "../../components/CatalogSection/CatalogSection";
+import GoogleMyBusinessWidget from "../../components/GoogleMyBusiness/GoogleMyBusinessWidget";
 import styles from "./Home.module.css";
 import { useProducts } from "../../context/ProductsContext";
 
@@ -146,6 +147,11 @@ const Home = () => {
 
         {/* Catalog Section */}
         <CatalogSection products={searchTerm ? filteredProducts : undefined} />
+
+        {/* Google My Business віджет */}
+        <Container maxWidth="lg">
+          <GoogleMyBusinessWidget />
+        </Container>
       </Box>
     </Fade>
   );

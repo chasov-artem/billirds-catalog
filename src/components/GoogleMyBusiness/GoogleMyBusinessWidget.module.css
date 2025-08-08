@@ -1,0 +1,160 @@
+.widgetContainer {
+  padding: 24px;
+  margin: 20px 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.businessIcon {
+  color: #115e59;
+  font-size: 32px;
+  margin-right: 16px;
+}
+
+.businessInfo {
+  flex: 1;
+}
+
+.businessName {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.ratingContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.starIcon {
+  color: #fbbf24;
+  font-size: 16px;
+}
+
+.rating {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.content {
+  margin-bottom: 20px;
+}
+
+.icon {
+  color: #115e59;
+  font-size: 20px;
+}
+
+.contactText {
+  color: #374151;
+}
+
+.contactText .MuiListItemText-primary {
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.contactText .MuiListItemText-secondary {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.callButton {
+  height: 48px;
+  font-weight: 600;
+  text-transform: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.2);
+}
+
+.directionsButton,
+.websiteButton {
+  height: 40px;
+  font-weight: 500;
+  text-transform: none;
+  border-radius: 8px;
+  border-width: 2px;
+}
+
+.attributes {
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.chipContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  background-color: #115e59;
+  color: white;
+  font-weight: 500;
+  border-radius: 16px;
+}
+
+.chip:hover {
+  background-color: #134e4a;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .widgetContainer {
+    padding: 16px;
+    margin: 16px 0;
+  }
+
+  .header {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .businessIcon {
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+
+  .actionButtons {
+    margin-top: 16px;
+  }
+
+  .chipContainer {
+    justify-content: center;
+  }
+}
+
+/* Hover effects */
+.widgetContainer:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.callButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(17, 94, 89, 0.3);
+}
+
+.directionsButton:hover,
+.websiteButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(17, 94, 89, 0.15);
+}
