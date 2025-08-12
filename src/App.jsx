@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box, CssBaseline, CircularProgress } from "@mui/material";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import PerformanceMonitor from "./components/Performance/PerformanceMonitor";
 import "./App.css";
 
 // Lazy loading для сторінок
@@ -19,6 +20,7 @@ function App() {
   return (
     <Router>
       <CssBaseline />
+      <PerformanceMonitor />
       <Box
         sx={{
           display: "flex",
@@ -32,14 +34,14 @@ function App() {
       >
         <Header />
         <Box component="main" sx={{ flexGrow: 1 }}>
-          <Suspense 
+          <Suspense
             fallback={
-              <Box 
-                sx={{ 
-                  display: 'flex', 
-                  justifyContent: 'center', 
-                  alignItems: 'center', 
-                  minHeight: '400px' 
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  minHeight: "400px",
                 }}
               >
                 <CircularProgress size={60} sx={{ color: "#115e59" }} />
