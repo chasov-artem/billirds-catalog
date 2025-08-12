@@ -13,6 +13,7 @@ import { Favorite, Delete } from "@mui/icons-material";
 import { useFavorites } from "../../context/FavoritesContext";
 import { useProducts } from "../../context/ProductsContext";
 import CatalogSection from "../../components/CatalogSection/CatalogSection";
+import SEOHead from "../../components/SEO/SEOHead";
 import styles from "./FavoritesPage.module.css";
 
 const FavoritesPage = () => {
@@ -66,6 +67,14 @@ const FavoritesPage = () => {
   return (
     <Fade in={true} timeout={600}>
       <div className={styles.favoritesPage}>
+        <SEOHead
+          title="Обране | Більярд сервіс Дніпро"
+          description="Ваші обрані більярдні столи та аксесуари. Зберігайте улюблені товари для зручного порівняння та покупки."
+          keywords="обране, улюблені товари, більярдні столи, більярдні аксесуари"
+          ogTitle="Обране | Більярд сервіс"
+          ogDescription="Ваші обрані більярдні столи та аксесуари."
+          canonical="https://billiard-servis.com/favorites"
+        />
         <Container maxWidth="xl">
           {/* Заголовок сторінки */}
           <Box className={styles.pageHeader}>

@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import { Search, FilterList, Sort } from "@mui/icons-material";
 import CatalogSection from "../../components/CatalogSection/CatalogSection";
+import SEOHead from "../../components/SEO/SEOHead";
 import { useProducts } from "../../context/ProductsContext";
 import styles from "./CatalogPage.module.css";
 
@@ -168,6 +169,14 @@ const CatalogPage = () => {
   return (
     <Fade in={true} timeout={600}>
       <div className={styles.catalogPage}>
+        <SEOHead
+          title="Каталог більярдних столів та аксесуарів | Більярд сервіс Дніпро"
+          description="Каталог більярдних столів, аксесуарів та сукна. Великий вибір товарів для більярду з доставкою по Україні. Купити більярдний стіл у Дніпрі."
+          keywords="каталог більярдних столів, більярдні аксесуари, сукно для більярду, купити більярдний стіл, більярд Дніпро"
+          ogTitle="Каталог більярдних столів та аксесуарів | Більярд сервіс"
+          ogDescription="Великий вибір більярдних столів, аксесуарів та сукна з доставкою по Україні."
+          canonical="https://billiard-servis.com/catalog"
+        />
         <Container maxWidth="xl">
           {/* Заголовок сторінки */}
           <Box className={styles.pageHeader}>
