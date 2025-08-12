@@ -14,6 +14,7 @@ import { BsWrenchAdjustable } from "react-icons/bs";
 import { Search } from "@mui/icons-material";
 import CatalogSection from "../../components/CatalogSection/CatalogSection";
 import SEOHead from "../../components/SEO/SEOHead";
+import StructuredData from "../../components/SEO/StructuredData";
 import styles from "./Home.module.css";
 import { useProducts } from "../../context/ProductsContext";
 
@@ -77,6 +78,30 @@ const Home = () => {
           ogTitle="Більярд сервіс — Якісні більярдні столи, аксесуари, монтаж"
           ogDescription="Продаж, монтаж та обслуговування більярдних столів, аксесуарів та сукна. Доставка по Україні."
           canonical="https://billiard-servis.com/"
+        />
+        <StructuredData
+          data={{
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Більярд сервіс",
+            "description": "Продаж, монтаж та обслуговування більярдних столів, аксесуарів та сукна",
+            "url": "https://billiard-servis.com/",
+            "telephone": "+380XXXXXXXXX",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Дніпро",
+              "addressCountry": "UA"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "48.4647",
+              "longitude": "35.0462"
+            },
+            "openingHours": "Mo-Fr 09:00-18:00",
+            "priceRange": "$$",
+            "serviceType": ["Більярдні столи", "Аксесуари", "Монтаж", "Обслуговування"],
+            "areaServed": "Україна"
+          }}
         />
         {/* Hero Section */}
         <Box className={styles.heroSection}>

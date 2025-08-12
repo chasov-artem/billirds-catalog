@@ -42,6 +42,7 @@ import {
 import { useProducts } from "../../context/ProductsContext";
 import { useFavorites } from "../../context/FavoritesContext";
 import SEOHead from "../../components/SEO/SEOHead";
+import StructuredData from "../../components/SEO/StructuredData";
 import styles from "./ProductPage.module.css";
 
 const ProductPage = () => {
@@ -361,6 +362,35 @@ const ProductPage = () => {
           ogDescription={`${product.Опис || product.description || 'Купити ' + (product.Назва || product.name)}. ${product.Ціна ? `Ціна: ${formatPrice(product.Ціна)}.` : ''} Доставка по Україні.`}
           ogImage={mainImage}
           canonical={`https://billiard-servis.com/product/${productId}`}
+        />
+        <StructuredData
+          data={{
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": product.Назва || product.name,
+            "description": product.Опис || product.description,
+            "image": mainImage,
+            "category": product.Категорія || "Більярдні товари",
+            "brand": {
+              "@type": "Brand",
+              "name": "Більярд сервіс"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": product.Ціна || product.price,
+              "priceCurrency": "UAH",
+              "availability": product.Статус === "В наявності" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+              "seller": {
+                "@type": "LocalBusiness",
+                "name": "Більярд сервіс",
+                "address": {
+                  "@type": "PostalAddress",
+                  "addressLocality": "Дніпро",
+                  "addressCountry": "UA"
+                }
+              }
+            }
+          }}
         />
         <Container maxWidth="lg">
           {/* Хлібні крихти */}
