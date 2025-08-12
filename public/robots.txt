@@ -1,11 +1,8 @@
 User-agent: *
 Allow: /
 
-# Блокируємо адмінку від індексації
-Disallow: /admin
-
-# Дозволяємо всі інші сторінки
-Allow: /
-
 # Sitemap
-Sitemap: https://billiard-servis.com/sitemap.xml 
+Sitemap: https://billiard-servis.com/sitemap.xml
+
+# Disallow admin pages
+Disallow: /admin 
