@@ -1,17 +1,19 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // Альтернатива якщо BrowserRouter не працює на Vercel:
 // import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import { Box, CssBaseline } from "@mui/material";
+import { Box, CssBaseline, CircularProgress } from "@mui/material";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Home from "./pages/Home/Home";
-import CatalogPage from "./pages/Catalog/CatalogPage";
-import ProductPage from "./pages/Product/ProductPage";
-import FavoritesPage from "./pages/Favorites/FavoritesPage";
-import NotFound from "./pages/NotFound/NotFound";
-import AdminPage from "./pages/Admin/AdminPage";
 import "./App.css";
+
+// Lazy loading для сторінок
+const Home = lazy(() => import("./pages/Home/Home"));
+const CatalogPage = lazy(() => import("./pages/Catalog/CatalogPage"));
+const ProductPage = lazy(() => import("./pages/Product/ProductPage"));
+const FavoritesPage = lazy(() => import("./pages/Favorites/FavoritesPage"));
+const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
+const AdminPage = lazy(() => import("./pages/Admin/AdminPage"));
 
 function App() {
   return (
@@ -30,14 +32,29 @@ function App() {
       >
         <Header />
         <Box component="main" sx={{ flexGrow: 1 }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/catalog" element={<CatalogPage />} />
-            <Route path="/favorites" element={<FavoritesPage />} />
-            <Route path="/product/:productId" element={<ProductPage />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense 
+            fallback={
+              <Box 
+                sx={{ 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  alignItems: 'center', 
+                  minHeight: '400px' 
+                }}
+              >
+                <CircularProgress size={60} sx={{ color: "#115e59" }} />
+              </Box>
+            }
+          >
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/catalog" element={<CatalogPage />} />
+              <Route path="/favorites" element={<FavoritesPage />} />
+              <Route path="/product/:productId" element={<ProductPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </Box>
         <Footer />
       </Box>
