@@ -13,6 +13,7 @@ import { GiReceiveMoney, Gi3dHammer, GiTable } from "react-icons/gi";
 import { BsWrenchAdjustable } from "react-icons/bs";
 import { Search } from "@mui/icons-material";
 import CatalogSection from "../../components/CatalogSection/CatalogSection";
+import SEOHead from "../../components/SEO/SEOHead";
 import styles from "./Home.module.css";
 import { useProducts } from "../../context/ProductsContext";
 
@@ -69,6 +70,14 @@ const Home = () => {
   return (
     <Fade in={true} timeout={800}>
       <Box className={styles.home}>
+        <SEOHead
+          title="Більярд сервіс — Якісні більярдні столи, аксесуари, монтаж | Дніпро"
+          description="Більярд сервіс у Дніпрі — продаж, монтаж та обслуговування більярдних столів, аксесуарів та сукна. Доставка по Україні. Професійний сервіс з 10+ роками досвіду."
+          keywords="більярд, більярдні столи, аксесуари, сукно, Дніпро, сервіс, монтаж, купити більярдний стіл, збірка більярдних столів, перетяжка сукна"
+          ogTitle="Більярд сервіс — Якісні більярдні столи, аксесуари, монтаж"
+          ogDescription="Продаж, монтаж та обслуговування більярдних столів, аксесуарів та сукна. Доставка по Україні."
+          canonical="https://billiard-servis.com/"
+        />
         {/* Hero Section */}
         <Box className={styles.heroSection}>
           <Container maxWidth="lg">
