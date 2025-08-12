@@ -41,6 +41,7 @@ import {
 } from "@mui/icons-material";
 import { useProducts } from "../../context/ProductsContext";
 import { useFavorites } from "../../context/FavoritesContext";
+import SEOHead from "../../components/SEO/SEOHead";
 import styles from "./ProductPage.module.css";
 
 const ProductPage = () => {
@@ -352,6 +353,15 @@ const ProductPage = () => {
   return (
     <Fade in={true} timeout={800}>
       <div className={styles.productPage}>
+        <SEOHead
+          title={`${product.Назва || product.name} | Більярд сервіс Дніпро`}
+          description={`${product.Опис || product.description || 'Купити ' + (product.Назва || product.name)}. ${product.Ціна ? `Ціна: ${formatPrice(product.Ціна)}.` : ''} Доставка по Україні. Більярд сервіс у Дніпрі.`}
+          keywords={`${product.Назва || product.name}, більярд, ${product.Категорія || 'більярдні товари'}, купити, Дніпро`}
+          ogTitle={`${product.Назва || product.name} | Більярд сервіс`}
+          ogDescription={`${product.Опис || product.description || 'Купити ' + (product.Назва || product.name)}. ${product.Ціна ? `Ціна: ${formatPrice(product.Ціна)}.` : ''} Доставка по Україні.`}
+          ogImage={mainImage}
+          canonical={`https://billiard-servis.com/product/${productId}`}
+        />
         <Container maxWidth="lg">
           {/* Хлібні крихти */}
           <Breadcrumbs className={styles.breadcrumbs}>
