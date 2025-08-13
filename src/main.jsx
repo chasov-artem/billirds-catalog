@@ -6,6 +6,9 @@ import { ProductsProvider } from "./context/ProductsContext.jsx";
 import { FavoritesProvider } from "./context/FavoritesContext.jsx";
 import { initializePerformanceOptimizations } from "./utils/performance.js";
 
+// Версія для примусового оновлення кешу
+const APP_VERSION = Date.now();
+
 // Ініціалізуємо оптимізації продуктивності
 initializePerformanceOptimizations();
 
