@@ -16,7 +16,7 @@ import {
   Card,
   CardMedia,
   IconButton,
-  Breadcrumbs,
+  Breadcrumbs as MuiBreadcrumbs,
   Alert,
   CircularProgress,
   Skeleton,
@@ -43,6 +43,7 @@ import { useProducts } from "../../context/ProductsContext";
 import { useFavorites } from "../../context/FavoritesContext";
 import SEOHead from "../../components/SEO/SEOHead";
 import StructuredData from "../../components/SEO/StructuredData";
+import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import styles from "./ProductPage.module.css";
 
 const ProductPage = () => {
@@ -393,18 +394,10 @@ const ProductPage = () => {
           }}
         />
         <Container maxWidth="lg">
-          {/* Хлібні крихти */}
-          <Breadcrumbs className={styles.breadcrumbs}>
-            <Link to="/" className={styles.breadcrumbLink}>
-              Головна
-            </Link>
-            <Link to="/catalog" className={styles.breadcrumbLink}>
-              Каталог
-            </Link>
-            <Typography color="text.primary">
-              {product.Назва || product.name}
-            </Typography>
-          </Breadcrumbs>
+          {/* Breadcrumbs */}
+          <Breadcrumbs />
+          
+
 
           {/* Зображення товару */}
           <Paper className={styles.imageSection} elevation={2} sx={{ mb: 4 }}>

@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import { Search, FilterList, Sort } from "@mui/icons-material";
 import CatalogSection from "../../components/CatalogSection/CatalogSection";
+import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import SEOHead from "../../components/SEO/SEOHead";
 import { useProducts } from "../../context/ProductsContext";
 import styles from "./CatalogPage.module.css";
@@ -178,6 +179,9 @@ const CatalogPage = () => {
           canonical="https://billiard-servis.com/catalog"
         />
         <Container maxWidth="xl">
+          {/* Breadcrumbs */}
+          <Breadcrumbs />
+          
           {/* Заголовок сторінки */}
           <Box className={styles.pageHeader}>
             <Typography
