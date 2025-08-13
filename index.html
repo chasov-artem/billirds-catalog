@@ -62,22 +62,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <script>
-      // Очищення кешу при завантаженні
-      if ('caches' in window) {
-        caches.keys().then(function(names) {
-          for (let name of names) {
-            caches.delete(name);
-          }
-        });
-      }
-      
-      // Примусове оновлення при завантаженні
-      if (performance.navigation.type === 1) {
-        // Це оновлення сторінки, не перше завантаження
-        window.location.reload(true);
-      }
-    </script>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
