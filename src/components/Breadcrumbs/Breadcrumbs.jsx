@@ -1,43 +1,48 @@
-import React from 'react';
-import { Breadcrumbs as MuiBreadcrumbs, Link, Typography, Box } from '@mui/material';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { Home, NavigateNext } from '@mui/icons-material';
+import React from "react";
+import {
+  Breadcrumbs as MuiBreadcrumbs,
+  Link,
+  Typography,
+  Box,
+} from "@mui/material";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Home, NavigateNext } from "@mui/icons-material";
 
 const Breadcrumbs = ({ items = [] }) => {
   const location = useLocation();
-  
+
   // Автоматично генеруємо breadcrumbs на основі URL
   const generateBreadcrumbs = () => {
-    const pathnames = location.pathname.split('/').filter((x) => x);
+    const pathnames = location.pathname.split("/").filter((x) => x);
     const breadcrumbs = [
       {
-        label: 'Головна',
-        href: '/',
-        icon: <Home fontSize="small" />
-      }
+        label: "Головна",
+        href: "/",
+        icon: <Home fontSize="small" />,
+      },
     ];
 
-    let currentPath = '';
+    let currentPath = "";
     pathnames.forEach((name, index) => {
       currentPath += `/${name}`;
-      
+
       // Мапимо URL на читабельні назви
       const labelMap = {
-        'catalog': 'Каталог',
-        'product': 'Товар',
-        'favorites': 'Обране',
-        'admin': 'Адмін панель'
+        catalog: "Каталог",
+        product: "Товар",
+        favorites: "Обране",
+        admin: "Адмін панель",
       };
-      
+
       const label = labelMap[name] || name;
-      
+
       // Останній елемент не є посиланням
       const isLast = index === pathnames.length - 1;
-      
+
       breadcrumbs.push({
         label,
         href: isLast ? undefined : currentPath,
-        isLast
+        isLast,
       });
     });
 
@@ -49,29 +54,29 @@ const Breadcrumbs = ({ items = [] }) => {
 
   return (
     <Box sx={{ py: 2, px: { xs: 2, md: 0 } }}>
-      <MuiBreadcrumbs 
+      <MuiBreadcrumbs
         separator={<NavigateNext fontSize="small" />}
         aria-label="breadcrumb"
         sx={{
-          '& .MuiBreadcrumbs-separator': {
-            color: '#666'
-          }
+          "& .MuiBreadcrumbs-separator": {
+            color: "#666",
+          },
         }}
       >
         {breadcrumbItems.map((item, index) => {
           const isLast = item.isLast || index === breadcrumbItems.length - 1;
-          
+
           if (isLast) {
             return (
               <Typography
                 key={item.label}
                 color="text.primary"
-                sx={{ 
-                  fontSize: '0.875rem',
+                sx={{
+                  fontSize: "0.875rem",
                   fontWeight: 500,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 0.5
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.5,
                 }}
               >
                 {item.icon}
@@ -87,14 +92,14 @@ const Breadcrumbs = ({ items = [] }) => {
               to={item.href}
               color="inherit"
               underline="hover"
-              sx={{ 
-                fontSize: '0.875rem',
-                display: 'flex',
-                alignItems: 'center',
+              sx={{
+                fontSize: "0.875rem",
+                display: "flex",
+                alignItems: "center",
                 gap: 0.5,
-                '&:hover': {
-                  color: '#1976d2'
-                }
+                "&:hover": {
+                  color: "#1976d2",
+                },
               }}
             >
               {item.icon}

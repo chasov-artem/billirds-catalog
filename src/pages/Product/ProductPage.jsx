@@ -44,6 +44,7 @@ import { useFavorites } from "../../context/FavoritesContext";
 import SEOHead from "../../components/SEO/SEOHead";
 import StructuredData from "../../components/SEO/StructuredData";
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
+import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
 import styles from "./ProductPage.module.css";
 
 const ProductPage = () => {
@@ -837,21 +838,24 @@ const ProductPage = () => {
             </Grid>
           </Grid>
 
-          {/* Кнопка повернення */}
-          <Box className={styles.backButtonContainer}>
-            <Button
-              component={Link}
-              to="/catalog"
-              variant="outlined"
-              startIcon={<ArrowBack />}
-              className={styles.backButton}
-            >
-              Повернутися до каталогу
-            </Button>
-          </Box>
-        </Container>
-      </div>
-    </Fade>
+                     {/* Кнопка повернення */}
+           <Box className={styles.backButtonContainer}>
+             <Button
+               component={Link}
+               to="/catalog"
+               variant="outlined"
+               startIcon={<ArrowBack />}
+               className={styles.backButton}
+             >
+               Повернутися до каталогу
+             </Button>
+           </Box>
+           
+           {/* Схожі товари */}
+           <RelatedProducts currentProduct={product} products={products} />
+         </Container>
+       </div>
+     </Fade>
   );
 };
 

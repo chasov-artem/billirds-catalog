@@ -13,6 +13,7 @@ import { GiReceiveMoney, Gi3dHammer, GiTable } from "react-icons/gi";
 import { BsWrenchAdjustable } from "react-icons/bs";
 import { Search } from "@mui/icons-material";
 import CatalogSection from "../../components/CatalogSection/CatalogSection";
+import FAQ from "../../components/FAQ/FAQ";
 import SEOHead from "../../components/SEO/SEOHead";
 import StructuredData from "../../components/SEO/StructuredData";
 import styles from "./Home.module.css";
@@ -180,6 +181,9 @@ const Home = () => {
 
         {/* Catalog Section */}
         <CatalogSection products={searchTerm ? filteredProducts : undefined} />
+        
+        {/* FAQ Section */}
+        <FAQ />
       </Box>
     </Fade>
   );
