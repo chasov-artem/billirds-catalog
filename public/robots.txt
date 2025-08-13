@@ -4,5 +4,38 @@ Allow: /
 # Sitemap
 Sitemap: https://billiard-servis.com/sitemap.xml
 
-# Disallow admin pages
-Disallow: /admin 
+# Crawl-delay для всіх ботів
+Crawl-delay: 1
+
+# Дозволяємо важливі сторінки
+Allow: /catalog
+Allow: /product/
+Allow: /favorites
+Allow: /assets/
+Allow: /images/
+
+# Забороняємо адмін панель
+Disallow: /admin
+Disallow: /admin/*
+
+# Спеціальні правила для Google
+User-agent: Googlebot
+Crawl-delay: 1
+
+# Спеціальні правила для Bing
+User-agent: Bingbot
+Crawl-delay: 1
+
+# Спеціальні правила для Yandex
+User-agent: Yandex
+Crawl-delay: 1
+
+# Забороняємо агресивні боти
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: / 
