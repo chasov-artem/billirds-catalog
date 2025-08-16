@@ -1,95 +1,179 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Button,
   Box,
   Typography,
+  Button,
   Paper,
-  Avatar,
   CircularProgress,
-  useTheme,
   useMediaQuery,
+  useTheme,
   Container,
+  Avatar,
 } from "@mui/material";
+import { Google as GoogleIcon } from "@mui/icons-material";
 import styles from "./AdminPage.module.css";
-import { Google } from "@mui/icons-material";
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-  onAuthStateChanged,
-} from "firebase/auth";
-import app from "../../firebase/config";
 import AdminProductsTable from "./AdminProductsTable";
 import AdminCategories from "./AdminCategories";
 
-// Масив дозволених email'ів адміністраторів
+// Лейзи-завантаження Firebase Auth
+const loadFirebaseAuth = async () => {
+  const {
+    getAuth,
+    signInWithPopup,
+    signInWithRedirect,
+    GoogleAuthProvider,
+    signOut,
+    getRedirectResult,
+  } = await import("firebase/auth");
+  const { default: app } = await import("../../firebase/config");
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+  return {
+    auth,
+    signInWithPopup,
+    signInWithRedirect,
+    signOut,
+    getRedirectResult,
+    provider,
+  };
+};
+
+// Список дозволених email адміністраторів
 const ADMIN_EMAILS = [
+  "chasov.artem@gmail.com",
   "chasov90@gmail.com",
-  "biillija777@gmail.com", // Email нового власника
+  "biillija777@gmail.com",
+  "admin@billiard-servis.com",
 ];
 
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
-  prompt: "select_account",
-});
-
-export default function AdminPage() {
-  const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem("adminUser");
-    return saved ? JSON.parse(saved) : null;
-  });
-  const [loading, setLoading] = useState(true);
+function AdminPage() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [authLoaded, setAuthLoaded] = useState(false);
+  const [authInstance, setAuthInstance] = useState(null);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  // Лейзи-завантаження Firebase Auth
   useEffect(() => {
-    let unsubscribe;
-    setLoading(true);
-    setError("");
-    unsubscribe = onAuthStateChanged(auth, (u) => {
-      setUser(u);
-      if (u) {
-        localStorage.setItem("adminUser", JSON.stringify(u));
-      } else {
+    const initAuth = async () => {
+      try {
+        const auth = await loadFirebaseAuth();
+        setAuthInstance(auth);
+        setAuthLoaded(true);
+      } catch (error) {
+        console.error("Помилка завантаження Firebase Auth:", error);
+        setError("Помилка ініціалізації авторизації");
+      }
+    };
+
+    initAuth();
+  }, []);
+
+  // Перевірка збереженого користувача
+  useEffect(() => {
+    if (!authLoaded) return;
+
+    const savedUser = localStorage.getItem("adminUser");
+    if (savedUser) {
+      try {
+        const userData = JSON.parse(savedUser);
+        setUser(userData);
+      } catch {
         localStorage.removeItem("adminUser");
       }
-      setLoading(false);
+    }
+
+    // Перевіряємо результат redirect авторизації
+    const checkRedirectResult = async () => {
+      try {
+        const result = await authInstance.getRedirectResult(authInstance.auth);
+        if (result?.user) {
+          if (ADMIN_EMAILS.includes(result.user.email)) {
+            setUser(result.user);
+            localStorage.setItem("adminUser", JSON.stringify(result.user));
+          } else {
+            await authInstance.signOut(authInstance.auth);
+            setError(
+              "Доступ заборонено. Ваш email не в списку адміністраторів."
+            );
+          }
+        }
+      } catch (error) {
+        console.error("Помилка перевірки redirect результату:", error);
+      }
+    };
+
+    checkRedirectResult();
+
+    // Слухач змін авторизації
+    const unsubscribe = authInstance?.auth?.onAuthStateChanged((user) => {
+      if (user && ADMIN_EMAILS.includes(user.email)) {
+        setUser(user);
+        localStorage.setItem("adminUser", JSON.stringify(user));
+      } else if (!user) {
+        setUser(null);
+        localStorage.removeItem("adminUser");
+      }
     });
+
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, []);
+  }, [authLoaded, authInstance]);
 
   const handleSignIn = async () => {
+    if (!authInstance) {
+      setError("Авторизація ще не завантажена");
+      return;
+    }
+
     setError("");
     setLoading(true);
     try {
-      const result = await signInWithPopup(auth, provider);
+      const { auth, signInWithPopup, signInWithRedirect, provider } =
+        authInstance;
 
-      // Перевіряємо чи email користувача в списку дозволених
-      if (!ADMIN_EMAILS.includes(result.user.email)) {
-        await signOut(auth);
-        setError("Доступ заборонено. Ваш email не в списку адміністраторів.");
+      // Спочатку пробуємо popup, якщо не спрацює - redirect
+      try {
+        const result = await signInWithPopup(auth, provider);
+
+        // Перевіряємо чи email користувача в списку дозволених
+        if (!ADMIN_EMAILS.includes(result.user.email)) {
+          await authInstance.signOut(auth);
+          setError("Доступ заборонено. Ваш email не в списку адміністраторів.");
+          setLoading(false);
+          return;
+        }
+
+        setUser(result.user);
+        localStorage.setItem("adminUser", JSON.stringify(result.user));
         setLoading(false);
-        return;
+      } catch (popupError) {
+        console.log("Popup failed, trying redirect:", popupError);
+        // Якщо popup не спрацював, використовуємо redirect
+        await signInWithRedirect(auth, provider);
+        // Redirect відбувається автоматично
       }
-
-      setUser(result.user);
-      localStorage.setItem("adminUser", JSON.stringify(result.user));
-      setLoading(false);
     } catch (e) {
+      console.error("Помилка авторизації:", e);
       setError("Помилка авторизації: " + e.message);
       setLoading(false);
     }
   };
 
   const handleSignOut = async () => {
-    await signOut(auth);
-    setUser(null);
-    localStorage.removeItem("adminUser");
+    if (!authInstance) return;
+
+    try {
+      await authInstance.signOut(authInstance.auth);
+      setUser(null);
+      localStorage.removeItem("adminUser");
+    } catch (e) {
+      console.error("Помилка виходу:", e);
+    }
   };
 
   if (loading) {
@@ -102,6 +186,22 @@ export default function AdminPage() {
         sx={{
           background: "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
           minHeight: "100vh",
+        }}
+      >
+        <CircularProgress size={60} sx={{ color: "#115e59" }} />
+      </Box>
+    );
+  }
+
+  if (!authLoaded) {
+    return (
+      <Box
+        minHeight="100vh"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        sx={{
+          background: "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
         }}
       >
         <CircularProgress size={60} sx={{ color: "#115e59" }} />
@@ -159,40 +259,33 @@ export default function AdminPage() {
             Домен: {window.location.hostname}
           </Typography>
 
-          <Button
-            variant="contained"
-            startIcon={
-              loading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : (
-                <Google />
-              )
-            }
-            onClick={handleSignIn}
-            disabled={loading}
-            sx={{
-              bgcolor: "#115e59",
-              ":hover": { bgcolor: "#134e4a" },
-              py: isMobile ? 1.5 : 2,
-              px: isMobile ? 3 : 4,
-              fontSize: isMobile ? "1rem" : "1.1rem",
-              borderRadius: 2,
-              mb: 2,
-            }}
-            fullWidth={isMobile}
-          >
-            {loading ? "Завантаження..." : "Увійти через Google"}
-          </Button>
-
           {error && (
             <Typography
+              variant="body2"
               color="error"
-              mt={2}
-              sx={{ fontSize: isMobile ? "0.9rem" : "1rem" }}
+              mb={2}
+              sx={{ fontSize: "0.9rem" }}
             >
               {error}
             </Typography>
           )}
+
+          <Button
+            variant="contained"
+            startIcon={<GoogleIcon />}
+            onClick={handleSignIn}
+            disabled={loading}
+            sx={{
+              width: "100%",
+              py: 1.5,
+              backgroundColor: "#4285f4",
+              "&:hover": {
+                backgroundColor: "#3367d6",
+              },
+            }}
+          >
+            {loading ? "Вхід..." : "Увійти через Google"}
+          </Button>
         </Paper>
       </Box>
     );
@@ -216,22 +309,26 @@ export default function AdminPage() {
           <Button
             variant="outlined"
             onClick={handleSignOut}
-            className={styles.logoutButton}
-            fullWidth={isMobile}
+            sx={{
+              borderColor: "#115e59",
+              color: "#115e59",
+              "&:hover": {
+                borderColor: "#134e4a",
+                backgroundColor: "rgba(17, 94, 89, 0.04)",
+              },
+            }}
           >
             Вийти
           </Button>
-
-          <AdminProductsTable />
-
-          <Box mt={isMobile ? 4 : 5}>
-            <Typography className={styles.sectionTitle}>
-              Керування категоріями
-            </Typography>
-            <AdminCategories />
-          </Box>
         </Paper>
+
+        <Box className={styles.adminContent}>
+          <AdminProductsTable />
+          <AdminCategories />
+        </Box>
       </Container>
     </Box>
   );
 }
+
+export default AdminPage;

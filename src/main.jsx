@@ -1,23 +1,20 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ProductsProvider } from "./context/ProductsContext";
+import { FavoritesProvider } from "./context/FavoritesContext";
 import App from "./App.jsx";
-import { ProductsProvider } from "./context/ProductsContext.jsx";
-import { FavoritesProvider } from "./context/FavoritesContext.jsx";
-import { initializePerformanceOptimizations } from "./utils/performance.js";
+import "./index.css";
 
-// Версія для примусового оновлення кешу
-const APP_VERSION = Date.now();
+// Performance optimization
+const version = "1.0.0"; // Cache busting
+console.log(`App version: ${version}`);
 
-// Ініціалізуємо оптимізації продуктивності
-initializePerformanceOptimizations();
-
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
     <ProductsProvider>
       <FavoritesProvider>
         <App />
       </FavoritesProvider>
     </ProductsProvider>
-  </StrictMode>
+  </React.StrictMode>
 );
