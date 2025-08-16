@@ -85,11 +85,12 @@
   line-height: 1.2;
 }
 
-.contactsText div:first-child {
+.contactsText span:first-child {
+  display: block;
   margin-bottom: 2px;
 }
 
-.contactsText div:last-child {
+.contactsText span:last-child {
   font-size: 0.85rem;
 }
 .contactLink {

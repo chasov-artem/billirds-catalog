@@ -38,8 +38,9 @@ const Header = () => {
         {/* Адреса та контакти (тільки desktop) */}
         <Box className={styles.contactsBox}>
           <Typography variant="body2" className={styles.contactsText}>
-            <div>Дніпро, Антоновича 79</div>
-            <div>
+            <span>Дніпро, Антоновича 79</span>
+            <br />
+            <span>
               <a href="tel:0664070941" className={styles.contactLink}>
                 066 407 09 41
               </a>{" "}
@@ -48,7 +49,7 @@ const Header = () => {
                 067 541 73 08
               </a>{" "}
               | <span>Андрій</span>
-            </div>
+            </span>
           </Typography>
         </Box>
 
