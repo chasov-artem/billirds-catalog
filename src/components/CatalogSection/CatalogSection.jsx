@@ -17,7 +17,7 @@ const CatalogSection = ({ products: externalProducts }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [activeFilter, setActiveFilter] = useState({
     type: "all",
-    value: "Усі товари",
+    value: "Каталог товарів",
   });
 
   // Використовуємо зовнішні продукти, якщо вони передані, інакше з контексту
@@ -25,7 +25,7 @@ const CatalogSection = ({ products: externalProducts }) => {
 
   useEffect(() => {
     setFilteredProducts(products);
-    setActiveFilter({ type: "all", value: "Усі товари" });
+    setActiveFilter({ type: "all", value: "Каталог товарів" });
   }, [products]);
 
   const handleFilterChange = (type, value) => {

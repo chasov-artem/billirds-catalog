@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography, Grid, Alert, Pagination } from "@mui/material";
+import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import styles from "./ProductGrid.module.css";
 
@@ -20,7 +21,20 @@ const ProductGrid = ({ products, filterName }) => {
   return (
     <Box>
       <Typography variant="h4" component="h1" className={styles.title}>
-        {filterName}
+        <Link
+          to="/catalog"
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+            cursor: "pointer",
+            transition: "color 0.3s ease",
+            "&:hover": {
+              color: "#10b981",
+            },
+          }}
+        >
+          {filterName}
+        </Link>
       </Typography>
 
       {sortedProducts.length === 0 ? (

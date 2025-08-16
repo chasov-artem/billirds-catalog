@@ -181,7 +181,7 @@ const CatalogPage = () => {
         <Container maxWidth="xl">
           {/* Breadcrumbs */}
           <Breadcrumbs />
-          
+
           {/* Заголовок сторінки */}
           <Box className={styles.pageHeader}>
             <Typography
@@ -189,7 +189,7 @@ const CatalogPage = () => {
               component="h1"
               className={styles.pageTitle}
             >
-              Каталог більярдних столів
+              Каталог товарів
             </Typography>
           </Box>
 
