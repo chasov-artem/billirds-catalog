@@ -25,7 +25,7 @@ const db = getFirestore(app);
 const baseUrl = "https://billiard-servis.com";
 
 // Статичні сторінки
-const staticPages = ["", "/catalog", "/favorites"];
+const staticPages = ["", "/catalog", "/favorites", "/about"];
 
 // Функція для отримання всіх товарів з Firebase
 async function getAllProducts() {
@@ -65,9 +65,10 @@ async function generateSitemap() {
   });
 
   // Додаємо сторінки товарів з Firebase
+  let products = [];
   try {
     console.log("Отримуємо товари з Firebase...");
-    const products = await getAllProducts();
+    products = await getAllProducts();
 
     console.log(`Знайдено ${products.length} товарів`);
 
@@ -96,7 +97,7 @@ async function generateSitemap() {
   fs.writeFileSync(sitemapPath, sitemap);
 
   console.log("Sitemap.xml успішно згенеровано!");
-  console.log(`Всього URL: ${staticPages.length + (products?.length || 0)}`);
+  console.log(`Всього URL: ${staticPages.length + products.length}`);
 }
 
 // Запускаємо генерацію

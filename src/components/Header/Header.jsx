@@ -38,15 +38,17 @@ const Header = () => {
         {/* Адреса та контакти (тільки desktop) */}
         <Box className={styles.contactsBox}>
           <Typography variant="body2" className={styles.contactsText}>
-            <span>Дніпро, вул Антоновича 79</span> |{" "}
-            <a href="tel:0664070941" className={styles.contactLink}>
-              066 407 09 41
-            </a>{" "}
-            |{" "}
-            <a href="tel:0675417308" className={styles.contactLink}>
-              067 541 73 08
-            </a>{" "}
-            | <span>Андрій</span>
+            <div>Дніпро, Антоновича 79</div>
+            <div>
+              <a href="tel:0664070941" className={styles.contactLink}>
+                066 407 09 41
+              </a>{" "}
+              |{" "}
+              <a href="tel:0675417308" className={styles.contactLink}>
+                067 541 73 08
+              </a>{" "}
+              | <span>Андрій</span>
+            </div>
           </Typography>
         </Box>
 
@@ -58,6 +60,9 @@ const Header = () => {
             </Button>
             <Button color="inherit" component={Link} to="/catalog">
               Каталог
+            </Button>
+            <Button color="inherit" component={Link} to="/about">
+              Про нас
             </Button>
             <Button
               color="inherit"
@@ -111,6 +116,9 @@ const Header = () => {
               </ListItem>
               <ListItem component={Link} to="/catalog">
                 <ListItemText primary="Каталог" />
+              </ListItem>
+              <ListItem component={Link} to="/about">
+                <ListItemText primary="Про нас" />
               </ListItem>
               <ListItem component={Link} to="/favorites">
                 <ListItemText

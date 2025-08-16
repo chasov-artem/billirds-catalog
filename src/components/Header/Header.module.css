@@ -80,8 +80,17 @@
 .contactsText {
   color: #fff;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: center;
+  line-height: 1.2;
+}
+
+.contactsText div:first-child {
+  margin-bottom: 2px;
+}
+
+.contactsText div:last-child {
+  font-size: 0.85rem;
 }
 .contactLink {
   color: #ffd700 !important;

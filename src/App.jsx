@@ -14,6 +14,7 @@ const Home = lazy(() => import("./pages/Home/Home"));
 const CatalogPage = lazy(() => import("./pages/Catalog/CatalogPage"));
 const ProductPage = lazy(() => import("./pages/Product/ProductPage"));
 const FavoritesPage = lazy(() => import("./pages/Favorites/FavoritesPage"));
+const AboutPage = lazy(() => import("./pages/About/AboutPage"));
 const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 const AdminPage = lazy(() => import("./pages/Admin/AdminPage"));
 
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/catalog" element={<CatalogPage />} />
                 <Route path="/favorites" element={<FavoritesPage />} />
                 <Route path="/product/:productId" element={<ProductPage />} />
+                <Route path="/about" element={<AboutPage />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

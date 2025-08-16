@@ -31,6 +31,7 @@ const Breadcrumbs = ({ items = [] }) => {
         catalog: "Каталог",
         product: "Товар",
         favorites: "Обране",
+        about: "Про нас",
         admin: "Адмін панель",
       };
 
