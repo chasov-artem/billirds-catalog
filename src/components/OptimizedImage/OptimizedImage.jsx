@@ -1,160 +1,124 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Skeleton, Box } from "@mui/material";
+import React, { useState, useRef, useEffect } from "react";
+import styles from "./OptimizedImage.module.css";
 
 const OptimizedImage = ({
   src,
   alt,
-  width = "100%",
-  height = "auto",
-  className = "",
-  style = {},
-  placeholder = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFyZSBsb2FkaW5nLi4uPC90ZXh0Pjwvc3ZnPg==",
-  onLoad,
+  className,
+  style,
   onError,
   priority = false,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 }) => {
-  const [imageSrc, setImageSrc] = useState(placeholder);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [isInView, setIsInView] = useState(priority);
   const imgRef = useRef(null);
-  const observerRef = useRef(null);
 
-  useEffect(() => {
-    if (!src) {
-      setHasError(true);
-      setIsLoading(false);
-      return;
-    }
-
-    // Якщо priority = true, завантажуємо одразу
-    if (priority) {
-      loadImage(src);
-      return;
-    }
-
-    // Налаштовуємо Intersection Observer для lazy loading
-    if ("IntersectionObserver" in window && !priority) {
-      observerRef.current = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setIsInView(true);
-              observerRef.current?.unobserve(entry.target);
-            }
-          });
-        },
-        {
-          rootMargin: "50px 0px", // Завантажуємо за 50px до появи в viewport
-          threshold: 0.1,
-        }
-      );
-
-      if (imgRef.current) {
-        observerRef.current.observe(imgRef.current);
-      }
-    } else {
-      // Fallback для браузерів без Intersection Observer
-      setIsInView(true);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [src, priority]);
-
-  useEffect(() => {
-    if (isInView && src) {
-      loadImage(src);
-    }
-  }, [isInView, src]);
-
-  const loadImage = (imageSrc) => {
-    setIsLoading(true);
-    setHasError(false);
-
-    const img = new Image();
-
-    img.onload = () => {
-      setImageSrc(imageSrc);
-      setIsLoading(false);
-      if (onLoad) onLoad();
-    };
-
-    img.onerror = () => {
-      setHasError(true);
-      setIsLoading(false);
-      if (onError) onError();
-    };
-
-    img.src = imageSrc;
+  // WebP support detection
+  const supportsWebP = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
   };
 
-  if (hasError) {
-    return (
-      <Box
-        sx={{
-          width,
-          height,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#f5f5f5",
-          color: "#666",
-          fontSize: "14px",
-          borderRadius: "8px",
-          ...style,
-        }}
-        className={className}
-      >
-        Помилка завантаження зображення
-      </Box>
+  // Generate optimized image URL
+  const getOptimizedSrc = (originalSrc) => {
+    if (!originalSrc) return '';
+    
+    // If it's a Firebase Storage URL, add optimization parameters
+    if (originalSrc.includes('firebasestorage.googleapis.com')) {
+      const baseUrl = originalSrc.split('?')[0];
+      const params = new URLSearchParams();
+      
+      // Add WebP format if supported
+      if (supportsWebP()) {
+        params.append('alt', 'media');
+        params.append('format', 'webp');
+      }
+      
+      // Add size optimization for mobile
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        params.append('w', '400'); // Smaller size for mobile
+      } else {
+        params.append('w', '800'); // Larger size for desktop
+      }
+      
+      return `${baseUrl}?${params.toString()}`;
+    }
+    
+    return originalSrc;
+  };
+
+  useEffect(() => {
+    if (priority) {
+      setIsInView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: "50px 0px",
+        threshold: 0.01,
+      }
     );
-  }
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [priority]);
+
+  const handleLoad = () => {
+    setIsLoaded(true);
+  };
+
+  const handleError = (e) => {
+    setIsError(true);
+    if (onError) onError(e);
+  };
+
+  const optimizedSrc = getOptimizedSrc(src);
 
   return (
-    <Box
+    <div
       ref={imgRef}
-      sx={{
-        position: "relative",
-        width,
-        height,
-        overflow: "hidden",
-        borderRadius: "8px",
-        ...style,
-      }}
-      className={className}
+      className={`${styles.imageContainer} ${className || ""}`}
+      style={style}
     >
-      {isLoading && (
-        <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="100%"
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            borderRadius: "8px",
-          }}
+      {/* Skeleton placeholder */}
+      {!isLoaded && !isError && <div className={styles.skeleton} />}
+
+      {/* Error placeholder */}
+      {isError && (
+        <div className={styles.errorPlaceholder}>
+          <span>Помилка завантаження</span>
+        </div>
+      )}
+
+      {/* Actual image */}
+      {isInView && !isError && (
+        <img
+          src={optimizedSrc}
+          alt={alt}
+          className={`${styles.image} ${isLoaded ? styles.loaded : ""}`}
+          onLoad={handleLoad}
+          onError={handleError}
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
+          sizes={sizes}
         />
       )}
-      <img
-        src={imageSrc}
-        alt={alt}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          opacity: isLoading ? 0 : 1,
-          transition: "opacity 0.3s ease-in-out",
-          borderRadius: "8px",
-        }}
-        loading={priority ? "eager" : "lazy"}
-        fetchPriority={priority ? "high" : "auto"}
-      />
-    </Box>
+    </div>
   );
 };
 
