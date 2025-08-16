@@ -5,6 +5,8 @@
   color: white;
   padding: 3rem 0 1rem;
   margin-top: auto;
+  min-height: 300px; /* Фіксована висота для уникнення CLS */
+  box-sizing: border-box;
 }
 
 .footer .MuiTypography-h6 {

@@ -1,56 +1,58 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import compression from "vite-plugin-compression";
+import { compression } from "vite-plugin-compression";
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     compression({
       algorithm: "gzip",
       ext: ".gz",
-      threshold: 10240, // Компресуємо файли більше 10KB
-      deleteOriginFile: false,
     }),
     compression({
       algorithm: "brotliCompress",
       ext: ".br",
-      threshold: 10240,
-      deleteOriginFile: false,
     }),
   ],
   build: {
-    outDir: "dist",
-    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
+          // Розділяємо vendor чанки
           vendor: ["react", "react-dom"],
           mui: ["@mui/material", "@mui/icons-material"],
+          firebase: ["firebase/app", "firebase/firestore", "firebase/storage"],
           router: ["react-router-dom"],
           icons: ["react-icons"],
-          firebase: [
-            "firebase/app",
-            "firebase/auth",
-            "firebase/firestore",
-            "firebase/storage",
-          ],
-          utils: ["axios", "clsx"],
         },
       },
     },
-    chunkSizeWarningLimit: 1000, // Збільшуємо ліміт попереджень
+    // Оптимізація розміру бандла
+    chunkSizeWarningLimit: 1000,
+    // Видаляємо console.log в production
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
   },
+  // Оптимізація dev сервера
   server: {
-    port: 3000,
-    host: true,
+    hmr: {
+      overlay: false,
+    },
   },
+  // Оптимізація залежностей
   optimizeDeps: {
     include: [
-      "firebase/app",
-      "firebase/auth",
-      "firebase/firestore",
-      "firebase/storage",
+      "react",
+      "react-dom",
+      "@mui/material",
+      "@mui/icons-material",
+      "react-router-dom",
     ],
   },
 });

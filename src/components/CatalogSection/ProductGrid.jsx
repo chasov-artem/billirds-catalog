@@ -30,9 +30,12 @@ const ProductGrid = ({ products, filterName }) => {
       ) : (
         <>
           <Grid container spacing={3}>
-            {paginatedProducts.map((product) => (
+            {paginatedProducts.map((product, index) => (
               <Grid key={product.id} size={{ xs: 12, sm: 6, lg: 4 }}>
-                <ProductCard product={product} />
+                <ProductCard
+                  product={product}
+                  priority={index < 4} // Priority для перших 4 зображень
+                />
               </Grid>
             ))}
           </Grid>

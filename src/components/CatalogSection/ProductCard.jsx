@@ -2,7 +2,6 @@ import React from "react";
 import {
   Card,
   CardContent,
-  CardMedia,
   Typography,
   Box,
   Button,
@@ -16,9 +15,10 @@ import {
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../../context/FavoritesContext";
+import OptimizedImage from "../OptimizedImage/OptimizedImage";
 import styles from "./ProductCard.module.css";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, priority = false }) => {
   const { toggleFavorite, isInFavorites } = useFavorites();
   const defaultImage = "/default-product-image.png"; // Шлях до зображення-заглушки
   const images = product.Фото || [];
@@ -48,17 +48,13 @@ const ProductCard = ({ product }) => {
   return (
     <Card className={styles.productCard}>
       <Box className={styles.imageContainer}>
-        <CardMedia
-          component="img"
-          image={mainImage}
+        <OptimizedImage
+          src={mainImage}
           alt={product.Назва || product.name}
           className={styles.productImage}
-          onError={(e) => {
-            if (!e.target.src.endsWith("default-product-image.png")) {
-              e.target.onerror = null;
-              e.target.src = defaultImage;
-            }
-          }}
+          style={{ height: "220px" }}
+          priority={priority}
+          onError={() => console.log("Image failed to load:", mainImage)}
         />
         {/* Плашка статусу */}
         <div className={`${styles.statusBadgeAbsolute} ${badgeClass}`}>
@@ -70,6 +66,7 @@ const ProductCard = ({ product }) => {
             to={`/product/${product.id}`}
             className={styles.viewButton}
             size="large"
+            aria-label={`Переглянути ${product.Назва || product.name}`}
           >
             <Visibility />
           </IconButton>
@@ -81,6 +78,9 @@ const ProductCard = ({ product }) => {
               e.stopPropagation();
               toggleFavorite(product.id);
             }}
+            aria-label={`${
+              isInFavorites(product.id) ? "Видалити з" : "Додати до"
+            } улюблених ${product.Назва || product.name}`}
             sx={{
               color: isInFavorites(product.id) ? "#ff4081" : "white",
               "&:hover": {
