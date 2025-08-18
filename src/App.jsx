@@ -14,6 +14,7 @@ const FavoritesPage = React.lazy(() =>
 );
 const AboutPage = React.lazy(() => import("./pages/About/AboutPage"));
 const AdminPage = React.lazy(() => import("./pages/Admin/AdminPage"));
+const NotFound = React.lazy(() => import("./pages/NotFound/NotFound"));
 
 // Loading component
 const LoadingSpinner = () => (
@@ -56,6 +57,7 @@ function App() {
               <Route path="/favorites" element={<FavoritesPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/admin" element={<AdminPage />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
         </Box>
