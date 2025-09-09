@@ -8,17 +8,28 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Розділяємо vendor чанки
+          // Розділяємо vendor чанки для кращого кешування
           vendor: ["react", "react-dom"],
-          mui: ["@mui/material", "@mui/icons-material"],
-          firebase: ["firebase/app", "firebase/firestore", "firebase/storage"],
+          mui: ["@mui/material", "@mui/icons-material", "@emotion/react", "@emotion/styled"],
+          firebase: ["firebase/app", "firebase/firestore", "firebase/storage", "firebase/auth"],
           router: ["react-router-dom"],
           icons: ["react-icons"],
+          utils: ["axios", "clsx"],
         },
       },
     },
     // Оптимізація розміру бандла
     chunkSizeWarningLimit: 1000,
+    // Мінімізація для production
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+    // Оптимізація source maps
+    sourcemap: false,
   },
   // Оптимізація dev сервера
   server: {

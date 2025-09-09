@@ -6,7 +6,10 @@
   padding: 3rem 0 1rem;
   margin-top: auto;
   min-height: 300px; /* Фіксована висота для уникнення CLS */
+  max-height: 400px; /* Максимальна висота */
   box-sizing: border-box;
+  contain: layout style; /* Оптимізація для браузера */
+  will-change: auto; /* Відключаємо will-change для статичних елементів */
 }
 
 .footer .MuiTypography-h6 {

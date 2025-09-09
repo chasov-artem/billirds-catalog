@@ -3,9 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box, CssBaseline, CircularProgress } from "@mui/material";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import PerformanceMonitor from "./components/Performance/PerformanceMonitor";
-
 // Lazy loading для покращення продуктивності
+const PerformanceMonitor = React.lazy(() => import("./components/Performance/PerformanceMonitor"));
 const Home = React.lazy(() => import("./pages/Home/Home"));
 const CatalogPage = React.lazy(() => import("./pages/Catalog/CatalogPage"));
 const ProductPage = React.lazy(() => import("./pages/Product/ProductPage"));
@@ -34,7 +33,9 @@ function App() {
   return (
     <BrowserRouter>
       <CssBaseline />
-      <PerformanceMonitor />
+      <Suspense fallback={null}>
+        <PerformanceMonitor />
+      </Suspense>
 
       <Box
         sx={{
