@@ -1,10 +1,12 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box, CssBaseline, CircularProgress } from "@mui/material";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
 // Lazy loading для покращення продуктивності
-const PerformanceMonitor = React.lazy(() => import("./components/Performance/PerformanceMonitor"));
+const Header = React.lazy(() => import("./components/Header/Header"));
+const Footer = React.lazy(() => import("./components/Footer/Footer"));
+const PerformanceMonitor = React.lazy(() =>
+  import("./components/Performance/PerformanceMonitor")
+);
 const Home = React.lazy(() => import("./pages/Home/Home"));
 const CatalogPage = React.lazy(() => import("./pages/Catalog/CatalogPage"));
 const ProductPage = React.lazy(() => import("./pages/Product/ProductPage"));
@@ -48,7 +50,9 @@ function App() {
           backgroundColor: "#fff",
         }}
       >
-        <Header />
+        <Suspense fallback={<div style={{ height: "80px" }} />}>
+          <Header />
+        </Suspense>
         <Box component="main" sx={{ flexGrow: 1 }}>
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
@@ -62,7 +66,9 @@ function App() {
             </Routes>
           </Suspense>
         </Box>
-        <Footer />
+        <Suspense fallback={<div style={{ height: "300px" }} />}>
+          <Footer />
+        </Suspense>
       </Box>
     </BrowserRouter>
   );

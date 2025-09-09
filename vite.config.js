@@ -10,8 +10,18 @@ export default defineConfig({
         manualChunks: {
           // Розділяємо vendor чанки для кращого кешування
           vendor: ["react", "react-dom"],
-          mui: ["@mui/material", "@mui/icons-material", "@emotion/react", "@emotion/styled"],
-          firebase: ["firebase/app", "firebase/firestore", "firebase/storage", "firebase/auth"],
+          mui: [
+            "@mui/material",
+            "@mui/icons-material",
+            "@emotion/react",
+            "@emotion/styled",
+          ],
+          firebase: [
+            "firebase/app",
+            "firebase/firestore",
+            "firebase/storage",
+            "firebase/auth",
+          ],
           router: ["react-router-dom"],
           icons: ["react-icons"],
           utils: ["axios", "clsx"],
@@ -21,7 +31,7 @@ export default defineConfig({
     // Оптимізація розміру бандла
     chunkSizeWarningLimit: 1000,
     // Мінімізація для production
-    minify: 'terser',
+    minify: "terser",
     terserOptions: {
       compress: {
         drop_console: true,

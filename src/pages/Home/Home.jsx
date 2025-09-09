@@ -383,10 +383,46 @@ const Home = () => {
         />
         {/* Hero Section */}
         <Box className={styles.heroSection}>
+          <img
+            src="/src/assets/banner8.webp"
+            alt="Більярд Сервіс - Якісні більярдні столи"
+            className={styles.heroImage}
+            fetchPriority="high"
+            loading="eager"
+          />
           <Container maxWidth="lg">
             <Box className={styles.heroContent}>
-              {/* <h1>Більярд Сервіс</h1>
-              <p>Якісні більярдні столи для вашого дому та бізнесу</p> */}
+              <Typography
+                variant="h2"
+                component="h1"
+                className={styles.heroTitle}
+              >
+                БІЛЬЯРД СЕРВІС
+              </Typography>
+              <Typography variant="h5" className={styles.heroSubtitle}>
+                Якісні більярдні столи для вашого дому та бізнесу. Професійне
+                обладнання від перевірених виробників.
+              </Typography>
+              <Box className={styles.heroButtons}>
+                <Button
+                  component={Link}
+                  to="/catalog"
+                  variant="contained"
+                  size="large"
+                  className={`${styles.heroButton} ${styles.primary}`}
+                >
+                  Переглянути каталог
+                </Button>
+                <Button
+                  component={Link}
+                  to="/about"
+                  variant="outlined"
+                  size="large"
+                  className={`${styles.heroButton} ${styles.secondary}`}
+                >
+                  Дізнатися більше
+                </Button>
+              </Box>
             </Box>
           </Container>
         </Box>
