@@ -21,6 +21,7 @@ import styles from "./ProductCard.module.css";
 const ProductCard = ({ product, priority = false }) => {
   const { toggleFavorite, isInFavorites } = useFavorites();
   const defaultImage = "/default-product-image.png"; // Шлях до зображення-заглушки
+
   const images = product.Фото || [];
   const mainImage =
     images[0] || product.imageUrl || product.зображення || defaultImage;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import {
   Container,
   Grid,
@@ -48,8 +48,14 @@ import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
 import styles from "./ProductPage.module.css";
 
 const ProductPage = () => {
-  const { productId } = useParams();
+  const params = useParams();
+  const location = useLocation();
+  const { productId } = params;
   const { products, loading } = useProducts();
+
+  // Fallback: отримуємо ID з URL якщо useParams не працює
+  const urlProductId = productId || location.pathname.split("/product/")[1];
+
   const { toggleFavorite, isInFavorites } = useFavorites();
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -65,7 +71,7 @@ const ProductPage = () => {
     // Симулюємо затримку для кращого UX
     const timer = setTimeout(() => {
       if (products.length > 0) {
-        const foundProduct = products.find((p) => p.id === productId);
+        const foundProduct = products.find((p) => p.id === urlProductId);
         if (foundProduct) {
           setProduct(foundProduct);
           setProductError(false);
@@ -79,7 +85,7 @@ const ProductPage = () => {
     }, 800); // 800ms затримка для кращого UX
 
     return () => clearTimeout(timer);
-  }, [products, productId, loading]);
+  }, [products, urlProductId, loading]);
 
   const handleOrder = (platform) => {
     const productName = product?.Назва || product?.name || "Товар";
@@ -358,10 +364,24 @@ const ProductPage = () => {
       <div className={styles.productPage}>
         <SEOHead
           title={`${product.Назва || product.name} | Більярд сервіс Дніпро`}
-          description={`${product.Опис || product.description || 'Купити ' + (product.Назва || product.name)}. ${product.Ціна ? `Ціна: ${formatPrice(product.Ціна)}.` : ''} Доставка по Україні. Більярд сервіс у Дніпрі.`}
-          keywords={`${product.Назва || product.name}, більярд, ${product.Категорія || 'більярдні товари'}, купити, Дніпро`}
+          description={`${
+            product.Опис ||
+            product.description ||
+            "Купити " + (product.Назва || product.name)
+          }. ${
+            product.Ціна ? `Ціна: ${formatPrice(product.Ціна)}.` : ""
+          } Доставка по Україні. Більярд сервіс у Дніпрі.`}
+          keywords={`${product.Назва || product.name}, більярд, ${
+            product.Категорія || "більярдні товари"
+          }, купити, Дніпро`}
           ogTitle={`${product.Назва || product.name} | Більярд сервіс`}
-          ogDescription={`${product.Опис || product.description || 'Купити ' + (product.Назва || product.name)}. ${product.Ціна ? `Ціна: ${formatPrice(product.Ціна)}.` : ''} Доставка по Україні.`}
+          ogDescription={`${
+            product.Опис ||
+            product.description ||
+            "Купити " + (product.Назва || product.name)
+          }. ${
+            product.Ціна ? `Ціна: ${formatPrice(product.Ціна)}.` : ""
+          } Доставка по Україні.`}
           ogImage={mainImage}
           canonical={`https://billiard-servis.com/product/${productId}`}
         />
@@ -369,36 +389,37 @@ const ProductPage = () => {
           data={{
             "@context": "https://schema.org",
             "@type": "Product",
-            "name": product.Назва || product.name,
-            "description": product.Опис || product.description,
-            "image": mainImage,
-            "category": product.Категорія || "Більярдні товари",
-            "brand": {
+            name: product.Назва || product.name,
+            description: product.Опис || product.description,
+            image: mainImage,
+            category: product.Категорія || "Більярдні товари",
+            brand: {
               "@type": "Brand",
-              "name": "Більярд сервіс"
+              name: "Більярд сервіс",
             },
-            "offers": {
+            offers: {
               "@type": "Offer",
-              "price": product.Ціна || product.price,
-              "priceCurrency": "UAH",
-              "availability": product.Статус === "В наявності" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-              "seller": {
+              price: product.Ціна || product.price,
+              priceCurrency: "UAH",
+              availability:
+                product.Статус === "В наявності"
+                  ? "https://schema.org/InStock"
+                  : "https://schema.org/OutOfStock",
+              seller: {
                 "@type": "LocalBusiness",
-                "name": "Більярд сервіс",
-                "address": {
+                name: "Більярд сервіс",
+                address: {
                   "@type": "PostalAddress",
-                  "addressLocality": "Дніпро",
-                  "addressCountry": "UA"
-                }
-              }
-            }
+                  addressLocality: "Дніпро",
+                  addressCountry: "UA",
+                },
+              },
+            },
           }}
         />
         <Container maxWidth="lg">
           {/* Breadcrumbs */}
           <Breadcrumbs />
-          
-
 
           {/* Зображення товару */}
           <Paper className={styles.imageSection} elevation={2} sx={{ mb: 4 }}>
@@ -838,24 +859,24 @@ const ProductPage = () => {
             </Grid>
           </Grid>
 
-                     {/* Кнопка повернення */}
-           <Box className={styles.backButtonContainer}>
-             <Button
-               component={Link}
-               to="/catalog"
-               variant="outlined"
-               startIcon={<ArrowBack />}
-               className={styles.backButton}
-             >
-               Повернутися до каталогу
-             </Button>
-           </Box>
-           
-           {/* Схожі товари */}
-           <RelatedProducts currentProduct={product} products={products} />
-         </Container>
-       </div>
-     </Fade>
+          {/* Кнопка повернення */}
+          <Box className={styles.backButtonContainer}>
+            <Button
+              component={Link}
+              to="/catalog"
+              variant="outlined"
+              startIcon={<ArrowBack />}
+              className={styles.backButton}
+            >
+              Повернутися до каталогу
+            </Button>
+          </Box>
+
+          {/* Схожі товари */}
+          <RelatedProducts currentProduct={product} products={products} />
+        </Container>
+      </div>
+    </Fade>
   );
 };
 
