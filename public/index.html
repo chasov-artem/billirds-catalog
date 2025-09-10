@@ -2,7 +2,10 @@
 <html lang="uk">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
       Більярд Сервіс - Купити більярдний стіл у Дніпрі | Доставка по Україні
@@ -58,6 +61,7 @@
         "name": "Більярд Сервіс",
         "description": "Купити більярдний стіл у Дніпрі. Продаж, монтаж та обслуговування більярдних столів, аксесуарів та сукна. Доставка по Україні.",
         "url": "https://www.billiard-servis.com",
+        "logo": "https://www.billiard-servis.com/favicon.svg",
         "telephone": "+380-XX-XXX-XXXX",
         "address": {
           "@type": "PostalAddress",
@@ -109,6 +113,31 @@
       }
     </script>
 
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Більярд Сервіс",
+      "url": "https://www.billiard-servis.com",
+      "logo": "https://www.billiard-servis.com/favicon.svg",
+      "description": "Продаж, монтаж та обслуговування більярдних столів, аксесуарів та сукна в Дніпрі з 1996 року",
+      "foundingDate": "1996",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Дніпро",
+        "addressCountry": "UA"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": ["+380664070941", "+380675417308"],
+        "contactType": "customer service",
+        "areaServed": "UA",
+        "availableLanguage": "Ukrainian"
+      }
+    }
+    </script>
+
     <!-- Preconnect hints for performance -->
     <link rel="preconnect" href="https://billiard-catalog.firebaseapp.com" />
     <link rel="preconnect" href="https://apis.google.com" />
@@ -122,12 +151,7 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="/src/main.jsx" as="script" />
-    <link
-      rel="preload"
-      href="/banner8.webp"
-      as="image"
-      fetchpriority="high"
-    />
+    <link rel="preload" href="/banner8.webp" as="image" fetchpriority="high" />
 
     <!-- Defer non-critical CSS -->
     <link
