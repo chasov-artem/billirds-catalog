@@ -22,7 +22,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Базовий URL сайту
-const baseUrl = "https://billiard-servis.com";
+const baseUrl = "https://www.billiard-servis.com";
 
 // Статичні сторінки
 const staticPages = ["", "/catalog", "/favorites", "/about"];

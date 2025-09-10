@@ -29,10 +29,10 @@
       content="Купити більярдний стіл у Дніпрі. Продаж, монтаж та обслуговування більярдних столів. Доставка по Україні."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://billiard-servis.com/" />
+    <meta property="og:url" content="https://www.billiard-servis.com/" />
     <meta
       property="og:image"
-      content="https://billiard-servis.com/og-image.jpg"
+      content="https://www.billiard-servis.com/og-image.jpg"
     />
 
     <!-- Twitter Card -->
@@ -47,8 +47,67 @@
     />
     <meta
       name="twitter:image"
-      content="https://billiard-servis.com/og-image.jpg"
+      content="https://www.billiard-servis.com/og-image.jpg"
     />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Більярд Сервіс",
+        "description": "Купити більярдний стіл у Дніпрі. Продаж, монтаж та обслуговування більярдних столів, аксесуарів та сукна. Доставка по Україні.",
+        "url": "https://www.billiard-servis.com",
+        "telephone": "+380-XX-XXX-XXXX",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Дніпро",
+          "addressCountry": "UA"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "48.464717",
+          "longitude": "35.046183"
+        },
+        "openingHours": "Mo-Fr 09:00-18:00, Sa 10:00-16:00",
+        "priceRange": "$$",
+        "serviceArea": {
+          "@type": "Country",
+          "name": "Україна"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Більярдні столи та аксесуари",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Product",
+                "name": "Більярдні столи"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Product",
+                "name": "Аксесуари для більярду"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Product",
+                "name": "Сукно для більярду"
+              }
+            }
+          ]
+        },
+        "sameAs": [
+          "https://www.facebook.com/billiard-servis",
+          "https://www.instagram.com/billiard-servis"
+        ]
+      }
+    </script>
 
     <!-- Preconnect hints for performance -->
     <link rel="preconnect" href="https://billiard-catalog.firebaseapp.com" />
@@ -65,7 +124,7 @@
     <link rel="preload" href="/src/main.jsx" as="script" />
     <link
       rel="preload"
-      href="/src/assets/banner8.webp"
+      href="/banner8.webp"
       as="image"
       fetchpriority="high"
     />

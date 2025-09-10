@@ -384,7 +384,7 @@ const Home = () => {
         {/* Hero Section */}
         <Box className={styles.heroSection}>
           <img
-            src="/src/assets/banner8.webp"
+            src="/banner8.webp"
             alt="Більярд Сервіс - Якісні більярдні столи"
             className={styles.heroImage}
             fetchPriority="high"

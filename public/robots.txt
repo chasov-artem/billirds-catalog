@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://billiard-servis.com/sitemap.xml
+Sitemap: https://www.billiard-servis.com/sitemap.xml
 
 # Crawl-delay для всіх ботів
 Crawl-delay: 1
