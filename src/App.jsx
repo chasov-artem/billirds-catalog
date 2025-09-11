@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { Suspense, useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Box, CssBaseline, CircularProgress } from "@mui/material";
 // Lazy loading для покращення продуктивності
 const Header = React.lazy(() => import("./components/Header/Header"));
@@ -31,10 +31,23 @@ const LoadingSpinner = () => (
   </Box>
 );
 
+// Компонент для скролу на початок сторінки при зміні роуту
+const ScrollToTop = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // При кожній зміні роуту скролимо на початок сторінки
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  return null;
+};
+
 function App() {
   return (
     <BrowserRouter>
       <CssBaseline />
+      <ScrollToTop />
       <Suspense fallback={null}>
         <PerformanceMonitor />
       </Suspense>
