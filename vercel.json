@@ -89,8 +89,7 @@
         }
       ],
       "destination": "https://www.billiard-servis.com/$1",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     }
   ],
   "rewrites": [
