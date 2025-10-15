@@ -417,6 +417,32 @@ const ProductPage = () => {
             },
           }}
         />
+        <StructuredData
+          data={{
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Головна",
+                item: "https://billiard-servis.com/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Каталог",
+                item: "https://billiard-servis.com/catalog",
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: product.Назва || product.name,
+                item: `https://billiard-servis.com/product/${productId}`,
+              },
+            ],
+          }}
+        />
         <Container maxWidth="lg">
           {/* Breadcrumbs */}
           <Breadcrumbs />
